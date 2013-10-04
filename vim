@@ -1,0 +1,1 @@
+{"error":{"type":"Symfony\\Component\\Debug\\Exception\\FatalErrorException","message":"Call to undefined function table()","file":"\/opt\/lampp\/htdocs\/butterfly\/app\/database\/seeds\/DatabaseSeeder.php","line":20}}
