@@ -6,11 +6,11 @@ class UserController extends \BaseController {
   }
 
   public function login() {
-
-    if (Auth::check())
+    if (Auth::check()) {
       return Redirect::route("backend.index");
-    else
+    } else {
       return View::make('backend.login')->with([ 'title' => 'Login' ]);
+    }
   }
 
   public function check() {
