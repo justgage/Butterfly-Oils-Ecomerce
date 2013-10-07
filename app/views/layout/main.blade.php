@@ -1,35 +1,39 @@
-<!DOCTYPE html!>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>{{ $title }} | ButterflyOils.com</title>
-{{ HTML::style('css/main.css')}}
+<head>
+  <title>{{ $title }} | ButterflyOils.com</title>
+  {{ HTML::style('css/main.css')}}
+</head>
+<body>
 
-    </head>
-    <body>
-        <div id="header">
-            <div id="logo">Butterfly Oils</div>
-            <div id="nav"></div>
-<a href=" {{ route('oils.index')}} ">Shop</a>
-@if( Auth::check() )
-Logged in as {{ Auth::user()->username }}
-@else
-<a href=" {{ route('login')}} ">Login</a>
-@endif
-            <hr />
-        </div>
+<div id="header">
+  <div id="logo">Butterfly Oils</div>
+  <div id="nav"></div>
+  <a href=" {{ route('oils.index')}} ">Shop</a>
+
+  @if( Auth::check() )
+    Logged in as <a href="{{ route('backend.index') }}">{{ Auth::user()->username }}</a>
+  @else
+    <a href=" {{ route('login')}} ">Login</a>
+  @endif
+
+  <hr />
+</div>
+
+{{-- this will show the message if it exists --}}
 @if(isset($message))
-        <div id="message">
-          {{ $message }}
-        </div>
+<div id="message">
+  {{ $message }}
+</div>
 @else
 {{ $message = Session::get('message') }}
 @endif
 
-        
-        <div id="content">
-            @section('content')
-                this is the main content
-            @show
-        </div>
-    </body>
+
+<div id="content">
+  @section('content')
+  this is the main content
+  @show
+</div>
+</body>
 </html>
