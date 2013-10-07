@@ -13,8 +13,19 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return View::make('front.index')->with(['title' => 'Welcome to Buttefly Oils!']);
 });
 
 Route::resource('oils', 'OilController');
+
+Route::get('login', array("as" => 'login', 'uses' => 'UserController@login'));
+Route::post('backend/check', array("as" => 'backend.check', 'uses' => 'UserController@check'));
+
+Route::get('backend/index', array("as" => 'backend.index', 'uses' => 'UserController@index'));
+
+
+Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserController@logout'));
+
+
+
 

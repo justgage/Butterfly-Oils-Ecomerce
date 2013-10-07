@@ -29,6 +29,13 @@ class OilTableSeeder extends Seeder {
 
             $oil->save();
         }
+
+        $user = new User;
+        $user->username = "admin";
+        $user->password = Hash::make('password');
+        $user->email = "justgage@gmail.com";
+        $user->rights = 0;
+        $user->save();
     }
 
 }
