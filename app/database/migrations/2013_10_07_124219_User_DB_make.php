@@ -19,8 +19,6 @@ class UserDBMake extends Migration {
       $table->integer('rights'); // 0 - admin, 1 - user
       $table->timestamps();
     });
-
-    
   }
 
   /**

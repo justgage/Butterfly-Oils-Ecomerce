@@ -10,7 +10,7 @@ class OilController extends \BaseController {
 	public function index()
 	{
         $v = View::make('oils.index')->with('title', "Shop oils");
-        $v->oils = Oil::all();
+        $v->oils = Oil::orderBy('name')->get();
         return $v;
 	}
 
@@ -21,7 +21,11 @@ class OilController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		if (Auth::check()) {
+         return View::make('oils.create')->with('title', 'Creating a new oil');
+      } else {
+         return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login");
+      }
 	}
 
 	/**
@@ -30,9 +34,55 @@ class OilController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{
-        //
-	}
+   {
+      if (Auth::check()) {
+         $valid = Oil::validate(Input::all());
+         //return var_dump(Input::all());
+         if ($valid->fails()) 
+         { return Redirect::route('oils.create')->withErrors($valid)->withInput(); } 
+         else 
+         {
+            if (Input::hasFile('image') === false) {
+               return Redirect::route('oils.create')
+                  ->with("message", "File failed to upload")
+                  ->withInput();; 
+            } 
+            $oil = new Oil;
+
+            //create oil
+            $oil->name = Input::get('name');
+            $oil->info = Input::get('info');
+            $oil->price = Input::get('price');
+            $oil->compare_price = Input::get('compare_price');
+            $oil->name = Input::get('name');
+
+            $oil->save();
+
+            //create photo
+            $photo = new Photo;
+
+
+            $file = Input::file('image');
+            $ext = $file->getClientOriginalExtension();
+            $filename = str_random(40) . ".$ext";
+            $file->move('public/img', $filename);
+
+            //$photo->oil_id = $oil->id;
+            //if ($oil->id === null) {
+            //    return var_dump($oil->id); 
+            // }
+            $photo->caption = Input::get('caption');
+            $photo->path = '/img/' . $filename;
+
+            $photo = $oil->photos()->save($photo);
+
+            return Redirect::route('oils.index')->with('message', 'Oil ' . $oil->name . ' was created sucsessfuly');;
+         }
+
+      } else {
+         return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login");
+      }
+   }
 
 	/**
 	 * Display the specified resource.

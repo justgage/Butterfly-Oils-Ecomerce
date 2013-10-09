@@ -21,14 +21,7 @@
 </div>
 
 {{-- this will show the message if it exists --}}
-@if(isset($message))
-<div id="message">
-  {{ $message }}
-</div>
-@else
-{{ $message = Session::get('message') }}
-@endif
-
+@include('includes.message')
 
 <div id="content">
   @section('content')
