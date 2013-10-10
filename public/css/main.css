@@ -9,7 +9,18 @@
 .oil_show_photo {
    width: 300px;
    float: left;
+   clear: both;
    border: solid lightgrey 3px;
    margin: 1em;
 }
+
+.oil_index_box {
+}
+/*  */
+/* .oil_index_photo { */
+/*    width: 200px; */
+/*    border: solid lightgrey 3px; */
+/*    margin: 1em; */
+/* } */
+
 

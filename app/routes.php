@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function()
+Route::get('/', array("as" => "home", function() 
 {
 	return View::make('front.index')->with(['title' => 'Welcome to Buttefly Oils!']);
-});
+}));
 
 Route::resource('oils', 'OilController');
 

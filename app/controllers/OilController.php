@@ -75,9 +75,9 @@ class OilController extends \BaseController {
 
                   $ext = $file->getClientOriginalExtension();
                   $filename = str_random(40) . ".$ext";
-                  $file->move('public/img', $filename);
+                  $file->move('public/uploads', $filename);
 
-                  $photo->path = '/img/' . $filename;
+                  $photo->path = '/uploads/' . $filename;
 
                   $photo = $oil->photos()->save($photo);
                }
