@@ -19,6 +19,14 @@ class UserDBMake extends Migration {
       $table->integer('rights'); // 0 - admin, 1 - user
       $table->timestamps();
     });
+
+    $admin = new User;
+    $admin->username = "admin";
+    $admin->password = Hash::make('password');
+    $admin->email = "justgage@gmail.com";
+    $admin->rights = 0;
+    $admin->save();
+
   }
 
   /**
@@ -28,7 +36,7 @@ class UserDBMake extends Migration {
    */
   public function down()
   {
-    Schema::drop('users');
+     Schema::drop('users');
   }
 
 }
