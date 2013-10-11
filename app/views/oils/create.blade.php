@@ -24,27 +24,44 @@
    {{-- PRICE --}}
    <div class="{{ $col_size }}">
       {{ Form::label('price', 'price') }}
-      <p> ${{ Form::text('price', Input::old('price') , ['placeholder' => '10.00', 'class' => 'form-control']) }} </p>
+      <p> ${{ Form::text('price', Input::old('price') , 
+               ['placeholder' => '10.00', 'class' => 'form-control']) }} </p>
    </div>
    
    {{-- COMPARE PRICE --}}
    <div class="{{ $col_size }}">
       {{ Form::label('compare_price', 'Compare Price (from compettitor)') }}
-      <p> ${{ Form::text('compare_price', Input::old('compare_price'), ['placeholder' => '12.00', 'class' => 'form-control'] ) }} </p>
+      <p> ${{ Form::text('compare_price', Input::old('compare_price'),
+             [ 'placeholder' => '12.00', 'class' => 'form-control' ] ) }} </p> 
    </div>
    
+   {{-- IMAGE UPLOAD --}}
    {{ Form::label('image', 'Product_Images') }}
-   @for ($i = 0; $i < 4; $i++)
-   {{-- FILE UPLOAD --}}
    <div class="{{ $col_size }}">
-      <p> {{ Form::file('image[]') }} </p>
+      <p class="upload_input"> {{ Form::file('image[]') }} </p>
+      <button type="button" class='upload_button btn btn-primary'>Add a file</button>
    </div>
-   @endfor
    
 </div>
+{{-- VISIBLE --}}
+   <p>
+      Visible to users? {{ Form::checkbox('visible', 'visible', Input::old('visible') ) }} 
+   </p>
 {{-- SUBMIT --}}
    {{ Form::submit('Add new oil', array('class' => 'btn-lg btn-primary')) }}
 </div>
 {{ Form::close() }}
 @stop
 
+@section('script')
+<script type="text/javascript" charset="utf-8">
+$( document ).ready(function () {
+      $('.upload_button').click(function(e){
+         console.log('click');
+         e.preventDefault();
+         var copy = $('.upload_input').first().clone();
+         $(copy).insertBefore(this);
+         });
+      });
+</script>
+@stop

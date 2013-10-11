@@ -2,7 +2,9 @@
 
 
 class Oil extends Eloquent {
+
    protected $table = 'oils';
+   protected $softDelete = true; // deletes are still stored in DB
 
    public function photos() {
       return $this->hasMany('Photo', 'oil_id');

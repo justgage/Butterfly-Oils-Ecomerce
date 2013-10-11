@@ -2,6 +2,7 @@
 
 class OilController extends \BaseController {
 
+
    /**
     * Display a listing of the resource.
     *
@@ -139,7 +140,13 @@ class OilController extends \BaseController {
     */
    public function destroy($id)
    {
-      //
+      $affected = Oil::find($id)->delete();
+      $names = "";
+      foreach ($affected as $oil) {
+         $names = $names . ", " . $oil->name;
+      }
+
+      return Redirect::back()->with('message', "The oil " . $names );
    }
 
 }

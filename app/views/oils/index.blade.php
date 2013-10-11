@@ -29,5 +29,8 @@
       @endif
       <div class="clearfix visible-xs"></div>
 @endforeach
+@if($i === 0)
+<h3>Sorry, there's no oils.</h3>
+@endif
 @stop
 
