@@ -16,7 +16,7 @@
             </a>
          </div>
          <div class="oil_price">
-            <h3 class="pull-right">${{ round($oil->price, 2) }} <button class="btn btn-default" >+ <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
+            <h3 class="pull-right">${{ round($oil->price, 2) }} <button data-id="{{ $oil->id }}" class="cart_add btn btn-default" >+ <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
             
          </div>
       </div>
@@ -38,9 +38,12 @@
 @section('script')
 <script type="text/javascript">
 laravel_URL = "{{ URL::to('cart_add') }}"; // NOTE: blade templating
- $.post(laravel_URL, {id : 1}, function (data) {
-      console.log(data.mess);
-}, "json");
+$(".cart_add").click(function() {
+      var id = $(this).attr("data-id");
+      $.post(laravel_URL, {id : id}, function (data) {
+         console.log(data.mess);
+         }, "json");
+      });
 
 
 </script>

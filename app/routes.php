@@ -17,7 +17,6 @@ Route::get('/', array("as" => "home", function()
 }));
 
 Route::post('cart_add', function() {
-   
    $id = Input::get('id');
    return json_encode(array('mess' => "$id was added"));
 });
