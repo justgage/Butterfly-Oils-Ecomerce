@@ -34,3 +34,14 @@
 @endif
 @stop
 
+
+@section('script')
+<script type="text/javascript">
+laravel_URL = "{{ URL::to('cart_add') }}"; // NOTE: blade templating
+ $.post(laravel_URL, {id : 1}, function (data) {
+      console.log(data.mess);
+}, "json");
+
+
+</script>
+@stop
