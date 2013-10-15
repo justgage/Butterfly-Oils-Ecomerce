@@ -84,7 +84,7 @@ class OilController extends \BaseController {
                }
 
             }
-            return Redirect::route('oils.index')->with('message', 'Oil ' . $oil->name . ' was created sucsessfuly');;
+            return Redirect::route('backend.index')->with('message', 'Oil ' . $oil->name . ' was created sucsessfuly');;
          }
 
       } else { return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login"); }
