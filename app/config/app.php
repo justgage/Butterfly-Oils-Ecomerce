@@ -113,7 +113,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-      'Madlymint\Shpcart\ShpcartServiceProvider'
+
+      'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 
 	),
 
@@ -179,8 +180,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-      'Shpcart'         => 'Madlymint\Shpcart\Facades\Shpcart'
 
+      'Cart'            => 'Gloudemans\Shoppingcart\Facades\Cart',
 	),
 
 );
