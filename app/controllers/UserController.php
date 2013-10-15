@@ -2,7 +2,8 @@
 class UserController extends \BaseController {
 
   public function index() {
-    return View::make("backend.index")->with(["title"=> "Backend"]);
+    $oils = Oil::all();
+    return View::make("backend.index")->with(["title" => "Backend", "oils" => $oils]);
   }
 
   public function login() {

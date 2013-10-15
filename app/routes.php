@@ -9,14 +9,14 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the Closure to execute when that URI is requested.
 |
-*/
+ */
 
 /******************************
  * Homepage
  *****************************/
 Route::get('/', array("as" => "home", function() 
 {
-	return View::make('front.index')->with(['title' => 'Welcome to Buttefly Oils!']);
+   return View::make('front.index')->with(['title' => 'Welcome to Buttefly Oils!']);
 }));
 
 
@@ -31,8 +31,8 @@ Route::resource('oils', 'OilController');
 Route::get('login', array("as" => 'login', 'uses' => 'UserController@login'));
 Route::post('backend/check', array("as" => 'backend.check', 'uses' => 'UserController@check'));
 Route::group(array('before' => 'auth'), function() {
-    Route::get('backend', array("as" => 'backend.index', 'uses' => 'UserController@index'));
-  });
+   Route::get('backend', array("as" => 'backend.index', 'uses' => 'UserController@index'));
+});
 Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserController@logout'));
 
 /******************************
@@ -41,8 +41,14 @@ Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserCont
 Route::get('cart/add', function() {
    $id = Input::get('id');
 
+   if (isset($id) === false) 
+      return json_encode(['error' => true, 'mess' => 'no Id sent']);
+
    $oil = Oil::find($id);
-   
+
+   if (isset($oil) === false) 
+      return json_encode(['error' => true, 'mess' => 'Product no longer exists']);
+
    Cart::add($oil->id, $oil->name, 1, $oil->price);
 
    $cart = Cart::content()->toArray();
@@ -52,5 +58,5 @@ Route::get('cart/add', function() {
    $qty = $cart[$row_id[0]]['qty'];
    $total = $cart[$row_id[0]]['price'] * $qty;
 
-   return json_encode(array('mess' => "$oil->name was added now ". $qty . " items = $$total", 'cart' => $cart));
+   return json_encode(array('error' => false, 'mess' => "$oil->name was added now ". $qty . " items = $$total", 'cart' => $cart));
 });
