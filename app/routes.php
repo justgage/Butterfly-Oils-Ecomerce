@@ -38,25 +38,5 @@ Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserCont
 /******************************
  * Cart
  *****************************/
-Route::get('cart/add', function() {
-   $id = Input::get('id');
-
-   if (isset($id) === false) 
-      return json_encode(['error' => true, 'mess' => 'no Id sent']);
-
-   $oil = Oil::find($id);
-
-   if (isset($oil) === false) 
-      return json_encode(['error' => true, 'mess' => 'Product no longer exists']);
-
-   Cart::add($oil->id, $oil->name, 1, $oil->price);
-
-   $cart = Cart::content()->toArray();
-
-   $row_id = Cart::search(array('id' => $id));
-
-   $qty = $cart[$row_id[0]]['qty'];
-   $total = $cart[$row_id[0]]['price'] * $qty;
-
-   return json_encode(array('error' => false, 'mess' => "$oil->name was added now ". $qty . " items = $$total", 'cart' => $cart));
-});
+Route::get('cart/add', [ 'uses' => 'CartController@AJAXadd', 'as' => 'cart.add']);
+Route::get('cart/show', [ 'uses' => 'CartController@show', 'as' => 'cart.show']);
