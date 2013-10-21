@@ -37,6 +37,9 @@
    
         </ul>
    <ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="{{ URL::to('cart/show'); }}">Shopping Cart (<span id="cart_total_count">{{ Cart::count() }}</span>)</a>  
+</li>
       <li>
          @if( Auth::check() )
          <a href="{{ route('backend.index') }}">Logged in as {{ Auth::user()->username }}</a>

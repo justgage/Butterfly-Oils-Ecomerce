@@ -16,7 +16,7 @@
             </a>
          </div>
          <div class="oil_price">
-            <h3 class="pull-right">${{ round($oil->price, 2) }} <button data-id="{{ $oil->id }}" class="cart_add btn btn-default" >+ <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
+            <h3 class="pull-right">${{ round($oil->price, 2) }} <button data-id="{{ $oil->id }}" class="cart_add btn btn-default" ><span class="cart_num" >+</span> <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
          </div>
       </div>
    </div>
@@ -35,15 +35,33 @@
 
 
 @section('script')
+
+
+
 <script type="text/javascript">
-laravel_URL = "{{ URL::to('cart/add') }}"; // NOTE: blade templating
-$(".cart_add").click(function() {
-      var id = $(this).attr("data-id");
-      $.get(laravel_URL, {id : id}, function (data) {
-         console.log(data.mess);
-         }, "json");
-      });
+var laravel_URL = "{{ URL::to('cart/add') }}"; // NOTE: blade templating
+var cart = {{ Cart::content()->toJSON() }};
+$( document ).ready(function () {
+    for( item in cart ) {
+        var id =  cart[item].id;
+        $("#oil_id_" + id ).find('.cart_num').
+            html(cart[item].qty);
+        $("#oil_id_" + id ).find('.cart_add').removeClass("btn-default").addClass("btn-primary");
 
+    }
 
+    $(".cart_add").click(function() {
+          var id = $(this).attr("data-id");
+          var me = this;
+          $.post(laravel_URL, {id : id}, function (data) {
+             console.log(data.mess);
+             console.log(data);
+             $(me).find(".cart_num").html(data.qty);
+             $(me).removeClass("btn-default").addClass("btn-primary");
+             $("#cart_total_count").html(data.count);
+
+             }, "json");
+          });
+});
 </script>
 @stop

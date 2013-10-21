@@ -12,39 +12,49 @@ class CartController extends BaseController {
    |
     */
 
-   public function show()
-   {
-      $v = View::make('cart.show');
-      $v->cart = Cart::content()->toArray();
-      $v->title = "Viewing cart";
-      $v->total = Cart::total();
+    public function getShow()
+    {
+        $v = View::make('cart.show');
+        $v->cart = Cart::content()->toArray();
+        $v->title = "Viewing cart";
+        $v->total = Cart::total();
 
-      return $v;
-   }
+        return $v;
+    }
 
-   public function AJAXadd()
-   {
-      $id = Input::get('id');
+    public function postAdd()
+    {
+        $id = Input::get('id');
 
-      if (isset($id) === false) 
-         return json_encode(['error' => true, 'mess' => 'no Id sent']);
+        if (isset($id) === false) 
+            return json_encode(['error' => true, 'mess' => 'no Id sent']);
 
-      $oil = Oil::find($id);
+        $oil = Oil::find($id);
 
-      if (isset($oil) === false) 
-         return json_encode(['error' => true, 'mess' => 'Product no longer exists']);
+        if (isset($oil) === false) 
+            return json_encode(['error' => true, 'mess' => 'Product no longer exists']);
 
-      Cart::add($oil->id, $oil->name, 1, $oil->price);
+        Cart::add($oil->id, $oil->name, 1, $oil->price);
 
-      $cart = Cart::content()->toArray();
+        $cart = Cart::content()->toArray();
 
-      $row_id = Cart::search(array('id' => $id));
+        $row_id = Cart::search(array('id' => $id));
 
-      $qty = $cart[$row_id[0]]['qty'];
-      $total = $cart[$row_id[0]]['price'] * $qty;
+        $qty = $cart[$row_id[0]]['qty'];
+        $total = $cart[$row_id[0]]['price'] * $qty;
+        $count = Cart::count();
 
-      return json_encode(array('error' => false, 'mess' => "$oil->name was added now ". $qty . " items = $$total", 'cart' => $cart));
+        return json_encode(array('error' => false, 'total' => $total, 'count' => $count, 'qty' => $qty, 'mess' => "$oil->name was added now ". $qty . " items = $$total", 'cart' => $cart));
 
-   }
+    }
+
+    public function postClear()
+    {
+        if( Cart::destroy() ) {
+            return json_encode(array('error' => false, 'mess' => 'Cart was cleared'));
+        } else {
+            return json_encode(array('error' => true, 'mess' => 'Cart clear failed! please try again'));
+        }
+    }
 
 }

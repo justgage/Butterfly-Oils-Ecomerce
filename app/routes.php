@@ -30,13 +30,15 @@ Route::resource('oils', 'OilController');
  *****************************/
 Route::get('login', array("as" => 'login', 'uses' => 'UserController@login'));
 Route::post('backend/check', array("as" => 'backend.check', 'uses' => 'UserController@check'));
+
+//for AUTH protected routes. 
 Route::group(array('before' => 'auth'), function() {
-   Route::get('backend', array("as" => 'backend.index', 'uses' => 'UserController@index'));
+    Route::get('backend', array("as" => 'backend.index', 'uses' => 'UserController@index'));
 });
+
 Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserController@logout'));
 
 /******************************
  * Cart
  *****************************/
-Route::get('cart/add', [ 'uses' => 'CartController@AJAXadd', 'as' => 'cart.add']);
-Route::get('cart/show', [ 'uses' => 'CartController@show', 'as' => 'cart.show']);
+Route::controller('cart', 'CartController');
