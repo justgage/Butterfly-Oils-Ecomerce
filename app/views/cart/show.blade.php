@@ -18,7 +18,7 @@
    <div class="col-md-12">
        <div class="row">
            <div class="col-sm-12">
-               <h3>TOTAL: <em>${{ number_format($total, 2) }}<em> </h3>
+               <h3>TOTAL: <em>${{ number_format($total, 2) }}</em> </h3>
            </div>
            <div class="col-sm-6">
                <a class="btn btn-warning" id="clear" href="#">Clear Cart</a>
