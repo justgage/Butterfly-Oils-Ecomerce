@@ -57,4 +57,20 @@ class CartController extends BaseController {
         }
     }
 
+    public function postDestroy($id)
+    {
+        if( Cart::destroy() ) {
+            return json_encode(array('error' => false, 'mess' => 'Cart was cleared'));
+        } else {
+            return json_encode(array('error' => true, 'mess' => 'Cart clear failed! please try again'));
+        }
+    }
+
+    public function missingMethod ($errors) {
+
+        return Redirect::to('cart/show')
+            ->with('message', "404 the page " . URL::to('/') . "/cart/$errors[0], was NOT FOUND!");
+
+    }
+
 }

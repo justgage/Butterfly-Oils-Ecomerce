@@ -12,5 +12,5 @@ if (!isset($message)) {
 ?>
 
 @if($message !== false)
-<div id="message"> {{ $message }} </div>
+<div id="message" class="alert alert-warning"> {{ $message }} </div>
 @endif
