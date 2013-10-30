@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class OilsDB extends Migration {
+class CatMake extends Migration {
+
 
     /**
      * Run the migrations.
@@ -11,17 +12,12 @@ class OilsDB extends Migration {
      */
     public function up()
     {
-        Schema::create('oils', function($table) {
+        Schema::create('cats', function($table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->text('info');
-            $table->float('price');
-            $table->float('compare_price');
             $table->boolean('visible');
-            $table->integer('cat_id');
 
-            $table->timestamps();
-            $table->softDeletes();
         });
 
     }
@@ -33,7 +29,8 @@ class OilsDB extends Migration {
      */
     public function down()
     {
-        Schema::drop('oils');
+        Schema::drop('cats');
     }
+
 
 }

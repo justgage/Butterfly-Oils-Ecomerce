@@ -22,7 +22,8 @@
    </thead>
 <tbody class = "backend-table">
 @foreach($oils as $oil)
-    @if ($oil->visible == true)
+    {{-- NOT error, has to be this way!  --}}
+    @if ($oil->visible == true) 
        <tr class="">
     @else
        <tr class="not-visible">
