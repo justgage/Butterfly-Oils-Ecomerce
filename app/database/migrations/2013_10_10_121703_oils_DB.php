@@ -17,7 +17,7 @@ class OilsDB extends Migration {
             $table->text('info');
             $table->float('price');
             $table->float('compare_price');
-            $table->booleen('visible');
+            $table->boolean('visible');
 
             $table->timestamps();
             $table->softDeletes();

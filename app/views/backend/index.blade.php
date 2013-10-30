@@ -12,6 +12,7 @@
 <table width="100%" cellspacing="0">
    <thead>
       <tr>
+         <th>Visible</th>
          <th>Name</th>
          <th>Description</th>
          <th>Price</th>
@@ -19,19 +20,26 @@
          <th>Delete</th>
       </tr>
    </thead>
+<tbody class = "backend-table">
 @foreach($oils as $oil)
-<tbody>
-   <tr>
-      <td><a href="{{ URL::route('oils.show', $oil->id) }}"/>  {{ $oil->name  }}</a></td>
-      <td>{{ $oil->info  }}</td>
-      <td>{{ $oil->price  }}</td>
-      <td>{{ $oil->compare_price  }}</td>
-      <td><a href="{{URL::route('oils.destroy', $oil->id)}}">delete</a></td>
-   </tr>
-</tbody>
-
-
+    @if ($oil->visible == true)
+       <tr class="">
+    @else
+       <tr class="not-visible">
+    @endif
+          <td>{{  ($oil->visible == true ? 'true' : 'false') }}</td>
+          <td><a href="{{ URL::route('oils.show', $oil->id) }}"/>  {{ $oil->name  }}</a></td>
+          <td>{{ $oil->info  }}</td>
+          <td>{{ $oil->price  }}</td>
+          <td>{{ $oil->compare_price  }}</td>
+          <td>
+            {{ Form::open(array('route' => array('oils.destroy', $oil->id), 'method' => 'delete')) }}
+            <button type="submit" href="{{ URL::route('oils.destroy', $oil->id) }}" class="btn btn-danger btn-mini">Delete</button>
+            {{ Form::close() }}
+        </td>
+       </tr>
 @endforeach
+</tbody>
 </table>
 
 

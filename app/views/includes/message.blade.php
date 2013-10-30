@@ -12,5 +12,8 @@ if (!isset($message)) {
 ?>
 
 @if($message !== false)
-<div id="message" class="alert alert-warning"> {{ $message }} </div>
+<div class="alert alert-warning alert-dismisable">
+ {{ $message }} 
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+</div>
 @endif

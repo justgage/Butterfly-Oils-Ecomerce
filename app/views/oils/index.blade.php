@@ -12,7 +12,11 @@
          <h3> <a href="{{ URL::route('oils.show', $oil->id) }}"> {{ $oil->name }} </a> </h3>
          <div class="oil_img"> 
             <a href="{{ URL::route('oils.show', $oil->id) }}"> 
+@if($oil->photos->isEmpty() === false)
                <img class="img-responsive img-thumbnail" src="{{ $oil->photos->first()->path }}" alt="photo"/>
+@else
+               <img class="img-responsive img-thumbnail" src="" alt="There is no photo"/>
+@endif
             </a>
          </div>
          <div class="oil_price">

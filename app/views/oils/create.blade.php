@@ -45,7 +45,7 @@
 </div>
 {{-- VISIBLE --}}
    <p>
-      Visible to users? {{ Form::checkbox('visible', 'visible', Input::old('visible') ) }} 
+      Visible to users? {{ Form::checkbox('visible', 'visible', ['checked' => Input::old('visible')] ) }} 
    </p>
 {{-- SUBMIT --}}
    {{ Form::submit('Add new oil', array('class' => 'btn-lg btn-primary')) }}

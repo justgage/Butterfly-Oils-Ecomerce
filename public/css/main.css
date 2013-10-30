@@ -18,3 +18,21 @@
    margin:75px 0 10px 0;
 }
 
+.backend-table tr td {
+    padding:10px;
+}
+
+.backend-table tr:nth-child(2n) {
+    background:#F7F7F7;
+} 
+
+.not-visible a {
+    color:grey;
+}
+
+.not-visible {
+    color:grey;
+    font-style:italic;
+}
+
+

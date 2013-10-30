@@ -64,6 +64,7 @@ class OilController extends \BaseController {
             $oil->price = Input::get('price');
             $oil->compare_price = Input::get('compare_price');
             $oil->name = Input::get('name');
+            $oil->visible = Input::get('visible') == 'visible';
 
             $oil->save();
 
@@ -140,13 +141,17 @@ class OilController extends \BaseController {
     */
    public function destroy($id)
    {
-      $affected = Oil::find($id)->delete();
-      $names = "";
-      foreach ($affected as $oil) {
-         $names = $names . ", " . $oil->name;
+      $target = Oil::find($id);
+
+      if ($target !== null) {
+          $target->delete();
+          return Redirect::back()->with('message', "The oil " . $target->name . " was removed" );
+      } else {
+          return Redirect::back()->with('message', "That oil was already removed!" );
       }
 
-      return Redirect::back()->with('message', "The oil " . $names );
+
+
    }
 
 }
