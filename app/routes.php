@@ -42,3 +42,8 @@ Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserCont
  * Cart
  *****************************/
 Route::controller('cart', 'CartController');
+
+/******************************
+ * PayPal
+ *****************************/
+Route::resource('payment', 'PaypalPaymentController');

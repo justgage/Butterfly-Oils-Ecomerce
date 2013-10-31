@@ -114,7 +114,8 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
-      'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+          'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
 
 	),
 
@@ -182,6 +183,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
       'Cart'            => 'Gloudemans\Shoppingcart\Facades\Cart',
+       'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
 	),
 
 );
