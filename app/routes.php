@@ -46,4 +46,5 @@ Route::controller('cart', 'CartController');
 /******************************
  * PayPal
  *****************************/
-Route::resource('payment', 'PaypalPaymentController');
+Route::controller('payment', 'PaypalPaymentController');
+

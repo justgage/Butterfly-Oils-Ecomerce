@@ -13,8 +13,8 @@ class PaypalPaymentController extends BaseController {
      *string $_ClientId
      *string $_ClientSecret
      */
-    private $_ClientId='AVJx0RArQzkCCsWC0evZi1SsoO4gxjDkkULQBdmPNBZT4fc14AROUq-etMEY';
-    private $_ClientSecret='EH5F0BAxqonVnP8M4a0c6ezUHq-UT-CWfGciPNQOdUlTpWPkNyuS6eDN-tpA';
+    private $_ClientId='ATgOqhBlVtBHklASxJjIh0W1Vk-uOoUPStsqiLKmzqYqUQ6NA4UxrZihV6KH';
+    private $_ClientSecret='EPdcARARnKvt3eooxAfwpx1bZ_7WoiWnAV_SMbCAeIn7qRy9LH6fDfl8gR4g';
 
     /*
      *   These construct set the SDK configuration dynamiclly, 
@@ -50,11 +50,119 @@ class PaypalPaymentController extends BaseController {
 
     }
 
+    public function getCreatePaypal() {
+        
+        // ### Payer
+        // A resource representing a Payer that funds a payment
+        // For paypal account payments, set payment method
+        // to 'paypal'.
+        $payer = Paypalpayment::Payer();
+        $payer->setPayment_method("paypal");
+
+        // ### Itemized information
+        // (Optional) Lets you specify item wise
+        // information
+        $item1 = Paypalpayment::Item();
+        $item1->setName('Lavender 6 oz')
+            ->setCurrency('USD')
+            ->setQuantity(1)
+            ->setPrice('7.50');
+
+        $itemList = Paypalpayment::ItemLIst();
+        $itemList->setItems(array($item1));
+
+        // ### Additional payment details
+        // Use this optional field to set additional
+        // payment information such as tax, shipping
+        // charges etc.
+        /*
+        $details = Paypalpayment::Details();
+        $details->setShipping('1.20')
+            ->setTax('1.30')
+            ->setSubtotal('17.50');
+         */
+
+        // ### Amount
+        // Lets you specify a payment amount.
+        // You can also specify additional details
+        // such as shipping, tax.
+        $amount = Paypalpayment::Amount();
+        $amount->setCurrency("USD")
+            ->setTotal("20.00");
+//            ->setDetails($details);
+
+
+        $transaction = Paypalpayment::Transaction();
+        $transaction->setAmount($amount)
+            ->setItemList($itemList)
+            ->setDescription("Buying from ButterflyOils.com");
+        
+        // ### Redirect urls
+        // Set the urls that the buyer must be redirected to after 
+        // payment approval/ cancellation.
+        $redirectUrls = Paypalpayment::RedirectUrls();
+        $baseUrl = Paypalpayment::getBaseUrl();
+        $redirectUrls->setReturnUrl($baseUrl +  "/ExecutePayment.php?success=true&message='PayPal+Worked!'")
+            ->setCancelUrl($baseUrl + "/ExecutePayment.php?success=false&message='PayPal+Cancel'");
+
+        // ### Payment
+        // A Payment Resource; create one using
+        // the above types and intent set to 'sale'
+        $payment = Paypalpayment:: Payment();
+        $payment->setIntent("sale");
+        $payment->setPayer($payer);
+        $payment->setRedirectUrls($redirectUrls);
+        $payment->setTransactions(array($transaction));
+
+        // ### Create Payment
+        // Create a payment by calling the 'create' method
+        // passing it a valid apiContext.
+        // (See bootstrap.php for more on `ApiContext`) <- probably not true
+        // The return object contains the state and the
+        // url to which the buyer must be redirected to
+        // for payment approval
+        try {
+            $payment->create($this->_apiContext);
+        } catch (\PPConnectionException $ex) {
+            return "Exception: " . $ex->getMessage() . PHP_EOL;
+            var_dump($ex->getData());
+            exit(1);
+        }
+
+        // ### Get redirect url
+        // The API response provides the url that you must redirect
+        // the buyer to. Retrieve the url from the $payment->getLinks()
+        // method
+        foreach($payment->getLinks() as $link) {
+            if($link->getRel() == 'approval_url') {
+                $redirectUrl = $link->getHref();
+                break;
+            }
+        }
+        // ### Redirect buyer to PayPal website
+        // Save the payment id so that you can 'complete' the payment
+        // once the buyer approves the payment and is redirected
+        // back to your website.
+        //
+        // It is not a great idea to store the payment id
+        // in the session. In a real world app, you may want to 
+        // store the payment id in a database.
+        $_SESSION['paymentId'] = $payment->getId();
+        if(isset($redirectUrl)) {
+            header("Location: $redirectUrl");
+            exit;
+        }
+    }
+
     /*
      * Create payment using credit card
-     * url:payment/create
+     * url: payment/create-tempate
+     * 
+     * This will add a payment without the user ever 
+     * seeing paypal, the credit card will be processed
+     * by paypal and will return the answer.
     */
-    public function create(){
+    public function getCreateTest() {
 
         // ### Address
         // Base Address object used as shipping or billing
@@ -150,7 +258,7 @@ class PaypalPaymentController extends BaseController {
         Use this call to get a list of payments. 
         url:payment/
     */
-    public function index(){
+    public function getIndex(){
 
         echo "<pre>";
 
