@@ -64,7 +64,7 @@ class PaypalPaymentController extends BaseController {
             // to execute a PayPal account payment. 
             // The payer_id is added to the request query parameters
             // when the user is redirected from paypal back to your site
-            $execution = new PaymentExecution();
+            $execution = Paypalpayment::PaymentExecution();
             $execution->setPayer_id($_GET['PayerID']);
 
             //Execute the payment
@@ -95,27 +95,45 @@ class PaypalPaymentController extends BaseController {
         $payer = Paypalpayment::Payer();
         $payer->setPayment_method("paypal");
 
+        // ### Items
+        // These repersent the items in the cart
+        $itemsArray = array();
+        $cartItems = Cart::content()->toArray();
 
+        foreach ($cartItems as $cartItem){
+            $item = Paypalpayment::Item();
+            $item->setCurrency( 'USD' );
+            $item->setName( $cartItem['name'] );
+            $item->setPrice( number_format((float) $cartItem['price'], 2, '.', '') );
+            $item->setQuantity( (string) $cartItem['qty'] );
+
+            $itemsArray[] = $item;
+        }
+
+        $itemList = Paypalpayment::ItemList();
+        $itemList->setItems( $itemsArray );
+        
         // ### Amount
         // Lets you specify a payment amount.
         // You can also specify additional details
         // such as shipping, tax.
         $amount = Paypalpayment::Amount();
         $amount->setCurrency("USD");
-        $amount->setTotal("1.00");
+        $amount->setTotal( number_format((float) Cart::total(), 2, '.', '') );
 
 
         $transaction = Paypalpayment::Transaction();
         $transaction->setAmount($amount)
-            ->setDescription("Buying from ButterflyOils.com");
+            ->setDescription("Buying from ButterflyOils.com")
+            ->setItemList($itemList);
         
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
         // payment approval/ cancellation.
         $baseUrl      = Paypalpayment::getBaseUrl();
         $redirectUrls = Paypalpayment::RedirectUrls();
-        $redirectUrls->setReturnUrl(URL::to("payment/execute-payment?success=true"));
-        $redirectUrls->setCancelUrl(URL::to("payment/execute-payment?success=false"));
+        $redirectUrls->setReturnUrl(URL::to("paypal/execute?success=true"));
+        $redirectUrls->setCancelUrl(URL::to("paypal/execute?success=false"));
         // ### Payment
         // A Payment Resource; create one using
         // the above types and intent set to 'sale'
@@ -222,7 +240,7 @@ class PaypalPaymentController extends BaseController {
         // Let's you specify a payment amount.
         $amount = Paypalpayment:: Amount();
         $amount->setCurrency("USD");
-        $amount->setTotal("1.00");
+        $amount->setTotal( (string) Cart::total() );
 
         // ### Transaction
         // A transaction defines the contract of a

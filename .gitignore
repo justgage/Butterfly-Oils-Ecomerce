@@ -11,3 +11,5 @@ README.md
 *.jpg
 
 *.png
+
+app/PayPal.log
