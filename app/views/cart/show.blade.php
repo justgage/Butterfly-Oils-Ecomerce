@@ -20,11 +20,13 @@
            <div class="col-sm-12">
                <h3>TOTAL: <em>${{ number_format($total, 2) }}</em> </h3>
            </div>
-           <div class="col-sm-6">
-               <a class="btn btn-warning" id="clear" href="#">Clear Cart</a>
+           <div class="col-sm-12">
+               {{ HTML::link( URL::to('/paypal'), "Checkout with PayPal", array("class" => "btn btn-primary pull-right"),true) }}
+               <a class="btn btn-warning pull-right" id="clear" href="#">Clear Cart</a>
            </div>
        </div>
    </div>
+
 @endif
 @stop
 
