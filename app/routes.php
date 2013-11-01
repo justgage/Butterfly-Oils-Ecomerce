@@ -46,5 +46,12 @@ Route::controller('cart', 'CartController');
 /******************************
  * PayPal
  *****************************/
-Route::controller('payment', 'PaypalPaymentController');
+//Route::controller('payment', 'PaypalPaymentController');
+
+/* USE HTTPS when we are on a real server!!! */
+Route::get('paypal', array('as' => 'paypal.create', 'uses' => 'PaypalPaymentController@createPaypal'));
+Route::get('paypal/execute', array('as' => 'paypal.execute', 'uses' => 'PaypalPaymentController@execute'));
+
+//Route::get('paypal', array('https', 'as' => 'paypal.create', 'uses' => 'PaypalPaymentController@createPaypal'));
+// Route::get('paypal/execute', array('https', 'as' => 'paypal.execute', 'uses' => 'PaypalPaymentController@execute'));
 

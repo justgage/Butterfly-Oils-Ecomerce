@@ -50,7 +50,43 @@ class PaypalPaymentController extends BaseController {
 
     }
 
-    public function getCreatePaypal() {
+    public function execute() {
+
+        if(isset($_GET['success']) && $_GET['success'] == 'true') {
+
+            // Get the payment Object by passing paymentId
+            // payment id was previously stored in session in
+            // CreatePaymentUsingPayPal.php
+            $paymentId = $_SESSION['paymentId'];
+            $payment = Payment::get($paymentId, $apiContext);
+
+            // PaymentExecution object includes information necessary 
+            // to execute a PayPal account payment. 
+            // The payer_id is added to the request query parameters
+            // when the user is redirected from paypal back to your site
+            $execution = new PaymentExecution();
+            $execution->setPayer_id($_GET['PayerID']);
+
+            //Execute the payment
+            // (See bootstrap.php for more on `ApiContext`)
+            $payment->execute($execution, $apiContext);
+
+            var_dump($payment->toArray());
+
+        } else {
+            echo "User cancelled payment.";
+        }
+    }
+
+    /*
+     * This is a method that usees paypal accounts to pay the payment 
+     * 
+     * status: working 
+     *
+     * TODO: test items ability
+     * TODO: add cart's items to the paypal purchace
+     */
+    public function createPaypal() {
         
         // ### Payer
         // A resource representing a Payer that funds a payment
@@ -59,52 +95,27 @@ class PaypalPaymentController extends BaseController {
         $payer = Paypalpayment::Payer();
         $payer->setPayment_method("paypal");
 
-        // ### Itemized information
-        // (Optional) Lets you specify item wise
-        // information
-        $item1 = Paypalpayment::Item();
-        $item1->setName('Lavender 6 oz')
-            ->setCurrency('USD')
-            ->setQuantity(1)
-            ->setPrice('7.50');
-
-        $itemList = Paypalpayment::ItemLIst();
-        $itemList->setItems(array($item1));
-
-        // ### Additional payment details
-        // Use this optional field to set additional
-        // payment information such as tax, shipping
-        // charges etc.
-        /*
-        $details = Paypalpayment::Details();
-        $details->setShipping('1.20')
-            ->setTax('1.30')
-            ->setSubtotal('17.50');
-         */
 
         // ### Amount
         // Lets you specify a payment amount.
         // You can also specify additional details
         // such as shipping, tax.
         $amount = Paypalpayment::Amount();
-        $amount->setCurrency("USD")
-            ->setTotal("20.00");
-//            ->setDetails($details);
+        $amount->setCurrency("USD");
+        $amount->setTotal("1.00");
 
 
         $transaction = Paypalpayment::Transaction();
         $transaction->setAmount($amount)
-            ->setItemList($itemList)
             ->setDescription("Buying from ButterflyOils.com");
         
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
         // payment approval/ cancellation.
+        $baseUrl      = Paypalpayment::getBaseUrl();
         $redirectUrls = Paypalpayment::RedirectUrls();
-        $baseUrl = Paypalpayment::getBaseUrl();
-        $redirectUrls->setReturnUrl($baseUrl +  "/ExecutePayment.php?success=true&message='PayPal+Worked!'")
-            ->setCancelUrl($baseUrl + "/ExecutePayment.php?success=false&message='PayPal+Cancel'");
-
+        $redirectUrls->setReturnUrl(URL::to("payment/execute-payment?success=true"));
+        $redirectUrls->setCancelUrl(URL::to("payment/execute-payment?success=false"));
         // ### Payment
         // A Payment Resource; create one using
         // the above types and intent set to 'sale'
