@@ -23,7 +23,10 @@
                 </a>
              </div>
              <div class="oil_price">
-                <h3 class="pull-right">${{ round($oil->price, 2) }} <button data-id="{{ $oil->id }}" class="cart_add btn btn-default" ><span class="cart_num" >+</span> <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
+                <h3 class="pull-right">${{ round($oil->price, 2) }} 
+                <button data-id="{{ $oil->id }}" class="cart_add btn btn-primary" >
+                <span class="cart_num" >Add to Cart</span> 
+                <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
              </div>
           </div>
        </div>
@@ -53,8 +56,8 @@ $( document ).ready(function () {
     for( item in cart ) {
         var id =  cart[item].id;
         $("#oil_id_" + id ).find('.cart_num').
-            html(cart[item].qty);
-        $("#oil_id_" + id ).find('.cart_add').removeClass("btn-default").addClass("btn-primary");
+            html(cart[item].qty + " x in cart");
+        $("#oil_id_" + id ).find('.cart_add').removeClass("btn-primary").addClass("btn-default");
 
     }
 
@@ -64,8 +67,8 @@ $( document ).ready(function () {
           $.post(laravel_URL, {id : id}, function (data) {
              console.log(data.mess);
              console.log(data);
-             $(me).find(".cart_num").html(data.qty);
-             $(me).removeClass("btn-default").addClass("btn-primary");
+             $(me).find(".cart_num").html(data.qty + " x in cart");
+             $(me).removeClass("btn-primary").addClass("btn-default");
              $("#cart_total_count").html(data.count);
 
              }, "json");
