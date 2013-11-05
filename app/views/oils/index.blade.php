@@ -20,6 +20,7 @@
     @else
                    <img class="img-responsive img-thumbnail" src="" alt="There is no photo"/>
     @endif
+<p> Click here for more Information </p>
                 </a>
              </div>
              <div class="oil_price">
