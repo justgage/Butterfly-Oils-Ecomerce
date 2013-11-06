@@ -36,29 +36,36 @@ class OilController extends \BaseController {
     */
    public function store()
    {
-      if (Auth::check()) {
+       if (Auth::check() === false) { // if NOT Authenticated
+
+          return Redirect::route('oils.index')
+              ->with('message' , "Sorry you don't have rights to create an oil, please login"); 
+
+      } else { // We are loged in as admin
+
          $valid = Oil::validate(Input::all());
-         //return var_dump(Input::all());
-         if ($valid->fails()) 
-         { return Redirect::route('oils.create')->withErrors($valid)->withInput(); } 
-         else 
-         {
-            $count = $count = Oil::where('name', '=', Input::get('name'))->count();
+
+         if ($valid->fails()) {
+
+             return Redirect::route('oils.create')
+                 ->withErrors($valid)
+                 ->withInput(); 
+
+         } else { // data IS valid
+
+             // check if there's any with the same name
+             $count = $count = Oil::where('name', '=',
+                 Input::get('name'))->count();
+
             if ($count != 0) {
                return Redirect::route('oils.create')
                   ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
                   ->withInput();; 
             }
+            
 
-            // if (Input::hasFile('image') === false) {
-            //    return Redirect::route('oils.create')
-            //       ->with("message", "File failed to upload")
-            //       ->withInput();; 
-            // } 
-
+            // create oil in database
             $oil = new Oil;
-
-            //create oil
             $oil->name = Input::get('name');
             $oil->info = Input::get('info');
             $oil->price = Input::get('price');
@@ -68,6 +75,7 @@ class OilController extends \BaseController {
 
             $oil->save();
 
+            // save the image(s) assosiated with it. 
             $files = Input::file('image');
 
             foreach($files as $file) {
@@ -85,11 +93,15 @@ class OilController extends \BaseController {
                }
 
             }
-            return Redirect::route('backend.index')->with('message', 'Oil ' . $oil->name . ' was created sucsessfuly');;
-         }
 
-      } else { return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login"); }
+            // Return message saying, it worked!
+            return Redirect::route('backend.index')
+                ->with('message', 'Oil ' . $oil->name . ' was created sucsessfuly');;
+
+         } // if valid
+      } // if auth
    }
+
 
    /**
     * Display the specified resource.

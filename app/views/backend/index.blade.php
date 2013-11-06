@@ -28,7 +28,7 @@
     @else
        <tr class="not-visible">
     @endif
-          <td>{{  ($oil->visible == true ? 'true' : 'false') }}</td>
+          <td>{{ ($oil->visible == true ? 'true' : 'false') }} </td>
           <td><a href="{{ URL::route('oils.show', $oil->id) }}"/>  {{ $oil->name  }}</a></td>
           <td>{{ $oil->info  }}</td>
           <td>{{ $oil->price  }}</td>
