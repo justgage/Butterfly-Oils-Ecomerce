@@ -27,7 +27,7 @@
          @endif
       
          <h2>Description</h2>
-         <div> {{ $oil->info }}</div>
+         <div> {{ Markdown::transform($oil->info) }}</div>
       </div>
    </div>
 @stop
