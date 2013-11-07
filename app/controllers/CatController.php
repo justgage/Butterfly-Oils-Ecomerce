@@ -23,9 +23,11 @@ class CatController extends \BaseController {
 	public function create()
 	{
         if (Auth::check()) {
-            return View::make('cats.create')->with('title', 'Creating a new category');
+            return View::make('cats.create')
+                ->with('title', 'Creating a new category');
         } else {
-            return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login");
+            return Redirect::route('oils.index')
+                ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
 	}
 
@@ -55,7 +57,16 @@ class CatController extends \BaseController {
 	 */
 	public function show($urlName)
 	{
-        return "list of oils in the category";
+        $cat = Cat::where('urlName', '=', $urlName)->first();
+
+        $oils = $cat->oils;
+
+        $v = View::make('cats.show');
+        $v->title = $cat->name;
+        $v->oils = $oils;
+        $v->pretty_url = $this->pretty_url();
+
+        return $v;
 	}
 
 	/**

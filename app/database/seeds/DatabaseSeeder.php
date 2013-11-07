@@ -10,8 +10,8 @@ class DatabaseSeeder extends Seeder {
 	public function run()
 	{
 		Eloquent::unguard();
-		$this->call('OilTableSeeder');
 		$this->call('CatTableSeeder');
+		$this->call('OilTableSeeder');
 	}
 
 }
@@ -45,7 +45,7 @@ class OilTableSeeder extends Seeder {
 	public function run() {
         DB::table('oils')->delete();
 
-        $cat = Cat::find(1); // 'other' category
+        $cat = Cat::where('name', '=', 'Other')->first(); // 'other' category
 
         for($i=0; $i < 10; $i++ ) {
             $oil = new Oil;

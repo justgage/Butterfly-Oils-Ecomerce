@@ -1,8 +1,7 @@
 <?php
 
+
 class OilController extends \BaseController {
-
-
 
     /**
      * Display a listing of the resource.
@@ -11,20 +10,12 @@ class OilController extends \BaseController {
      */
     public function index()
     {
-        /**
-         * HELPER
-         * easy way to get the SEO friendly URL
-         */
-        $pretty_url = function ($id) {
-            $oil = Oil::find($id);
-            return URL::route('oils.show', ["cat", $oil->urlName]);
-        };
 
         $oils = Oil::orderBy('name')->get();
 
         $v = View::make('oils.index')->with('title', "Shop oils");
         $v->oils = $oils;
-        $v->pretty_url = $pretty_url;
+        $v->pretty_url = $this->pretty_url();
         
         return $v;
     }

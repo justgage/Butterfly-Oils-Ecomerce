@@ -1,9 +1,10 @@
 @extends('layout.main')
+{{-- Display a list of oils in a category --}}
 
 @section('content')
 <h2>{{ $title }}</h2>
 
-@include('oils.include.oil_grid', ["oils" => $oils]);
+@include('oils.include.oil_grid', ["oils" => $oils])
 @stop
 
 

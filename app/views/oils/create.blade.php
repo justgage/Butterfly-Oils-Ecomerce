@@ -17,22 +17,44 @@
       <p> {{ Form::text('name', Input::old('name') , ['placeholder' => 'Spice Traders', 'class' => 'form-control']) }} </p>
 
    {{-- URL NAME --}}
-      {{ Form::label('urlName', 'Name In url ') }}
-      <p>This will appear in the URL, will be searched be search engines. Can't contain any spaces.</p>
+      {{ Form::label('urlName', 'Name In url (no spaces)') }}
       <p> {{ Form::text('urlName', Input::old('urlName') , ['placeholder' => 'spice_traders', 'class' => 'form-control']) }} </p>
 
 
 
    {{-- PRICE --}}
       {{ Form::label('price', 'price') }}
-      <p> ${{ Form::text('price', Input::old('price') , 
-               ['placeholder' => '10.00', 'class' => 'form-control']) }} </p>
+      <div class="input-group">
+          <span class="input-group-addon">$</span>
+          {{ Form::text('price', Input::old('price') , 
+               ['placeholder' => '10.00', 'class' => 'form-control']) }} 
+      </div>
    
    {{-- COMPARE PRICE --}}
       {{ Form::label('compare_price', 'Compare Price (from compettitor)') }}
-      <p> ${{ Form::text('compare_price', Input::old('compare_price'),
-             [ 'placeholder' => '12.00', 'class' => 'form-control' ] ) }} </p> 
+      <div class="input-group">
+          <span class="input-group-addon">$</span>
+          {{ Form::text('compare_price', Input::old('compare_price'),
+                 [ 'placeholder' => '12.00', 'class' => 'form-control' ] ) }} 
+     </div> 
 
+   {{-- CAT DROP DOWN  --}}
+    <h3> 
+        {{ Form::label('cat_id', 'Category') }} 
+        {{ Form::select('cat_id', $cats, null, ['id' => 'cat_select', 'class' => 'form-control']) }} 
+    </h3>
+    <div id="cat_new" style="display:none;">
+        {{ Form::label('cat_name', 'Category name') }}
+        <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'class' => 'form-control']) }} </p>
+
+        {{ Form::label('cat_urlName', 'Category name in URL') }}
+        <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'class' => 'form-control']) }} </p>
+
+        {{ Form::label('cat_info', 'Cat description') }}
+        <p> {{ Form::textarea('cat_info', Input::old('cat_info'), 
+                ['placeholder' => 'small description of category', 'class' => 'form-control']) }} </p>
+           
+    </div>
  </div>
    <div class="{{ $col_size }}">
    {{-- INFO --}}
@@ -53,25 +75,7 @@
 {{-- SUBMIT --}}
    {{ Form::submit('Save', array('class' => 'btn-lg btn-primary pull-right')) }}
    </div>
-   {{-- CAT DROP DOWN  --}}
-   <div class="{{ $col_size }}">
-    <h3> 
-        {{ Form::label('cat_id', 'Category') }} 
-        {{ Form::select('cat_id', $cats, null, ['id' => 'cat_select', 'class' => 'form-control']) }} 
-    </h3>
-    <div id="cat_new" style="display:none;">
-        {{ Form::label('cat_name', 'Category name') }}
-        <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'class' => 'form-control']) }} </p>
 
-        {{ Form::label('cat_urlName', 'Category name in URL') }}
-        <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'class' => 'form-control']) }} </p>
-
-        {{ Form::label('cat_info', 'Cat description') }}
-        <p> {{ Form::textarea('cat_info', Input::old('cat_info'), 
-                ['placeholder' => 'small description of category', 'class' => 'form-control']) }} </p>
-           
-    </div>
-</div>
 </div>
 {{ Form::close() }}
 @stop
@@ -93,9 +97,9 @@ $( document ).ready(function () {
         var value = $("#cat_select").val();
 
         if (value == 'new') {
-            $('#cat_new').show();
+            $('#cat_new').slideDown();
         } else {
-            $('#cat_new').hide();
+            $('#cat_new').slideUp();
         }
     }
 

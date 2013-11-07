@@ -25,7 +25,6 @@ class CatMake extends Migration {
         // that get their category deleted. 
         $cat = new Cat;
 
-        $cat->id = 0;
         $cat->name = "Other";
         $cat->urlName = "other";
         $cat->info = "All the other products";

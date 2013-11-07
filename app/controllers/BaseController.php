@@ -2,6 +2,16 @@
 
 class BaseController extends Controller {
 
+    protected $pretty_url;
+
+    public function pretty_url() {
+
+        return function ($id) {
+            $oil = Oil::find($id);
+            return URL::route('oils.show', [$oil->cat->urlName, $oil->urlName]);
+        };
+    }
+    
 	/**
 	 * Setup the layout used by the controller.
 	 *

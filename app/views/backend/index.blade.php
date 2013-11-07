@@ -14,7 +14,7 @@
       <tr>
          <th>Visible</th>
          <th>Name</th>
-         <th>Description</th>
+         <th>Category</th>
          <th>Price</th>
          <th>Compare Price</th>
          <th>Delete</th>
@@ -29,13 +29,18 @@
        <tr class="not-visible">
     @endif
           <td>{{ ($oil->visible == true ? 'true' : 'false') }} </td>
-          <td><a href="{{ URL::route('oils.show', $oil->id) }}"/>  {{ $oil->name  }}</a></td>
-          <td>{{ $oil->info  }}</td>
+          <td> <a href="{{ $pretty_url($oil->id) }}"/>  {{ $oil->name  }}</a></td>
+          <td> <a href="{{ URL::route('cats.show', ['catId' => $oil->cat->urlName] );}}">
+                    {{ $oil->cat->name}}
+               </a>
+          </td>
           <td>{{ $oil->price  }}</td>
           <td>{{ $oil->compare_price  }}</td>
           <td>
             {{ Form::open(array('route' => array('oils.destroy', $oil->id), 'method' => 'delete')) }}
-            <button type="submit" href="{{ URL::route('oils.destroy', $oil->id) }}" class="btn btn-danger btn-mini">Delete</button>
+            <button type="submit" href="{{ URL::route('oils.destroy', $oil->id) }}" class="btn btn-danger btn-mini">
+                Delete
+            </button>
             {{ Form::close() }}
         </td>
        </tr>
