@@ -64,6 +64,7 @@ class OilController extends \BaseController {
 
             $valid = Oil::validate(Input::all());
 
+
             if ($valid->fails()) {
 
                 return Redirect::route('oils.create')
@@ -73,8 +74,7 @@ class OilController extends \BaseController {
             } else { // data IS valid
 
                 // check if there's any with the same name
-                $count = $count = Oil::where('name', '=',
-                    Input::get('name'))->count();
+                $count = $count = Oil::where('name', '=', Input::get('name'))->count();
 
                 if ($count != 0) {
                     return Redirect::route('oils.create')
@@ -84,6 +84,15 @@ class OilController extends \BaseController {
 
                 // add a category if select new
                 if (Input::get('cat_id') === 'new') {
+
+                    $valid_cat = Cat::validate(Input::all());
+
+                    if ($valid_cat->fails()) {
+                        return Redirect::route('oils.create')
+                            ->withErrors($valid_cat)
+                            ->withInput(); 
+                    }
+
                     $cat = new Cat;
                     $cat->name = Input::get('cat_name');
                     $cat->urlName = Input::get('cat_urlName');

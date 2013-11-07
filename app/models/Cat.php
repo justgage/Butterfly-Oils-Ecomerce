@@ -9,8 +9,9 @@ class Cat extends Eloquent {
    }
 
    public static $rules = array(
-      "name" => "required|min:2",
-      "info" => "required|min:4",
+      "cat_name" => "required|unique:cats,name|min:2",
+      "cat_urlName" => "required|alpha_dash|min:3|unique:cats,urlName",
+      "cat_info" => "required|min:12",
    );
 
 
