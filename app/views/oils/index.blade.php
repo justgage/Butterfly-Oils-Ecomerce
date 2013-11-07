@@ -1,7 +1,7 @@
 @extends('layout.main')
 
 @section('content')
-<h2> Essential Oil Products</h2>
+<h2> All of our products</h2>
 <div class="row">
 <?php $i = 0; ?>
 @foreach ($oils as $oil)
@@ -10,11 +10,12 @@
     @if ($oil->visible == true) 
     <?php $i++;  ?>
 
-       <?php echo "<div class='col-sm-6 col-md-3' id='user_id_$oil->id'>";  ?>
+       <div class='col-sm-6 col-md-3' id='user_id_{{$oil->id}}'>
           <div class="oil_index_box" id="oil_id_{{ $oil->id }}">
-             <h3> <a href="{{ URL::route('oils.show', $oil->id) }}"> {{ $oil->name }} </a> </h3>
+{{-- REPLACE "CAT" with proper category!!! --}}
+             <h3> <a href="{{ URL::route('oils.show', ["cat", $oil->urlName]) }}"> {{ $oil->name }} </a> </h3>
              <div class="oil_img"> 
-                <a href="{{ URL::route('oils.show', $oil->id) }}"> 
+                <a href="{{ URL::route('oils.show', [ "cat", $oil->urlName ]) }}"> 
     @if($oil->photos->isEmpty() === false)
                    <img class="img-responsive img-thumbnail" src="{{ $oil->photos->first()->path }}" alt="photo"/>
     @else
@@ -47,8 +48,6 @@
 
 
 @section('script')
-
-
 
 <script type="text/javascript">
 var laravel_URL = "{{ URL::to('cart/add') }}"; // NOTE: blade templating

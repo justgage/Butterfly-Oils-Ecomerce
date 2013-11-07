@@ -10,8 +10,13 @@ class Oil extends Eloquent {
       return $this->hasMany('Photo', 'oil_id');
    }
 
+   public function cat() {
+      return $this->belongsTo('Cat');
+   }
+
    public static $rules = array(
-      "name" => "required|min:3",
+      "name" => "required|min:3|unique:oils,name",
+      "urlName" => "required|alpha_dash|min:3|unique:oils,urlName",
       "info" => "required|min:4",
       "price" => "required|numeric|min:1",
       "compare_price" => "numeric",

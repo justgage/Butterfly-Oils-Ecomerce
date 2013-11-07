@@ -11,31 +11,63 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 		$this->call('OilTableSeeder');
+		$this->call('CatTableSeeder');
 	}
 
 }
 
+class CatTableSeeder extends Seeder {
+	public function run() {
+        DB::table('cats')->delete();
+
+        $cat_list  = array(
+            "Other" => "Other miscellaneous products.",
+            "Singles" => "A bottle of oil, containing only one pure essential oil. ",
+            "Blends" => "A powerful blends of different essential oils.",
+            "Cases" => "Cases to protect the oils"
+        );
+
+        foreach ($cat_list as $name => $info){
+            $cat = new Cat;
+
+            $cat->name = $name;
+            $cat->urlName = strtolower($name);
+            $cat->info = $info;
+            $cat->visible = true;
+
+            $cat->save();
+        }
+
+    }
+
+}
 class OilTableSeeder extends Seeder {
 	public function run() {
         DB::table('oils')->delete();
+
+        $cat = Cat::find(1); // 'other' category
 
         for($i=0; $i < 10; $i++ ) {
             $oil = new Oil;
 
             $oil->name = "Lavender" . $i;
+            $oil->urlName = "lavender_$i";
             $oil->info = "This is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala blaThis is about the oil. bala bla";
             $oil->price = 10.05;
             $oil->compare_price = 9.05;
+            $oil->visible = true;
+
+            $oil->cat()->associate($cat);
 
             $oil->save();
         }
 
-        $user = new User;
-        $user->username = "admin";
-        $user->password = Hash::make('password');
-        $user->email = "justgage@gmail.com";
-        $user->rights = 0;
-        $user->save();
+        // $user = new User;
+        // $user->username = "admin";
+        // $user->password = Hash::make('password');
+        // $user->email =  str_random(10) . "@gmail.com";
+        // $user->rights = 0;
+        // $user->save();
     }
 
 }

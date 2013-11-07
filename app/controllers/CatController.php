@@ -9,7 +9,10 @@ class CatController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+        $cats = Cat::all();
+        return View::make('cats.index')
+            ->with('title', "List of product categories")
+            ->with('cats', $cats);
 	}
 
 	/**
@@ -19,7 +22,11 @@ class CatController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+        if (Auth::check()) {
+            return View::make('cats.create')->with('title', 'Creating a new category');
+        } else {
+            return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login");
+        }
 	}
 
 	/**
@@ -29,7 +36,15 @@ class CatController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+       if (Auth::check() === false) { // if NOT Authenticated
+
+          return Redirect::route('cats.index')
+              ->with('message' , "Sorry you don't have rights to create a Category, please login"); 
+
+      } else { // We are loged in as admin
+
+      }
+
 	}
 
 	/**
@@ -38,9 +53,9 @@ class CatController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($urlName)
 	{
-		//
+        return "list of oils in the category";
 	}
 
 	/**

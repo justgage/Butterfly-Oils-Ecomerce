@@ -23,9 +23,23 @@ class OilController extends \BaseController {
    public function create()
    {
       if (Auth::check()) {
-         return View::make('oils.create')->with('title', 'Creating a new oil');
+          $cats_raw = Cat::all();
+
+          $cats;
+
+          foreach ($cats_raw as $cat){
+              $cats[$cat->id] = $cat->name;
+          }
+
+          //one for adding new categorys
+          $cats['new'] = "--Create new Category--";
+
+          return View::make('oils.create')
+              ->with('title', 'Creating a new oil')
+              ->with('cats', $cats);
       } else {
-         return Redirect::route('oils.index')->with('message' , "Sorry you don't have rights to create an oil, please login");
+          return Redirect::route('oils.index')
+              ->with('message' , "Sorry you don't have rights to create an oil, please login");
       }
    }
 
@@ -62,16 +76,29 @@ class OilController extends \BaseController {
                   ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
                   ->withInput();; 
             }
-            
+
+            // add a category if select new
+            if (Input::get('cat_id') === 'new') {
+                $cat = new Cat;
+                $cat->name = Input::get('cat_name');
+                $cat->urlName = Input::get('cat_urlName');
+                $cat->info = Input::get('cat_info');
+                $cat->visible = true;
+                $cat->save();
+            } 
+
+            $cat = Cat::find( (int) Input::get('cat_id') );
+
 
             // create oil in database
             $oil = new Oil;
-            $oil->name = Input::get('name');
-            $oil->info = Input::get('info');
-            $oil->price = Input::get('price');
+            $oil->name          = Input::get('name');
+            $oil->urlName       = Input::get('urlName');
             $oil->compare_price = Input::get('compare_price');
-            $oil->name = Input::get('name');
-            $oil->visible = Input::get('visible') == 'visible';
+            $oil->info          = Input::get('info');
+            $oil->price         = Input::get('price');
+            $oil->visible       = ('visible' == Input::get('visible')) ; // hack for checkbox
+            $oil->cat()->associate($cat);
 
             $oil->save();
 
@@ -109,9 +136,10 @@ class OilController extends \BaseController {
     * @param  int  $id
     * @return Response
     */
-   public function show($id)
+   public function show($cat, $urlName)
    {
-      $oil = Oil::find($id);
+
+      $oil = Oil::where('urlName', '=', $urlName)->first();
 
       if  ($oil !== NULL) {
          $v = View::make('oils.show');

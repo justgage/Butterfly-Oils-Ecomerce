@@ -8,8 +8,8 @@
 </div>
 @else
    @foreach($cart as $item)
-    <div class="row">
-       <div class="col-xs-3"> <em><a href="{{ URL::route('oils.show', $item['id']) }}">{{ $item['name'] }}</a></em> </div>
+    <div class="row">                                                {{-- GET RID OF THIS CAT --}}
+       <div class="col-xs-3"> <em><a href="{{ URL::route('oils.show', ["CAT" , Oil::find($item['id'])->urlName ]) }}">{{ $item['name'] }}</a></em> </div>
        <div class="col-xs-3"> ${{ $item['price'] }} </div>
        <div class="col-xs-3"> {{ $item['qty'] }} </div>
        <div class="col-xs-3"> ${{ $item['subtotal'] }} </div>

@@ -20,10 +20,6 @@ Route::get('/', array("as" => "home", function()
 }));
 
 
-/******************************
- * Oils Controller
- *****************************/
-Route::resource('oils', 'OilController');
 
 /******************************
  * Backend!
@@ -55,3 +51,17 @@ Route::get('paypal/execute', array('as' => 'paypal.execute', 'uses' => 'PaypalPa
 //Route::get('paypal', array('https', 'as' => 'paypal.create', 'uses' => 'PaypalPaymentController@createPaypal'));
 // Route::get('paypal/execute', array('https', 'as' => 'paypal.execute', 'uses' => 'PaypalPaymentController@execute'));
 
+
+/******************************
+ * Oils Controller & Categorys
+ *****************************/
+Route::resource('oils', 'OilController', 
+    array('except' => [ 'show' ]) );
+
+
+Route::resource('cats', 'CatController', 
+    array('except' => [ 'show', 'index' ]) );
+
+Route::get('shop/categories', ['as' => 'cats.index', 'uses' => 'CatController@index']);
+Route::get('shop/{catId}', ['as' => 'cats.show', 'uses' => 'CatController@show']);
+Route::get('shop/{catId}/{oilId}', ['as' => 'oils.show', 'uses' => 'OilController@show']);
