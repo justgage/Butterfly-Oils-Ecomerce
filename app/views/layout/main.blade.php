@@ -23,6 +23,7 @@
    <div class="navbar-header">
       <a class="navbar-brand" href="{{ route('home') }}">ButterflyOils.com</a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            {{-- Three lines for mobile button --}}
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -30,10 +31,13 @@
    </div>
    <div class="collapse navbar-collapse">
      <div class="navbar-collapse collapse">
+            <?php $cats = Cat::all(); ?>
         <ul class="nav navbar-nav">
+        @foreach($cats as $cat)
            <li>
-              <a href=" {{ route('oils.index')}} ">Shop</a>
+              <a href=" {{ route('cats.show', $cat->urlName)}} ">{{ $cat-> name}}</a>
            </li>
+        @endforeach
    
         </ul>
    <ul class="nav navbar-nav navbar-right">

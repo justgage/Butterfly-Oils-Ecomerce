@@ -12,14 +12,13 @@
 
        <div class='col-sm-6 col-md-3' id='user_id_{{$oil->id}}'>
           <div class="oil_index_box" id="oil_id_{{ $oil->id }}">
-{{-- REPLACE "CAT" with proper category!!! --}}
-             <h3> <a href="{{ URL::route('oils.show', ["cat", $oil->urlName]) }}"> {{ $oil->name }} </a> </h3>
+             <h3> <a href="{{ $pretty_url($oil->id) }}"> {{ $oil->name }} </a> </h3>
              <div class="oil_img"> 
-                <a href="{{ URL::route('oils.show', [ "cat", $oil->urlName ]) }}"> 
+                <a href="{{ $pretty_url($oil->id) }}"> 
     @if($oil->photos->isEmpty() === false)
                    <img class="img-responsive img-thumbnail" src="{{ $oil->photos->first()->path }}" alt="photo"/>
     @else
-                   <img class="img-responsive img-thumbnail" src="" alt="There is no photo"/>
+                   <img class="img_empty img-responsive img-thumbnail" src="" alt="There is no photo"/>
     @endif
 <p> Click here for more Information </p>
                 </a>
