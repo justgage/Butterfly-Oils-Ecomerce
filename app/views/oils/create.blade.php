@@ -14,11 +14,11 @@
    <div class="{{ $col_size }}">
    {{-- NAME --}}
       {{ Form::label('name', 'Name') }}
-      <p> {{ Form::text('name', Input::old('name') , ['placeholder' => 'Spice Traders', 'class' => 'form-control']) }} </p>
+      <p> {{ Form::text('name', Input::old('name') , ['placeholder' => 'Spice Traders', 'id' => 'text_oil_name', 'class' => 'form-control']) }} </p>
 
    {{-- URL NAME --}}
       {{ Form::label('urlName', 'Name In url (no spaces)') }}
-      <p> {{ Form::text('urlName', Input::old('urlName') , ['placeholder' => 'spice_traders', 'class' => 'form-control']) }} </p>
+      <p> {{ Form::text('urlName', Input::old('urlName') , ['placeholder' => 'spice_traders','id' => 'text_oil_urlName', 'class' => 'form-control']) }} </p>
 
 
 
@@ -45,10 +45,10 @@
     </h3>
     <div id="cat_new" style="display:none;">
         {{ Form::label('cat_name', 'Category name') }}
-        <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'class' => 'form-control']) }} </p>
+        <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'id' => 'text_cat_name', 'class' => 'form-control']) }} </p>
 
         {{ Form::label('cat_urlName', 'Category name in URL') }}
-        <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'class' => 'form-control']) }} </p>
+        <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'id' => 'text_cat_urlName', 'class' => 'form-control']) }} </p>
 
         {{ Form::label('cat_info', 'Cat description') }}
         <p> {{ Form::textarea('cat_info', Input::old('cat_info'), 
@@ -104,6 +104,28 @@ $( document ).ready(function () {
     }
 
     toggle_cat_create();
+
+
+    /***
+     * Will take the input of one field
+     * and put change it to a lowercase
+     * and get rid of the spaces
+     * then put into another feild (to)
+     */
+    var nameToUrlinput = function (to) {
+        return function () {
+            var text = $(this).val();
+            text = text.toLowerCase(); // lowercase
+            text = text.replace(/ *$/, ""); // get rid of white space at the end
+            text = text.replace(/\s/g,"-"); // spaces to dash
+            $(to).val(text);
+        };
+    };
+
+    $("#text_oil_name").keyup(nameToUrlinput("#text_oil_urlName"));
+
+    $("#text_cat_name").keyup(nameToUrlinput("#text_cat_urlName"));
+
 
     $('#cat_select').change(toggle_cat_create);
 

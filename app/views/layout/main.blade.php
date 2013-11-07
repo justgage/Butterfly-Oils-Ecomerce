@@ -35,7 +35,9 @@
         <ul class="nav navbar-nav">
         @foreach($cats as $cat)
            <li>
-              <a href=" {{ route('cats.show', $cat->urlName)}} ">{{ $cat-> name}}</a>
+            @if($cat->visible == true)
+              <a href=" {{ route('cats.show', ["catId" => $cat->urlName])}} ">{{ $cat-> name}}</a>
+            @endif
            </li>
         @endforeach
    
