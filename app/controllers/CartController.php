@@ -57,12 +57,12 @@ class CartController extends BaseController {
         }
     }
 
-    public function postDestroy($id)
+    public function getRemove($id)
     {
-        if( Cart::destroy() ) {
-            return json_encode(array('error' => false, 'mess' => 'Cart was cleared'));
+        if( Cart::remove($id) ) {
+            return json_encode(array('error' => false, 'mess' => 'Item was removed'));
         } else {
-            return json_encode(array('error' => true, 'mess' => 'Cart clear failed! please try again'));
+            return json_encode(array('error' => true, 'mess' => 'Item was NOT removed'));
         }
     }
 
