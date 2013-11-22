@@ -67,16 +67,25 @@ $(document).ready(function () {
     $(".remove-item").click(function () {
         var url = "{{ URL::to('cart/remove') }}/" + $(this).data('id');
         var $that = $(this);
-        $.get( url, {}, function (data) {
+
+        $that.parent().parent().fadeOut(); // the table row
+
+        var promise = $.get( url);
+
+        promise.done(function (data) {
             console.log(data.mess);
-            $that.parent().parent().fadeOut(); // the table row
             count--;
 
             if (count === 0) {
                 window.location.reload(true);
             }
-
         });
+        
+        promise.fail(function () {
+            //ERROR saying the AJAX failed!
+            $that.parent().parent().fadeIn(); // the table row
+        });
+
     });
 });
 </script>
