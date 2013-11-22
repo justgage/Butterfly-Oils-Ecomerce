@@ -5,7 +5,11 @@ class TagController extends \BaseController {
 
 	public function index()
 	{
+        $tags = Tag::all();
 
+        return View::make("tags.index")
+            ->with('title', "View by Use")
+            ->with('tags', $tags);
 	}
 
 	/**
@@ -38,7 +42,9 @@ class TagController extends \BaseController {
 	{
         $tag = Tag::where('urlName', '=', $urlName)->first();
 
-        return var_dump($tag);
+        return View::make('tags.show')
+            ->with('title', "Browse all products in $tag->name")
+            ->with('tag', $tag);
 	}
 
 	/**

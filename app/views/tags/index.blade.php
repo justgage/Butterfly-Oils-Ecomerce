@@ -5,7 +5,11 @@
 
 <ul>
 @foreach($tags as $tag)
-<li>{{ $tag->name }}</li>
+<li>
+    <a href="{{ URL::route('tags.show', $tag->urlName) }}">
+        {{ $tag->name }}
+    </a>
+</li>
 @endforeach
 </ul>
 

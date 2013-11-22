@@ -19,9 +19,9 @@
 
         {{-- NAME --}}
         <div class="form-group">
-            {{ Form::label('name', 'Name', ['class' => 'col-sm-3 control-label']) }}
+            {{ Form::label('name', 'Name', [ 'class' => 'col-sm-3 control-label']) }}
             <div class="col-sm-9">
-                {{ Form::text('name', Input::old('name') , ['placeholder' => 'Spice Traders', 'id' => 'text_oil_name', 'class' => 'form-control']) }} 
+                {{ Form::text('name', Input::old('name') , ['autocomplete' => "off", 'placeholder' => 'Spice Traders', 'id' => 'text_oil_name', 'class' => 'form-control']) }} 
             </div>
         </div>
     
@@ -78,7 +78,7 @@
         </h3>
         <div id="cat_new" style="display:none;">
             {{ Form::label('cat_name', 'Category name') }}
-            <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'id' => 'text_cat_name', 'class' => 'form-control']) }} </p>
+            <p> {{ Form::text('cat_name', Input::old('cat_name') , ['autocomplete' => "off", 'placeholder' => 'Blends', 'id' => 'text_cat_name', 'class' => 'form-control']) }} </p>
     
             {{ Form::label('cat_urlName', 'Category name in URL') }}
             <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'id' => 'text_cat_urlName', 'class' => 'form-control']) }} </p>
@@ -166,7 +166,7 @@ $( document ).ready(function () {
     // Adding custom typeahead support using http://twitter.github.io/typeahead.js
     $('#tags_input').tagsinput('input').typeahead({                                
           name: 'uses',                                                          
-          local: ['cool', 'awesome', 'fake', 'asdf'],
+          prefech: "{{ URL::route('tags.ajax')}}",
           limit: 10                                                                   
       }).bind('typeahead:selected', $.proxy(function (obj, datum) {  
             console.log("clear");

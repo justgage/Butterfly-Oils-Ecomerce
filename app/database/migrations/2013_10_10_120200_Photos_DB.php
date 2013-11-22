@@ -28,7 +28,7 @@ class PhotosDB extends Migration {
 	{
       Schema::drop('photos');
 
-      $files = glob('public/img/*'); // get all file names
+      $files = glob('public/uploads/*'); // get all file names
       foreach($files as $file){ // iterate files
          if(is_file($file))
             echo "removing image " . $file . "\n";

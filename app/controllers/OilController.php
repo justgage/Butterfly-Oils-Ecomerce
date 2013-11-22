@@ -106,6 +106,9 @@ class OilController extends \BaseController {
                     $cat = Cat::find( (int) $cat_id);
                 } 
 
+                $tags = explode(",", Input::Get('tags'));
+
+                $tags_obj = $this->tags_arr_add($tags);
 
                 // create oil in database
                 $oil = new Oil;
@@ -137,10 +140,6 @@ class OilController extends \BaseController {
                     }
 
                 }
-
-                $tags = explode(",", Input::Get('tags'));
-
-                $tags_obj = $this->tags_arr_add($tags);
 
                 foreach ($tags_obj as $tag){
                     $oil->tags()->attach($tag->id);
