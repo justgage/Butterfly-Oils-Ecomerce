@@ -55,7 +55,7 @@ class OilController extends \BaseController {
      */
     public function store()
     {
-        if (Auth::check() === false) { // if NOT Authenticated
+        if (Auth::check() === false) { 
 
             return Redirect::route('oils.index')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login"); 
@@ -82,8 +82,11 @@ class OilController extends \BaseController {
                         ->withInput();; 
                 }
 
+                $cat_id = Input::get('cat_id');
+                $cat;
+
                 // add a category if select new
-                if (Input::get('cat_id') === 'new') {
+                if ($cat_id === 'new') {
 
                     $valid_cat = Cat::validate(Input::all());
 
@@ -99,9 +102,9 @@ class OilController extends \BaseController {
                     $cat->info = Input::get('cat_info');
                     $cat->visible = true;
                     $cat->save();
+                } else {
+                    $cat = Cat::find( (int) $cat_id);
                 } 
-
-                $cat = Cat::find( (int) Input::get('cat_id') );
 
 
                 // create oil in database
@@ -133,6 +136,14 @@ class OilController extends \BaseController {
                         $photo = $oil->photos()->save($photo);
                     }
 
+                }
+
+                $tags = explode(",", Input::Get('tags'));
+
+                $tags_obj = $this->tags_arr_add($tags);
+
+                foreach ($tags_obj as $tag){
+                    $oil->tags()->attach($tag->id);
                 }
 
                 // Return message saying, it worked!
@@ -206,9 +217,6 @@ class OilController extends \BaseController {
         } else {
             return Redirect::back()->with('message', "That oil was already removed!" );
         }
-
-
-
     }
 
 }

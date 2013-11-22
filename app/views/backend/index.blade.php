@@ -9,7 +9,7 @@
 </div>
 
 <h2>Oils list</h2>
-<table width="100%" cellspacing="0">
+<table class="table table-striped table-hover" width="100%" cellspacing="0">
    <thead>
       <tr>
          <th>Visible</th>

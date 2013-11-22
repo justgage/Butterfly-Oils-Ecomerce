@@ -3,7 +3,7 @@
 @section('content')
 <h2>{{ $title }}</h2>
 
-@include('oils.include.oil_grid', ["oils" => $oils]);
+@include('oils.include.oil_grid', ["oils" => $oils])
 @stop
 
 

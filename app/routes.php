@@ -53,15 +53,29 @@ Route::get('paypal/execute', array('as' => 'paypal.execute', 'uses' => 'PaypalPa
 
 
 /******************************
- * Oils Controller & Categorys
+ * Oils
+ * Categorys
+ * Tags
  *****************************/
+
 Route::resource('oils', 'OilController', 
     array('except' => [ 'show' ]) );
 
+Route::resource('tags', 'TagController', 
+    array('except' => [ 'show' ]) );
 
 Route::resource('cats', 'CatController', 
     array('except' => [ 'show', 'index' ]) );
 
+//Categorys 
 Route::get('shop/categories', ['as' => 'cats.index', 'uses' => 'CatController@index']);
+
+// Tags show
+Route::post('shop/uses/ajax_list', ['as' => 'tags.ajax', 'uses' => 'TagController@ajax_list']);
+Route::get('shop/uses/{tagId}', ['as' => 'tags.show', 'uses' => 'TagController@show']);
+
+//Cat index
 Route::get('shop/{catId}', ['as' => 'cats.show', 'uses' => 'CatController@show']);
+
+//Oils show
 Route::get('shop/{catId}/{oilId}', ['as' => 'oils.show', 'uses' => 'OilController@show']);

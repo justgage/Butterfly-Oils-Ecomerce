@@ -14,6 +14,12 @@ class Oil extends Eloquent {
       return $this->belongsTo('Cat');
    }
 
+   public function Tags()
+   {
+       return $this->belongsToMany('Tag');
+   }
+   
+
    public static $rules = array(
       "name" => "required|min:3|unique:oils,name",
       "urlName" => "required|alpha_dash|min:3|unique:oils,urlName",

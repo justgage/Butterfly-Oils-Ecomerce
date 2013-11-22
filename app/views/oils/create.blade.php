@@ -1,5 +1,10 @@
 @extends('layout.main')
 
+@section('head')
+<link rel="stylesheet" href="/js/tagsinput/bootstrap-tagsinput.css">
+@stop
+
+
 @section('content')
 
 @include('includes.invalid', $errors)
@@ -10,58 +15,86 @@
 
 <h1> Create new Oil </h1>
 <div class="row">
+    <div class="{{ $col_size }}">
 
-   <div class="{{ $col_size }}">
-   {{-- NAME --}}
-      {{ Form::label('name', 'Name') }}
-      <p> {{ Form::text('name', Input::old('name') , ['placeholder' => 'Spice Traders', 'id' => 'text_oil_name', 'class' => 'form-control']) }} </p>
+        {{-- NAME --}}
+        <div class="form-group">
+            {{ Form::label('name', 'Name', ['class' => 'col-sm-3 control-label']) }}
+            <div class="col-sm-9">
+                {{ Form::text('name', Input::old('name') , ['placeholder' => 'Spice Traders', 'id' => 'text_oil_name', 'class' => 'form-control']) }} 
+            </div>
+        </div>
+    
+       {{-- URL NAME --}}
+        <div class="form-group">
+              {{ Form::label('urlName', 'URL name', ['class' => 'col-sm-3 control-label']) }}
+                <div class="col-sm-9">
+                   {{ Form::text('urlName', Input::old('urlName') , 
+                    ['placeholder' => 'spice_traders','id' => 'text_oil_urlName', 'class' => 'input-sm form-control']) }} 
+                </div>
+        </div>
 
-   {{-- URL NAME --}}
-      {{ Form::label('urlName', 'Name In url (no spaces)') }}
-      <p> {{ Form::text('urlName', Input::old('urlName') , ['placeholder' => 'spice_traders','id' => 'text_oil_urlName', 'class' => 'form-control']) }} </p>
-
-
-
-   {{-- PRICE --}}
-      {{ Form::label('price', 'price') }}
-      <div class="input-group">
-          <span class="input-group-addon">$</span>
-          {{ Form::text('price', Input::old('price') , 
-               ['placeholder' => '10.00', 'class' => 'form-control']) }} 
-      </div>
-   
-   {{-- COMPARE PRICE --}}
-      {{ Form::label('compare_price', 'Compare Price (from compettitor)') }}
-      <div class="input-group">
-          <span class="input-group-addon">$</span>
-          {{ Form::text('compare_price', Input::old('compare_price'),
-                 [ 'placeholder' => '12.00', 'class' => 'form-control' ] ) }} 
-     </div> 
-
-   {{-- CAT DROP DOWN  --}}
-    <h3> 
-        {{ Form::label('cat_id', 'Category') }} 
-        {{ Form::select('cat_id', $cats, null, ['id' => 'cat_select', 'class' => 'form-control']) }} 
-    </h3>
-    <div id="cat_new" style="display:none;">
-        {{ Form::label('cat_name', 'Category name') }}
-        <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'id' => 'text_cat_name', 'class' => 'form-control']) }} </p>
-
-        {{ Form::label('cat_urlName', 'Category name in URL') }}
-        <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'id' => 'text_cat_urlName', 'class' => 'form-control']) }} </p>
-
-        {{ Form::label('cat_info', 'Cat description') }}
-        <p> {{ Form::textarea('cat_info', Input::old('cat_info'), 
-                ['placeholder' => 'small description of category', 'class' => 'form-control']) }} </p>
-           
-    </div>
+       {{-- PRICE --}}
+        <div class="form-group">
+          {{ Form::label('price', 'price', ['class' => 'col-sm-3 control-label']) }}
+            <div class="col-sm-9">
+              <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  {{ Form::text('price', Input::old('price') , 
+                       ['placeholder' => '10.00', 'class' => 'form-control']) }} 
+                </div>
+            </div>
+        </div>
+       
+       {{-- COMPARE PRICE --}}
+        <div class="form-group">
+          {{ Form::label('compare_price', 'Compare Price', ['class' => 'col-sm-3 control-label']) }}
+            <div class="col-sm-9">
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  {{ Form::text('compare_price', Input::old('compare_price'),
+                         [ 'placeholder' => '12.00', 'class' => 'form-control' ] ) }} 
+                </div> 
+            </div> 
+        </div>
+    
+        {{-- TAGS --}}
+        <div class="form-group">
+          {{ Form::label('tags', 'Uses tags', ['class' => 'col-sm-3 control-label']) }}
+           <div class="input-group col-sm-9">
+               {{ Form::text('tags', Input::old('tags') , 
+                    ['class' => 'form-control', 'data-role' => 'tagsinput', 'placeholder' => '','id' => 'tags_input']) }} 
+            <em>push enter to add a tag</em>
+           </div>
+        </div>
+    
  </div>
+
    <div class="{{ $col_size }}">
+       {{-- CAT DROP DOWN  --}}
+        <h3> 
+            {{ Form::label('cat_id', 'Category') }} 
+            {{ Form::select('cat_id', $cats, null, ['id' => 'cat_select', 'class' => 'form-control']) }} 
+        </h3>
+        <div id="cat_new" style="display:none;">
+            {{ Form::label('cat_name', 'Category name') }}
+            <p> {{ Form::text('cat_name', Input::old('cat_name') , ['placeholder' => 'Blends', 'id' => 'text_cat_name', 'class' => 'form-control']) }} </p>
+    
+            {{ Form::label('cat_urlName', 'Category name in URL') }}
+            <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'id' => 'text_cat_urlName', 'class' => 'form-control']) }} </p>
+    
+            {{ Form::label('cat_info', 'Cat description') }}
+            <p> {{ Form::textarea('cat_info', Input::old('cat_info'), 
+                    ['placeholder' => 'small description of category', 'class' => 'form-control']) }} </p>
+               
+        </div>
    {{-- INFO --}}
       {{ Form::label('info', 'Oil Info') }}
-      <p> {{ Form::textarea('info', Input::old('name'), ['placeholder' => 'This is what the oil is (uses, ingredints, etc..)', 'class' => 'form-control']) }} </p>
-   
-
+      <p> {{ Form::textarea('info', Input::old('name'), 
+                ['placeholder' => 'This is what the oil is (basic description, ingredints, etc..)',
+                 'class' => 'form-control',
+                 'rows' => 3
+                ]) }} </p>
    
    {{-- IMAGE UPLOAD --}}
    {{ Form::label('image', 'Product_Images') }}
@@ -81,6 +114,8 @@
 @stop
 
 @section('script')
+<script type="text/javascript" src="/js/tagsinput/bootstrap-tagsinput.js"></script>
+<script type="text/javascript" src="/js/typeaheadjs/typeahead.js"></script>
 <script type="text/javascript" charset="utf-8">
 $( document ).ready(function () {
 
@@ -105,7 +140,6 @@ $( document ).ready(function () {
 
     toggle_cat_create();
 
-
     /***
      * Will take the input of one field
      * and put change it to a lowercase
@@ -126,8 +160,22 @@ $( document ).ready(function () {
 
     $("#text_cat_name").keyup(nameToUrlinput("#text_cat_urlName"));
 
-
     $('#cat_select').change(toggle_cat_create);
+
+
+    // Adding custom typeahead support using http://twitter.github.io/typeahead.js
+    $('#tags_input').tagsinput('input').typeahead({                                
+          name: 'uses',                                                          
+          local: ['cool', 'awesome', 'fake', 'asdf'],
+          limit: 10                                                                   
+      }).bind('typeahead:selected', $.proxy(function (obj, datum) {  
+            console.log("clear");
+            this.tagsinput('add', datum.value);
+            var $input = this.tagsinput('input')
+            $input.typeahead('setQuery', '');
+            console.log($input.val());
+
+          }, $('#tags_input')));;
 
 });
 </script>

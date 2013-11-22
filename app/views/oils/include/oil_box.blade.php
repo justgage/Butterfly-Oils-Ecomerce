@@ -14,7 +14,10 @@
             @if($oil->photos->isEmpty() === false)
             <img class="img-responsive img-thumbnail" src="{{ $oil->photos->first()->path }}" alt="photo"/>
             @else
-            <img class="img_empty img-responsive img-thumbnail" src="" alt="There is no photo"/>
+            <div class="img_empty img-responsive img-thumbnail"/>
+                    <span class="glyphicon glyphicon-camera"></span>
+                    No photos
+            </div>
             @endif
             <p> Click here for more Information </p>
         </a>
@@ -22,9 +25,12 @@
 
     {{-- Price Button --}}
     <div class="oil_price">
-        <h3 class="pull-right">${{ round($oil->price, 2) }} 
-            <button data-id="{{ $oil->id }}" class="cart_add btn btn-primary" >
-                <span class="cart_num" >Add to Cart</span> 
-                <span class="glyphicon glyphicon-shopping-cart"></span></button></h3>
+        <div class="text-center">
+            <h3>${{ number_format($oil->price, 2) }} </h3>
+                <button data-id="{{ $oil->id }}" class="cart_add btn btn-primary" >
+                    <span class="cart_num" >Add to Cart</span> 
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                </button>
+        </div>
     </div>
 </div>
