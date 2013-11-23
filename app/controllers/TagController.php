@@ -43,7 +43,7 @@ class TagController extends \BaseController {
         $tag = Tag::where('urlName', '=', $urlName)->first();
 
         return View::make('tags.show')
-            ->with('title', "Browse all products in $tag->name")
+            ->with('title', "Browse all products in \"$tag->name\"")
             ->with('tag', $tag);
 	}
 

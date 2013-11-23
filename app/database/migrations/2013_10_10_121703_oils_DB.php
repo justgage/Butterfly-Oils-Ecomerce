@@ -20,7 +20,6 @@ class OilsDB extends Migration {
             $table->float('compare_price');
             $table->boolean('visible');
             $table->integer('cat_id');
-            $table->integer('tag_id')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

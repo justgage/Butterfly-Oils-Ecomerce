@@ -5,7 +5,7 @@ class Tag extends Eloquent {
    protected $table = 'tags';
 
    public function oils() {
-      return $this->hasMany('Oil', 'tag_id');
+      return $this->belongsToMany('Oil');
    }
 
    public static $rules = array(
