@@ -1,12 +1,12 @@
 <div class="row">
-<?php $i = 0; ?>
-@foreach ($oils as $oil)
-    {{-- NOT error, has to be this way! --}}
 <?php 
-echo "<br><br>"; 
-return 0;
+$i = 0; 
 ?>
-    @if ($oil->visible == true)  // ERROR property of non-object??
+
+@foreach ($oils as $oil)
+
+    {{-- NOT error, has to be this way! --}}
+    @if ($oil->visible == true)  
     <?php $i++ ?>
 
         <div class='col-sm-6 col-md-3' id='user_id_{{$oil->id}}'>

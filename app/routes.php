@@ -61,7 +61,7 @@ Route::get('paypal/execute', array('as' => 'paypal.execute', 'uses' => 'PaypalPa
 Route::resource('oils', 'OilController', 
     array('except' => [ 'show' ]) );
 
-Route::resource('tags', 'TagController', 
+Route::resource('shop/uses', 'TagController', 
     array('except' => [ 'show' ]) );
 
 Route::resource('cats', 'CatController', 

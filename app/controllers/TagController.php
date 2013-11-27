@@ -42,9 +42,14 @@ class TagController extends \BaseController {
 	{
         $tag = Tag::where('urlName', '=', $urlName)->first();
 
-        return View::make('tags.show')
-            ->with('title', "Browse all products in \"$tag->name\"")
-            ->with('tag', $tag);
+        if ($tag !== null) {
+            return View::make('tags.show')
+                ->with('title', "Browse all products in \"$tag->name\"")
+                ->with('tag', $tag)
+                ->with('pretty_url', $this->pretty_url());
+        } else {
+            return "Not found!";
+        }
 	}
 
 	/**
