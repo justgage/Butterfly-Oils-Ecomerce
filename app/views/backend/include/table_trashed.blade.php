@@ -1,4 +1,5 @@
-@if( empty($oils->toArray) === false)
+@if( count($oils->toArray()) > 0)
+
 
 <a class="btn btn-default pull-right" href="{{ URL::route('oils.deleteAll'); }}">Empty Trash</a>
 <table class="table table-striped table-hover" width="100%" cellspacing="0">

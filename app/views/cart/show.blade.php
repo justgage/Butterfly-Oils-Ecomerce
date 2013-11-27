@@ -9,7 +9,7 @@
 
 @else
 
-<div class="col-md-12">
+<div class="panel panel-default">
 <table class="table table-hover table-striped">
 <thead>
     <tr>
@@ -45,18 +45,18 @@
 @if($item_del > 0)
 <em>{{ $item_del }} item(s) deleted due to them not being available in the shop anymore.</em>
 @endif
-<div></div>
 </table>
+</div>
    <div class="col-md-12">
        <div class="row">
            <div class="col-sm-12">
                <div class="text-right float-right">
-                   <h3>Total: ${{ number_format(Cart::total(), 2) }} </h3>
+                   <h4>Total ${{ number_format(Cart::total(), 2) }} </h4>
                </div>
            </div>
            <div class="col-sm-12">
-               {{ HTML::link( URL::to('/paypal'), "Checkout with PayPal", array("class" => "btn btn-primary pull-right"),true) }}
-               <a class="btn btn-warning pull-right" id="clear" href="#">Clear Cart</a>
+               {{ HTML::link( URL::to('/paypal'), "Pay with PayPal", array("class" => "btn btn-primary pull-right"),true) }}
+               <a class="btn btn-link pull-right" id="clear" href="#">Clear Cart</a>
            </div>
        </div>
    </div>

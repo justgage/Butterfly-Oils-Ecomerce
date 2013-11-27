@@ -1,3 +1,4 @@
+@if( count($oils->toArray()) > 0)
 <table class="table table-striped table-hover" width="100%" cellspacing="0">
    <thead>
       <tr>
@@ -39,3 +40,6 @@
 </table>
 
 
+@else
+<div class="panel-heading">There are no products.</div>
+@endif
