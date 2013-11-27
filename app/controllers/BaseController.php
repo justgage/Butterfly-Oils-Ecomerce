@@ -8,7 +8,11 @@ class BaseController extends Controller {
 
         return function ($id) {
             $oil = Oil::find($id);
-            return URL::route('oils.show', [$oil->cat->urlName, $oil->urlName]);
+            if ($oil !== null) {
+                return URL::route('oils.show', [$oil->cat->urlName, $oil->urlName]);
+            } else {
+                return URL::route('oils.404');
+            }
         };
     }
 
@@ -21,20 +25,25 @@ class BaseController extends Controller {
         $tags = Array();
 
         foreach ($arr as $single){
-            $tag = Tag::where('name', '=', $single)->first();
 
-            if ($tag === NULL) {
-                $urlName = preg_replace('/[^\da-z]+/i', '-', $single);
-                $urlName = strtolower($urlName);
+            $single = trim($single);
 
-                $tag = new Tag;
-                $tag->name = $single;
-                $tag->urlName = $urlName;
+            if ($single !== "") {
+                $tag = Tag::where('name', '=', $single)->first();
 
-                $tag->save();
+                if ($tag === NULL) {
+                    $urlName = preg_replace('/[^\da-z]+/i', '-', $single);
+                    $urlName = strtolower($urlName);
+
+                    $tag = new Tag;
+                    $tag->name = $single;
+                    $tag->urlName = $urlName;
+
+                    $tag->save();
+                }
+
+                $tags[] = $tag;
             }
-
-            $tags[] = $tag;
         }
         
         return $tags;

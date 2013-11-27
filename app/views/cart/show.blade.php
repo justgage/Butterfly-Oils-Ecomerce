@@ -21,22 +21,37 @@
     </tr>
 </thead>
    <tbody>
+        <?php
+        $item_del = 0;
+        ?>
        @foreach($cart as $item)
-        <tr>                                                {{-- GET RID OF THIS CAT --}}
-            <td><a class="remove-item" data-id="{{ $item['rowid'] }}" href="#"><span class="glyphicon glyphicon-remove"></span> </a></td>
-           <td> <em><a href="{{ URL::route('oils.show', ["CAT" , Oil::find($item['id'])->urlName ]) }}">{{ $item['name'] }}</a></em> </td>
-           <td> ${{ $item['price'] }} </td>
-           <td> {{ $item['qty'] }} </td>
-           <td class="text-right"> <strong>${{ $item['subtotal'] }} </strong></td>
-        </tr>
+            <?php $oil = Oil::find($item['id']); ?>
+            @if($oil !== null)
+                <tr>                                                {{-- GET RID OF THIS CAT --}}
+                    <td><a class="remove-item" data-id="{{ $item['rowid'] }}" href="#"><span class="glyphicon glyphicon-remove"></span> </a></td>
+                   <td> <em><a href="{{ URL::route('oils.show', ["CAT" , Oil::find($item['id'])->urlName ]) }}">{{ $item['name'] }}</a></em> </td>
+                   <td> ${{ $item['price'] }} </td>
+                   <td> {{ $item['qty'] }} </td>
+                   <td class="text-right"> <strong>${{ $item['subtotal'] }} </strong></td>
+                </tr>
+            @else 
+                <?php 
+                Cart::remove( $item['rowid'] ); 
+                $item_del++;
+                ?>
+            @endif
        @endforeach
    </tbody>
+@if($item_del > 0)
+<em>{{ $item_del }} item(s) deleted due to them not being available in the shop anymore.</em>
+@endif
+<div></div>
 </table>
    <div class="col-md-12">
        <div class="row">
            <div class="col-sm-12">
                <div class="text-right float-right">
-                   <h3>Total: ${{ number_format($total, 2) }} </h3>
+                   <h3>Total: ${{ number_format(Cart::total(), 2) }} </h3>
                </div>
            </div>
            <div class="col-sm-12">

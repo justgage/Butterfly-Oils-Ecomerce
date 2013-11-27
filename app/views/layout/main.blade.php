@@ -21,7 +21,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
 <div class="container">
    <div class="navbar-header">
-      <a class="navbar-brand" href="{{ route('home') }}">ButterflyOils.com</a>
+      <a class="navbar-brand" href="{{ route('home') }}">ButterflyOils</a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             {{-- Three lines for mobile button --}}
             <span class="icon-bar"></span>

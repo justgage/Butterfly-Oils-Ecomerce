@@ -77,5 +77,9 @@ Route::get('shop/uses/{tagId}', ['as' => 'tags.show', 'uses' => 'TagController@s
 //Cat index
 Route::get('shop/{catId}', ['as' => 'cats.show', 'uses' => 'CatController@show']);
 
-//Oils show
+//Oils
 Route::get('shop/{catId}/{oilId}', ['as' => 'oils.show', 'uses' => 'OilController@show']);
+Route::get('ship/oils/delete/{id}', ['as' => 'oils.delete', 'uses' => 'OilController@delete']);
+Route::get('ship/oils/restore/{id}', ['as' => 'oils.restore', 'uses' => 'OilController@restore']);
+Route::get('ship/oils/delete-all', ['as' => 'oils.deleteAll', 'uses' => 'OilController@deleteAll']);
+

@@ -5,12 +5,11 @@
 
 <?php 
 $oils = $tag->oils;
-
 ?>
 
 @include('oils.include.oil_grid', ["oils" => $oils])
 @stop
 
-
-
-
+@section('script')
+@include('oils.include.cart_js');
+@stop

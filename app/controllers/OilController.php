@@ -3,6 +3,11 @@
 
 class OilController extends \BaseController {
 
+    private function authReject() {
+        return Redirect::route('oils.index')
+                    ->with('message' , "Sorry you don't have rights to create an oil, please login");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +63,7 @@ class OilController extends \BaseController {
         if (Auth::check() === false) { 
 
             return Redirect::route('oils.index')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login"); 
+                ->with('message' , "Sorry you don't have rights to create a product, please login"); 
 
         } else { // We are loged in as admin
 
@@ -147,7 +152,7 @@ class OilController extends \BaseController {
 
                 // Return message saying, it worked!
                 return Redirect::route('backend.index')
-                    ->with('message', 'Oil ' . $oil->name . ' was created sucsessfuly');;
+                    ->with('message', 'Product ' . $oil->name . ' was created sucsessfuly');;
 
             } // if valid
         } // if auth
@@ -173,7 +178,7 @@ class OilController extends \BaseController {
 
         } else {
 
-            return View::make('oils.404')->with('title', 'Oil not Found!');
+            return View::make('oils.404')->with('title', 'Product not Found!');
 
         }
     }
@@ -186,7 +191,11 @@ class OilController extends \BaseController {
      */
     public function edit($id)
     {
-        //
+        if (Auth::check()) {
+        } else {
+            return Redirect::route('oils.index')
+                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+        }
     }
 
     /**
@@ -197,7 +206,34 @@ class OilController extends \BaseController {
      */
     public function update($id)
     {
-        //
+        if (Auth::check()) {
+        } else {
+            return Redirect::route('oils.index')
+                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+        }
+    }
+
+    /**
+     * Soft delete product
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        if (Auth::check()) {
+            $target = Oil::find($id);
+
+            if ($target !== null) {
+                $target->delete();
+                return Redirect::back()->with('message', "The product " . $target->name . " was trashed" );
+            } else {
+                return Redirect::back()->with('message', "That product was already removed!" );
+            }
+        } else {
+            return Redirect::route('oils.index')
+                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+        }
     }
 
     /**
@@ -206,15 +242,65 @@ class OilController extends \BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        $target = Oil::find($id);
+        if (Auth::check()) {
+            $target = Oil::withTrashed()->where('id', $id)->first();
 
-        if ($target !== null) {
-            $target->delete();
-            return Redirect::back()->with('message', "The oil " . $target->name . " was removed" );
+            if ($target !== null) {
+                $target->forceDelete();
+                return Redirect::back()->with('message', "The product " . $target->name . " was deleted forever" );
+            } else {
+                return Redirect::back()->with('message', "That product was already removed!" );
+            }
         } else {
-            return Redirect::back()->with('message', "That oil was already removed!" );
+            return Redirect::route('oils.index')
+                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+        }
+    }
+
+    /**
+     * Restore product
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function restore($id)
+    {
+
+        if (Auth::check()) {
+            $target = Oil::withTrashed()->where('id', $id)->first();
+
+            if ($target !== null) {
+                $target->restore();
+                return Redirect::back()->with('message', "The product " . $target->name . " was restored" );
+            } else {
+                return Redirect::back()->with('message', "That product was not in trash." );
+            }
+
+        } else {
+            return Redirect::route('oils.index')
+                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+        }
+    }
+
+    public function deleteAll()
+    {
+
+        if (Auth::check()) {
+            $targets = Oil::withTrashed()->get();
+
+            if ($targets !== null) {
+                foreach ($targets as $target){
+                    $target->forceDelete();
+                }
+                return Redirect::back()->with('message', count($targets) . " products deleted" );
+            } else {
+                return Redirect::back()->with('message', "Trash was empty" );
+            }
+
+        } else {
+            return $this->authReject();
         }
     }
 
