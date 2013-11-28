@@ -58,7 +58,7 @@ class PaypalPaymentController extends BaseController {
             // payment id was previously stored in session in
             // CreatePaymentUsingPayPal.php
             $paymentId = $_SESSION['paymentId'];
-            $payment = Payment::get($paymentId, $apiContext);
+            $payment = Paypalpayment::get($paymentId, $this->_apiContext);
 
             // PaymentExecution object includes information necessary 
             // to execute a PayPal account payment. 
@@ -69,7 +69,7 @@ class PaypalPaymentController extends BaseController {
 
             //Execute the payment
             // (See bootstrap.php for more on `ApiContext`)
-            $payment->execute($execution, $apiContext);
+            $payment->execute($execution, $this->_apiContext);
 
             var_dump($payment->toArray());
 

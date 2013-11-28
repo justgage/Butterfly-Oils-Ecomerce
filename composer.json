@@ -7,7 +7,8 @@
       "laravel/framework": "4.0.*",
       "way/generators": "dev-master",
       "gloudemans/shoppingcart": "dev-master",
-      "cohensive/markdown": "dev-master"
+      "cohensive/markdown": "dev-master",
+      "way/generators": "dev-master"
    },
    "autoload": {
       "classmap": [
