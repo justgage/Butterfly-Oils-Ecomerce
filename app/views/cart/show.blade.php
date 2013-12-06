@@ -31,7 +31,7 @@
                     <td><a class="remove-item" data-id="{{ $item['rowid'] }}" href="#"><span class="glyphicon glyphicon-remove"></span> </a></td>
                    <td> <em><a href="{{ URL::route('oils.show', ["CAT" , Oil::find($item['id'])->urlName ]) }}">{{ $item['name'] }}</a></em> </td>
                    <td> ${{ $item['price'] }} </td>
-                   <td> {{ $item['qty'] }} </td>
+                   <td> <input type="text" value="{{ $item['qty'] }}" /> </td>
                    <td class="text-right"> <strong>${{ $item['subtotal'] }} </strong></td>
                 </tr>
             @else 

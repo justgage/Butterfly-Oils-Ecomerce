@@ -113,6 +113,7 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
         'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
         'Cohensive\Markdown\MarkdownServiceProvider',

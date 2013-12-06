@@ -2,25 +2,25 @@
 
 class PaypalPaymentController extends BaseController {
     /**
-     * object to authenticate the call.
-     * @param object $_apiContext
-     */
+    * object to authenticate the call.
+    * @param object $_apiContext
+    */
     private $_apiContext;
 
     /**
-     * Set the ClientId and the ClientSecret.
-     * @param 
-     *string $_ClientId
-     *string $_ClientSecret
-     */
+    * Set the ClientId and the ClientSecret.
+    * @param 
+    *string $_ClientId
+    *string $_ClientSecret
+    */
     private $_ClientId='ATgOqhBlVtBHklASxJjIh0W1Vk-uOoUPStsqiLKmzqYqUQ6NA4UxrZihV6KH';
     private $_ClientSecret='EPdcARARnKvt3eooxAfwpx1bZ_7WoiWnAV_SMbCAeIn7qRy9LH6fDfl8gR4g';
 
     /*
-     *   These construct set the SDK configuration dynamiclly, 
-     *   If you want to pick your configuration from the sdk_config.ini file
-     *   make sure to update you configuration there then grape the credentials using this code :
-     *   $this->_cred= Paypalpayment::OAuthTokenCredential();
+    *   These construct set the SDK configuration dynamiclly, 
+    *   If you want to pick your configuration from the sdk_config.ini file
+    *   make sure to update you configuration there then grape the credentials using this code :
+    *   $this->_cred= Paypalpayment::OAuthTokenCredential();
     */
     public function __construct(){
 
@@ -32,10 +32,10 @@ class PaypalPaymentController extends BaseController {
 
 
         $this->_apiContext = Paypalpayment:: ApiContext(
-                Paypalpayment::OAuthTokenCredential(
-                    $this->_ClientId,
-                    $this->_ClientSecret
-                )
+            Paypalpayment::OAuthTokenCredential(
+                $this->_ClientId,
+                $this->_ClientSecret
+            )
         );
 
         // dynamic configuration instead of using sdk_config.ini
@@ -68,10 +68,35 @@ class PaypalPaymentController extends BaseController {
             $execution->setPayer_id($_GET['PayerID']);
 
             //Execute the payment
-            // (See bootstrap.php for more on `ApiContext`)
-            $payment->execute($execution, $this->_apiContext);
+            $order = $payment->execute($execution, $this->_apiContext)->toArray();
 
-            var_dump($payment->toArray());
+            $payer = $order['payer']['payer_info'];
+
+            $log = new PayLog;
+
+            $log->state = $order['state'];
+
+            $log->paypal_id = $order['id'];
+            $log->payer_email = $payer['email'];
+            $log->payer_id = $payer['payer_id'];
+            $log->payer_first_name = $payer['first_name'];
+            $log->payer_last_name = $payer['last_name'];
+            $log->shipping_address = json_encode($payer['shipping_address']);
+
+            //note: you'll have to do foreach if you want multiple -v
+            $log->item_list = json_encode($order['transactions'][0]);
+            $log->total = $order['transactions'][0]['amount']['total'];
+
+            $log->save();
+
+            $cart = Cart::content()->toArray();
+            Cart::destroy();
+
+            return View::make('cart.paypalReturn')
+                            ->with('title' , 'Payment Sucsess!')
+                            ->with('address' ,$payer['shipping_address'])
+                            ->with('cart' , $cart)
+                            ->with('log' , $log);
 
         } else {
             echo "User cancelled payment.";
@@ -79,15 +104,24 @@ class PaypalPaymentController extends BaseController {
     }
 
     /*
-     * This is a method that usees paypal accounts to pay the payment 
-     * 
-     * status: working 
-     *
-     * TODO: test items ability
-     * TODO: add cart's items to the paypal purchace
+     * format the number in the right format
      */
+    private function money_format($float) {
+        return number_format((float) $float, 2, '.', '');
+    }
+
+    /*
+    * This is a method that usees paypal accounts to pay the payment 
+    * 
+    * status: working 
+    *
+    * TODO: test items ability
+    * TODO: add cart's items to the paypal purchace
+    */
     public function createPaypal() {
-        
+        $subtotal = (float) Cart::total();
+        $shipping = 5.00;
+
         // ### Payer
         // A resource representing a Payer that funds a payment
         // For paypal account payments, set payment method
@@ -104,7 +138,7 @@ class PaypalPaymentController extends BaseController {
             $item = Paypalpayment::Item();
             $item->setCurrency( 'USD' );
             $item->setName( $cartItem['name'] );
-            $item->setPrice( number_format((float) $cartItem['price'], 2, '.', '') );
+            $item->setPrice( $this->money_format($cartItem['price']) );
             $item->setQuantity( (string) $cartItem['qty'] );
 
             $itemsArray[] = $item;
@@ -112,25 +146,30 @@ class PaypalPaymentController extends BaseController {
 
         $itemList = Paypalpayment::ItemList();
         $itemList->setItems( $itemsArray );
-        
+
+        // shipping
+        $amountDetails = Paypalpayment::AmountDetails();
+        $amountDetails->setShipping($this->money_format($shipping));
+        $amountDetails->setSubtotal($this->money_format($subtotal));
+
         // ### Amount
         // Lets you specify a payment amount.
         // You can also specify additional details
         // such as shipping, tax.
         $amount = Paypalpayment::Amount();
         $amount->setCurrency("USD");
-        $amount->setTotal( number_format((float) Cart::total(), 2, '.', '') );
+        $amount->setTotal($this->money_format($subtotal + $shipping));
+        $amount->setDetails($amountDetails);
 
 
         $transaction = Paypalpayment::Transaction();
         $transaction->setAmount($amount)
-            ->setDescription("Buying from ButterflyOils.com")
-            ->setItemList($itemList);
-        
+        ->setDescription("Buying from ButterflyOils.com")
+        ->setItemList($itemList);
+
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
         // payment approval/ cancellation.
-        $baseUrl      = Paypalpayment::getBaseUrl();
         $redirectUrls = Paypalpayment::RedirectUrls();
         $redirectUrls->setReturnUrl(URL::to("paypal/execute?success=true"));
         $redirectUrls->setCancelUrl(URL::to("paypal/execute?success=false"));
@@ -184,12 +223,12 @@ class PaypalPaymentController extends BaseController {
     }
 
     /*
-     * Create payment using credit card
-     * url: payment/create-tempate
-     * 
-     * This will add a payment without the user ever 
-     * seeing paypal, the credit card will be processed
-     * by paypal and will return the answer.
+    * Create payment using credit card
+    * url: payment/create-tempate
+    * 
+    * This will add a payment without the user ever 
+    * seeing paypal, the credit card will be processed
+    * by paypal and will return the answer.
     */
     public function getCreateTest() {
 
@@ -284,8 +323,8 @@ class PaypalPaymentController extends BaseController {
     }  
 
     /*
-        Use this call to get a list of payments. 
-        url:payment/
+    Use this call to get a list of payments. 
+    url:payment/
     */
     public function getIndex(){
 
@@ -293,6 +332,6 @@ class PaypalPaymentController extends BaseController {
 
         $payments = Paypalpayment::all(array('count' => 1, 'start_index' => 0),$this->_apiContext);
 
-         print_r($payments);
+        print_r($payments);
     }
 }
