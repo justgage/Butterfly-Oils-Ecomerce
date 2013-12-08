@@ -114,9 +114,9 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 
-        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
-        'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
-        'Cohensive\Markdown\MarkdownServiceProvider',
+        	'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+	        'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
+	        'Cohensive\Markdown\MarkdownServiceProvider',
 
 	),
 

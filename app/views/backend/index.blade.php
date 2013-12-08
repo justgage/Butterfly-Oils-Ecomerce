@@ -1,13 +1,16 @@
 @extends('layout.main')
+
   
 @section('content')
   <div class="pull-right">
-   <a href="{{ URL::route('oils.create')}}" class="btn btn-primary">+ Add Product</a>
-   <a class="btn btn-warning" href="{{ URL::route('backend.logout')}}"> Logout </a> 
+      <a class="btn btn-warning" href="{{ URL::route('backend.logout')}}"> Logout </a> 
   </div>
+  @include('backend.include.nav')
 
 <h2>Product list</h2>
-
+<a href="{{ URL::route('oils.create')}}" class="">
+    + Add Product
+</a>
 <div class="panel panel-default">
     @include("backend.include.table", array("oils" => $oils) )
 </div>

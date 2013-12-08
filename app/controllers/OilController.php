@@ -288,7 +288,7 @@ class OilController extends \BaseController {
     {
 
         if (Auth::check()) {
-            $targets = Oil::withTrashed()->get();
+            $targets = Oil::onlyTrashed()->get();
 
             if ($targets !== null) {
                 foreach ($targets as $target){

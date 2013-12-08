@@ -14,5 +14,5 @@
    <a class="btn btn-primary btn-lg" href="{{ route('oils.index') }}">Go to the Shop »</a>
 </div>
 </div>
-@stop
 
+@stop

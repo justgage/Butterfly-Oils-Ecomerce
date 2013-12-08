@@ -36,7 +36,9 @@
         @foreach($cats as $cat)
            <li>
             @if($cat->visible == true)
-              <a href=" {{ route('cats.show', ["catId" => $cat->urlName])}} ">{{ $cat-> name}}</a>
+              <a href=" {{ route('cats.show', ["catId" => $cat->urlName])}} ">
+                  {{ $cat-> name}}
+              </a>
             @endif
            </li>
         @endforeach
@@ -44,7 +46,10 @@
         </ul>
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="{{ URL::to('cart/show'); }}">Shopping Cart (<span id="cart_total_count">{{ Cart::count() }}</span>)</a>  
+            <a href="{{ URL::to('cart/show'); }}">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+                Shopping Cart (<span id="cart_total_count">{{ Cart::count() }}</span>)
+            </a>  
         </li>
         <li>
             @if( Auth::check() )
