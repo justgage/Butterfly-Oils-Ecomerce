@@ -2,61 +2,90 @@
 
 class CatController extends \BaseController {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
+    /**
+    * Display a listing of the resource.
+    *
+    * @return Response
+    */
+    public function index()
+    {
         $cats = Cat::all();
         return View::make('cats.index')
-            ->with('title', "List of product categories")
-            ->with('cats', $cats);
-	}
+        ->with('title', "List of product categories")
+        ->with('cats', $cats);
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
+    /**
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
+    public function create()
+    {
+        $cats_raw = Cat::all();
+
+        $cats;
+
+        foreach ($cats_raw as $cat){
+            $cats[$cat->id] = $cat->name;
+        }
+            //one for adding new categorys
+            $cats['new'] = "--Create new Category--";
+
         if (Auth::check()) {
             return View::make('cats.create')
-                ->with('title', 'Creating a new category');
+            ->with('title', 'Creating a new category')
+            ->with('cats', $cats);
         } else {
             return Redirect::route('oils.index')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+            ->with('message' , "Sorry you don't have rights to create a Category, please login");
         }
-	}
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-       if (Auth::check() === false) { // if NOT Authenticated
+    /**
+    * Store a newly created resource in storage.
+    *
+    * @return Response
+    */
+    public function store()
+    {
+        if (Auth::check() === false) { // if NOT Authenticated
 
-          return Redirect::route('cats.index')
-              ->with('message' , "Sorry you don't have rights to create a Category, please login"); 
+            return Redirect::route('cats.index')
+            ->with('message' , "Sorry you don't have rights to create a Category, please login");
 
-      } else { // We are loged in as admin
+        } else { // We are loged in as admin
 
-      }
+        $valid_cat = Cat::validate(Input::all());
 
-	}
+        if ($valid_cat->fails()) {
+            return Redirect::route('cats.create')
+            ->withErrors($valid_cat)
+            ->withInput(); 
+        }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($urlName)
-	{
+        $cat = new Cat;
+        $cat->name = Input::get('cat_name');
+        $cat->urlName = Input::get('cat_urlName');
+        $cat->info = Input::get('cat_info');
+        $cat->visible = true;
+        $cat->save();
+        return Redirect::route('backend.index')
+            ->with('message', 'Category ' . $cat->name . ' was created sucsessfuly');
+    }
+
+
+
+    }
+
+    /**
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return Response
+    */
+    public function show($urlName)
+    {
         $cat = Cat::where('urlName', '=', $urlName)->first();
 
         $oils = $cat->oils;
@@ -67,39 +96,43 @@ class CatController extends \BaseController {
         $v->pretty_url = $this->pretty_url();
 
         return $v;
-	}
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    /**
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return Response
+    */
+    public function edit($id)
+    {
+        //
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    /**
+    * Update the specified resource in storage.
+    *
+    * @param  int  $id
+    * @return Response
+    */
+    public function update($id)
+    {
+        //
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return Response
+    */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function missingMethod($array = array()) {
+        return $array;
+    }
 
 }

@@ -66,7 +66,7 @@ class CartController extends BaseController {
         }
     }
 
-    public function missingMethod ($errors) {
+    public function missingMethod ($errors = array()) {
 
         return Redirect::to('cart/show')
             ->with('message', "404 the page " . URL::to('/') . "/cart/$errors[0], was NOT FOUND!");

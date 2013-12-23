@@ -1,4 +1,4 @@
-<?php
+VG<?php
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
@@ -60,3 +60,4 @@ $app->run();
 */
 
 $app->shutdown();
+

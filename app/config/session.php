@@ -122,4 +122,9 @@ return array(
 
 	'domain' => null,
 
+    /*
+      laravel 4.1 added
+      */
+    'expire_on_close' => false,
+
 );
