@@ -1,5 +1,33 @@
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#">Products</a></li>
-  <li><a href="#">Categories</a></li>
-  <li><a href="#">Purchase logs</a></li>
+
+    <?php
+    if (isset($tab) === false) {
+        $tab = 0;
+    }
+    ?>
+
+  @if($tab === 0)
+      <li class="active">
+  @else
+      <li>
+  @endif
+      <a href="{{ URL::route('backend.index') }} ">Products</a>
+  </li>
+
+  @if($tab === 1)
+      <li class="active">
+  @else
+      <li>
+  @endif
+      <a href="{{ URL::route('backend.category') }}">Categories</a>
+  </li>
+
+  @if($tab === 3)
+      <li class="active">
+  @else
+      <li>
+  @endif
+      <a href="#">Purchase logs</a>
+  </li>
+
 </ul>

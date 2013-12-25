@@ -37,6 +37,18 @@ class UserController extends \BaseController {
     Auth::logout();
     return Redirect::to('/')->with(['message'=>'Logged out']);
   }
-} 
+
+  public function category() {
+      $cats = Cat::all();
+      return View::make("backend.category")
+        ->with([
+            "title" => "Backend categories",
+            "pretty_url" => $this->pretty_url(),
+            "cats" => $cats,
+            "tab" => 1
+        ]);
+  }
+
+} // end of UserController
 
 ?>

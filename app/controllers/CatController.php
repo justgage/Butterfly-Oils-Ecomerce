@@ -128,7 +128,32 @@ class CatController extends \BaseController {
     */
     public function destroy($id)
     {
-        //
+        if (Auth::check()) {
+            $cat = Cat::find($id);
+
+            if ($cat !== null) {
+
+                $oils = $cat->oils;
+                $other = Cat::find(1);
+
+                // reasign every category to "other"
+                foreach ($oils as $oil){
+                    $oil->cat()->associate($other);
+                    $oil->save();
+                }
+
+                $cat->delete();
+                return Redirect::route('backend.category')
+                    ->with('message', 'Category "' . $cat->name . '" was deleted!');
+            } else {
+                return Redirect::route('backend.category')
+                    ->with('message', 'Category does not exist!' );
+            }
+
+        } else {
+            return Redirect::route('oils.index')
+            ->with('message' , "Sorry you don't have rights to create a Category, please login");
+        }
     }
 
     public function missingMethod($array = array()) {
