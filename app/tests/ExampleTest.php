@@ -1,17 +1,19 @@
 <?php
 
-class ExampleTest extends TestCase {
+class SessionTest extends TestCase {
 
 	/**
 	 * A basic functional test example.
 	 *
 	 * @return void
 	 */
-	public function testBasicExample()
+	public function testSession()
 	{
-		$crawler = $this->client->request('GET', '/');
+        Session::put("SessionTest", 'test1234');
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+        $val = Session::get("SessionTest", null);
+
+        return $this->assertEquals("test1234", $val);
 	}
 
 }

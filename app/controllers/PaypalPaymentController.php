@@ -57,7 +57,10 @@ class PaypalPaymentController extends BaseController {
             // Get the payment Object by passing paymentId
             // payment id was previously stored in session in
             // CreatePaymentUsingPayPal.php
-            $paymentId = $_SESSION['paymentId'];
+
+            $log = PayLog::find( Session::get('log_id') );
+
+            $paymentId = $log->payment_id;
             $payment = Paypalpayment::get($paymentId, $this->_apiContext);
 
             // PaymentExecution object includes information necessary 
@@ -67,14 +70,21 @@ class PaypalPaymentController extends BaseController {
             $execution = Paypalpayment::PaymentExecution();
             $execution->setPayer_id($_GET['PayerID']);
 
+
             //Execute the payment
+        try {
             $order = $payment->execute($execution, $this->_apiContext)->toArray();
+        } catch (\PPConnectionException $ex) {
+            return "Exception: " . $ex->getMessage() . PHP_EOL;
+            var_dump($ex->getData());
+            exit(1);
+        }
 
             $payer = $order['payer']['payer_info'];
 
-            $log = new PayLog;
 
             $log->state = $order['state'];
+            $log->viewed = false;
 
             $log->paypal_id = $order['id'];
             $log->payer_email = $payer['email'];
@@ -133,6 +143,12 @@ class PaypalPaymentController extends BaseController {
         // These repersent the items in the cart
         $itemsArray = array();
         $cartItems = Cart::content()->toArray();
+        Log::info(var_export($cartItems, true));
+
+        //in case their cart is empty
+        if (empty($cartItems)) {
+            Redirect::route('cart.show');
+        }
 
         foreach ($cartItems as $cartItem){
             $item = Paypalpayment::Item();
@@ -173,6 +189,7 @@ class PaypalPaymentController extends BaseController {
         $redirectUrls = Paypalpayment::RedirectUrls();
         $redirectUrls->setReturnUrl(URL::to("paypal/execute?success=true"));
         $redirectUrls->setCancelUrl(URL::to("paypal/execute?success=false"));
+
         // ### Payment
         // A Payment Resource; create one using
         // the above types and intent set to 'sale'
@@ -181,6 +198,8 @@ class PaypalPaymentController extends BaseController {
         $payment->setPayer($payer);
         $payment->setRedirectUrls($redirectUrls);
         $payment->setTransactions(array($transaction));
+
+        Log::info("cool ->". var_export($payment->toArray(), true) );
 
         // ### Create Payment
         // Create a payment by calling the 'create' method
@@ -192,6 +211,7 @@ class PaypalPaymentController extends BaseController {
         try {
             $payment->create($this->_apiContext);
         } catch (\PPConnectionException $ex) {
+            
             return "Exception: " . $ex->getMessage() . PHP_EOL;
             var_dump($ex->getData());
             exit(1);
@@ -207,6 +227,7 @@ class PaypalPaymentController extends BaseController {
                 break;
             }
         }
+
         // ### Redirect buyer to PayPal website
         // Save the payment id so that you can 'complete' the payment
         // once the buyer approves the payment and is redirected
@@ -215,7 +236,15 @@ class PaypalPaymentController extends BaseController {
         // It is not a great idea to store the payment id
         // in the session. In a real world app, you may want to 
         // store the payment id in a database.
-        $_SESSION['paymentId'] = $payment->getId();
+
+
+        $pay_id = $payment->getId();
+        // store the payment_id
+        $log = PayLog::firstOrNew( array("payment_id" => $pay_id) );
+        $log->save();
+
+        Session::put( 'log_id' , $log->id);
+
         if(isset($redirectUrl)) {
             header("Location: $redirectUrl");
             exit;

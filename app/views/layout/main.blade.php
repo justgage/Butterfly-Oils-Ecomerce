@@ -1,86 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>{{ $title }} | ButterflyOils.com</title>
-  {{ HTML::style('css/main.css')}}
-  <!-- Bootstrap -->
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    @section('head')
-    @show
+    <head>
+        <title>{{ $title }} | ButterflyOils.com</title>
+        {{ HTML::style('css/main.css')}}
+        <!-- Bootstrap -->
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+        @section('head')
+        @show
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="../../assets/js/html5shiv.js"></script>
+        <script src="../../assets/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
 
-<div id="header">
-<div class="navbar navbar-default navbar-fixed-top">
-<div class="container">
-   <div class="navbar-header">
-      <a class="navbar-brand" href="{{ route('home') }}">ButterflyOils</a>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            {{-- Three lines for mobile button --}}
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-   </div>
-   <div class="collapse navbar-collapse">
-     <div class="navbar-collapse collapse">
-            <?php $cats = Cat::all(); ?>
-        <ul class="nav navbar-nav">
-        @foreach($cats as $cat)
-           <li>
-            @if($cat->visible == true)
-              <a href=" {{ route('cats.show', ["catId" => $cat->urlName])}} ">
-                  {{ $cat-> name}}
-              </a>
-            @endif
-           </li>
-        @endforeach
-   
-        </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="{{ URL::to('cart/show'); }}">
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-                Shopping Cart (<span id="cart_total_count">{{ Cart::count() }}</span>)
-            </a>  
-        </li>
-        <li>
-            @if( Auth::check() )
-                <a href="{{ route('backend.index') }}">Backend</a>
-            @else
-                <a href=" {{ route('login')}} ">Login</a>
-            @endif
-        </li>
-   </ul>
-     </div>
-   </div>
-</div>
+        <div id="header">
+            @include('layout.nav');
+        </div>
 
-</div>
-</div>
-
-
-<div class="container">
-<div id="content">
-{{-- this will show the message if it exists --}}
-@include('includes.message')
-  @section('content')
-  this is the main content
-  @show
-</div>
-</div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
-@section('script')
-@show
-</body>
+        <div class="container">
+            <div id="content">
+                {{-- this will show the message if it exists --}}
+                @include('includes.message')
+                @section('content')
+                this is the main content
+                @show
+            </div>
+        </div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        @section('script')
+        @show
+    </body>
 </html>

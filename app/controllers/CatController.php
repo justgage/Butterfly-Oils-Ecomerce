@@ -9,7 +9,8 @@ class CatController extends \BaseController {
     */
     public function index()
     {
-        $cats = Cat::all();
+        //get only visible ones
+        $cats = Cat::where('visible', '1')->get();
         return View::make('cats.index')
         ->with('title', "List of product categories")
         ->with('cats', $cats);
@@ -29,8 +30,9 @@ class CatController extends \BaseController {
         foreach ($cats_raw as $cat){
             $cats[$cat->id] = $cat->name;
         }
-            //one for adding new categorys
-            $cats['new'] = "--Create new Category--";
+
+        //one for adding new categorys
+        $cats['new'] = "--Create new Category--";
 
         if (Auth::check()) {
             return View::make('cats.create')
@@ -144,7 +146,7 @@ class CatController extends \BaseController {
 
                 $cat->delete();
                 return Redirect::route('backend.category')
-                    ->with('message', 'Category "' . $cat->name . '" was deleted!');
+                    ->with('message', 'Category "' . $cat->name . '" was deleted!, all Oils inside where moved to "Other"');
             } else {
                 return Redirect::route('backend.category')
                     ->with('message', 'Category does not exist!' );

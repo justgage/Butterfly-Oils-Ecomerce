@@ -44,3 +44,11 @@
     background-color:lightgrey;
     padding: 10px
 }
+
+#butter-logo {
+    padding:10px;
+}
+
+#butter-logo:hover {
+    background-color:#eee;
+}

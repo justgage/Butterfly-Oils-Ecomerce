@@ -31,6 +31,7 @@ Route::post('backend/check', array("as" => 'backend.check', 'uses' => 'UserContr
 Route::group(array('before' => 'auth'), function() {
     Route::get('backend', array("as" => 'backend.index', 'uses' => 'UserController@index'));
     Route::get('backend/category', array("as" => 'backend.category', 'uses' => 'UserController@category'));
+    Route::get('backend/logs', array("as" => 'backend.logs', 'uses' => 'LogsController@index'));
 });
 
 Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserController@logout'));

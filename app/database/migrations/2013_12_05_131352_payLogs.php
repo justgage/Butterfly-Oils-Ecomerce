@@ -14,18 +14,21 @@ class PayLogs extends Migration {
         //schema for the tags table
         Schema::create('payLogs', function($table) {
             $table->increments('id');
+            $table->string('payment_id');
 
-            $table->string('state');
+            $table->boolean('viewed')->default(false);
 
-            $table->string('paypal_id');
-            $table->string('payer_email');
-            $table->string('payer_id');
-            $table->string('payer_first_name');
-            $table->string('payer_last_name');
+            $table->string('state')->default('unfinished!');
 
-            $table->text('shipping_address');   // json
-            $table->text('item_list');          // json
-            $table->float('total');
+            $table->string('paypal_id')->nullable();
+            $table->string('payer_email')->nullable();
+            $table->string('payer_id')->nullable();
+            $table->string('payer_first_name')->nullable();
+            $table->string('payer_last_name')->nullable();
+
+            $table->text('shipping_address')->nullable();   // json
+            $table->text('item_list')->nullable();          // json
+            $table->float('total')->nullable();
             $table->timestamps();
         });
 	}

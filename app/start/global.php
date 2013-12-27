@@ -48,6 +48,12 @@ Log::getMonolog()->pushHandler(new Monolog\Handler\ChromePHPHandler);
 | shown, which includes a detailed stack trace during debug.
 |
 */
+App::error(function(PayPal\Exception\PPConnectionException $ex, $code)
+{
+	Log::error($ex);
+    Log::error( "Exception: " . $ex->getMessage() . PHP_EOL);
+    Log::error(var_export($ex->getData(), true));
+});
 
 App::error(function(Exception $exception, $code)
 {

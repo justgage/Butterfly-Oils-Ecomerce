@@ -22,12 +22,12 @@
       <a href="{{ URL::route('backend.category') }}">Categories</a>
   </li>
 
-  @if($tab === 3)
+  @if($tab === 2)
       <li class="active">
   @else
       <li>
   @endif
-      <a href="#">Purchase logs</a>
+      <a href="{{ URL::route('backend.logs') }}">Purchase logs</a>
   </li>
 
 </ul>

@@ -27,7 +27,7 @@ class CatMake extends Migration {
 
         $cat->name = "Other";
         $cat->urlName = "other";
-        $cat->info = "All the other products";
+        $cat->info = "A place to put oils when their category is deleted.";
         $cat->visible = false;
 
         $cat->save();

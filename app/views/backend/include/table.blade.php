@@ -2,8 +2,8 @@
 <table class="table table-striped table-hover" width="100%" cellspacing="0">
    <thead>
       <tr>
-         <th>Visible</th>
          <th>Name</th>
+         <th>Hidden?</th>
          <th>Category</th>
          <th>Price</th>
          <th>Compare Price</th>
@@ -18,8 +18,8 @@
     @else
        <tr class="not-visible">
     @endif
-          <td>{{ ($oil->visible == true ? 'true' : 'false') }} </td>
           <td> <a href="{{ $pretty_url($oil->id) }}"/>  {{ $oil->name  }}</a></td>
+          <td>{{ ($oil->visible == true ? 'no' : 'yes') }} </td>
           <td> <a href="{{ URL::route('cats.show', ['catId' => $oil->cat->urlName] );}}">
                     {{ $oil->cat->name}}
                </a>
