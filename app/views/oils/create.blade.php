@@ -166,14 +166,11 @@ $( document ).ready(function () {
     // Adding custom typeahead support using http://twitter.github.io/typeahead.js
     $('#tags_input').tagsinput('input').typeahead({                                
           name: 'uses',                                                          
-          prefech: "{{ URL::route('tags.ajax')}}",
-          limit: 10                                                                   
+          prefetch: "{{ URL::route('tags.ajax')}}"
       }).bind('typeahead:selected', $.proxy(function (obj, datum) {  
-            console.log("clear");
             this.tagsinput('add', datum.value);
             var $input = this.tagsinput('input')
             $input.typeahead('setQuery', '');
-            console.log($input.val());
 
           }, $('#tags_input')));;
 

@@ -84,7 +84,6 @@ class TagController extends \BaseController {
 	{
 		//
 	}
-
     /**
      * returns a list of current avalible tags
      */
@@ -93,9 +92,13 @@ class TagController extends \BaseController {
         $tags = Tag::all();
 
         $tags_arr = array();
+        $i = 0;
 
         foreach ($tags as $single){
-            $tags_arr[] = $single->name;
+            $tags_arr[$i] = array();
+            $tags_arr[$i]["value"] = $single->name;
+            $tags_arr[$i]["tokens"] = explode(" ", $single->name);
+            $i += 1;
         }
 
         return json_encode($tags_arr);

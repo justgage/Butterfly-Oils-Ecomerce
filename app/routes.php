@@ -73,7 +73,7 @@ Route::resource('cats', 'CatController',
 Route::get('shop/categories', ['as' => 'cats.index', 'uses' => 'CatController@index']);
 
 // Tags show
-Route::post('shop/uses/ajax_list', ['as' => 'tags.ajax', 'uses' => 'TagController@ajax_list']);
+Route::get('uses/ajax_list', ['as' => 'tags.ajax', 'uses' => 'TagController@ajax_list']);
 Route::get('shop/uses/{tagId}', ['as' => 'tags.show', 'uses' => 'TagController@show']);
 
 //Cat index
