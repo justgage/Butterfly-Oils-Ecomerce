@@ -53,6 +53,11 @@ Route::get('paypal/execute', array('as' => 'paypal.execute', 'uses' => 'PaypalPa
 //Route::get('paypal', array('https', 'as' => 'paypal.create', 'uses' => 'PaypalPaymentController@createPaypal'));
 // Route::get('paypal/execute', array('https', 'as' => 'paypal.execute', 'uses' => 'PaypalPaymentController@execute'));
 
+/******************************
+ * Search
+ *****************************/
+Route::get('shop/search', ['as' => 'search.show', 'uses' => 'SearchController@show']);
+
 
 /******************************
  * Oils
@@ -81,7 +86,7 @@ Route::get('shop/{catId}', ['as' => 'cats.show', 'uses' => 'CatController@show']
 
 //Oils
 Route::get('shop/{catId}/{oilId}', ['as' => 'oils.show', 'uses' => 'OilController@show']);
-Route::get('ship/oils/delete/{id}', ['as' => 'oils.delete', 'uses' => 'OilController@delete']);
-Route::get('ship/oils/restore/{id}', ['as' => 'oils.restore', 'uses' => 'OilController@restore']);
-Route::get('ship/oils/delete-all', ['as' => 'oils.deleteAll', 'uses' => 'OilController@deleteAll']);
+Route::get('shop/oils/delete/{id}', ['as' => 'oils.delete', 'uses' => 'OilController@delete']);
+Route::get('shop/oils/restore/{id}', ['as' => 'oils.restore', 'uses' => 'OilController@restore']);
+Route::get('shop/oils/delete-all', ['as' => 'oils.deleteAll', 'uses' => 'OilController@deleteAll']);
 

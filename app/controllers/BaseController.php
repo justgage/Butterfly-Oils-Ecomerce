@@ -61,4 +61,8 @@ class BaseController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
+    
+    public function missingMethod($array = array()) {
+        return view::make('front.404');
+    }
 }
