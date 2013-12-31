@@ -6,29 +6,60 @@
 @stop
 
 @section('content')
-   <h1> {{ $oil->name }} </h1>
 
    <div class="row">
-         @foreach($oil->photos as $photo)
-         <div class="col-md-3">
-            <a class="oil_show_photo_a" href="{{$photo->path}}"><img class="responsive img-thumbnail oil_show_photo" src="{{ $photo->path }}" alt="photo"/></a>
-         </div>
-         @endforeach
+      <div class="col-sm-7">
+             <h1> {{ $oil->name }} </h1>
+         <div class="well">
+             <?php $saved = ($oil->compare_price - $oil->price) ; ?>
 
-      <div class="col-sm-12 col-md-3">
-         <dt>Price</dt>
-         <dd> {{ $oil->price}}</dd>
-         <?php $saved = ($oil->compare_price - $oil->price) ; ?>
-      
-         @if ($oil->price < $oil->compare_price) 
-          <dt>Competitors price</dt>
-          <dd> {{ $oil->compare_price}}</dd>
-             <p> You save, ${{$saved}} or {{ round( ($oil->price / $oil->compare_price)  * 100 ) }}% </p>
-         @endif
+             @if ($oil->price < $oil->compare_price) 
+                 <div class="comp-price">
+                     <dd>
+                         ${{ number_format($oil->compare_price,2) }}
+                     </dd>
+                     <dt>
+                         Competitors price
+                    </dt>
+                 </div>
+             @endif
+    
+             <div class="price">
+                 <dd> ${{ number_format($oil->price, 2) }}
+             </dd>
+                 <dt>Price</dt>
+             </div>
+
+             <div>
+                 <div class="oil-price text-center">
+                     <button data-id="{{ $oil->id }}" class="cart_add btn btn-lg btn-success" >
+                         <span class="cart_num" >Add to Cart</span> 
+                         <span class="glyphicon glyphicon-shopping-cart"></span>
+                     </button>
+                 </div>
+             </div>
+         </div>
       
          <h2>Description</h2>
          <div> {{ Markdown::transform($oil->info) }}</div>
-      </div>
+
+         <h2>Uses</h2>
+             <div class="oil-uses">
+                 @foreach($tags as $tag)
+                 <a href=" {{ URL::route('tags.show', $tag->urlName) }} ">
+                     {{ $tag->name }}
+                 </a>
+                 @endforeach
+             </div>
+             <div class="clearfix" ></div>
+     </div>
+       <div class="col-sm-offset-1 col-sm-3">
+           <h2>Images</h2>
+           @foreach($oil->photos as $photo)
+           <a class="oil_show_photo_a" href="{{$photo->path}}">
+               <img class="img-responsive oil_show_photo" src="{{ $photo->path }}" alt="photo"/></a>
+           @endforeach
+       </div>
    </div>
 @stop
 
@@ -48,5 +79,7 @@
 
    });
    </script>
+
+    @include('oils.include.cart_js');
 
 @stop

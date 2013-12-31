@@ -244,6 +244,7 @@ class PaypalPaymentController extends BaseController {
         $log->save();
 
         Session::put( 'log_id' , $log->id);
+        Session::save();
 
         if(isset($redirectUrl)) {
             header("Location: $redirectUrl");

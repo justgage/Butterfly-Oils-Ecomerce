@@ -170,10 +170,13 @@ class OilController extends \BaseController {
 
         $oil = Oil::where('urlName', '=', $urlName)->first();
 
+
         if  ($oil !== NULL) {
+            $tags = $oil->tags;
             $v = View::make('oils.show');
             $v->title = "oil " . $oil->name;
             $v->oil = $oil;
+            $v->tags = $tags;
             return $v;
 
         } else {

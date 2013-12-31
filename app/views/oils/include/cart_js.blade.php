@@ -12,6 +12,7 @@ $( document ).ready(function () {
     }
 
     $(".cart_add").click(function() {
+        console.log("Adding to cart...");
           var id = $(this).attr("data-id");
           var me = this;
           $.post(laravel_URL, {id : id}, function (data) {

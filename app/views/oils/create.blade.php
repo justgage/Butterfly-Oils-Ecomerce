@@ -71,6 +71,14 @@
  </div>
 
    <div class="{{ $col_size }}">
+       {{-- INFO --}}
+          {{ Form::label('info', 'Oil Info') }}
+          <p> {{ Form::textarea('info', Input::old('name'), 
+                    ['placeholder' => 'This is what the oil is (basic description, ingredints, etc..)',
+                     'class' => 'form-control',
+                     'rows' => 3
+                    ]) }} </p>
+
        {{-- CAT DROP DOWN  --}}
         <h3> 
             {{ Form::label('cat_id', 'Category') }} 
@@ -88,25 +96,18 @@
                     ['placeholder' => 'small description of category', 'class' => 'form-control']) }} </p>
                
         </div>
-   {{-- INFO --}}
-      {{ Form::label('info', 'Oil Info') }}
-      <p> {{ Form::textarea('info', Input::old('name'), 
-                ['placeholder' => 'This is what the oil is (basic description, ingredints, etc..)',
-                 'class' => 'form-control',
-                 'rows' => 3
-                ]) }} </p>
-   
-   {{-- IMAGE UPLOAD --}}
-   {{ Form::label('image', 'Product_Images') }}
-      <button type="button" class='upload_button btn btn-default pull-right'>Add more a photos</button>
-      <p class="upload_input"> {{ Form::file('image[]') }} </p>
-   
-{{-- VISIBLE --}}
-   <h4>
-      Show in shop {{ Form::checkbox('visible', 'visible', ['checked' => Input::old('visible')] ) }} 
-   </h4>
-{{-- SUBMIT --}}
-   {{ Form::submit('Save', array('class' => 'btn-lg btn-primary pull-right')) }}
+       
+       {{-- IMAGE UPLOAD --}}
+       {{ Form::label('image', 'Product_Images') }}
+          <button type="button" class='upload_button btn btn-default pull-right'>Add more a photos</button>
+          <p class="upload_input"> {{ Form::file('image[]') }} </p>
+       
+    {{-- VISIBLE --}}
+       <h4>
+          Show in shop {{ Form::checkbox('visible', 'visible', ['checked' => Input::old('visible')] ) }} 
+       </h4>
+    {{-- SUBMIT --}}
+       {{ Form::submit('Save', array('class' => 'btn-lg btn-primary pull-right')) }}
    </div>
 
 </div>

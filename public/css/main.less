@@ -1,11 +1,3 @@
-#message {
-   background-color:orange;
-   color:white;
-   border-radius: 15px;
-   padding: 10px;
-   margin: 10px;
-}
-
 .oil_show_photo {
    width: 300px;
    float: left;
@@ -15,24 +7,27 @@
 }
 
 #content {
-   margin:75px 0 10px 0;
+   margin:75px auto 10px;
+   max-width:950px;
 }
 
-.backend-table tr td {
+.backend-table { 
+  tr td {
     padding:10px;
-}
+  }
 
-.backend-table tr:nth-child(2n) {
+  tr:nth-child(2n) {
     background:#F7F7F7;
-} 
-
-.not-visible a {
-    color:grey;
+  } 
 }
 
-.not-visible {
-    color:grey;
-    font-style:italic;
+.not-visible{
+  color:grey;
+  font-style:italic;
+
+  a {
+      color:grey;
+  }
 }
 
 .img_empty {
@@ -43,4 +38,33 @@
 #cat_new {
     background-color:lightgrey;
     padding: 10px
+}
+
+.price {
+  font-size:1.5em;
+  dd {
+      float:right;
+      color: green;
+    }
+}
+
+.comp-price { 
+  dd {
+    float:right;
+    text-align:right;
+    text-decoration:line-through;
+  }
+}
+
+.oil-uses {
+    a {
+      background-color:#eee;
+      padding: 0.4em;
+      float: left;
+      margin:0.5em;
+      &:hover {
+        text-decoration:none;
+        background-color:#bbb;
+      }
+    }
 }

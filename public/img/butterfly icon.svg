@@ -15,11 +15,21 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="butterfly icon.svg">
   <defs
      id="defs4">
     <linearGradient
-       inkscape:collect="always"
+       id="linearGradient12732">
+      <stop
+         id="stop12734"
+         offset="0"
+         style="stop-color:#4d7806;stop-opacity:1" />
+      <stop
+         id="stop12736"
+         offset="1"
+         style="stop-color:#00af25;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
        id="linearGradient12575">
       <stop
          style="stop-color:#75190a;stop-opacity:1"
@@ -249,6 +259,26 @@
        y1="-52.31937"
        x2="41.937248"
        y2="217.96336" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient12732"
+       id="linearGradient12728"
+       gradientUnits="userSpaceOnUse"
+       x1="-424.04236"
+       y1="650.7077"
+       x2="-424.04236"
+       y2="460.29379"
+       gradientTransform="translate(44.194174,110.48543)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient12732"
+       id="linearGradient12744"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(710.05824,110.48543)"
+       x1="-424.04236"
+       y1="650.7077"
+       x2="-424.04236"
+       y2="460.29379" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -257,11 +287,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.22627417"
-     inkscape:cx="184.8712"
-     inkscape:cy="354.65439"
+     inkscape:zoom="0.45254834"
+     inkscape:cx="-79.7364"
+     inkscape:cy="364.02989"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="719"
@@ -292,47 +322,72 @@
      id="layer2"
      inkscape:label="Page">
     <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly_icon_shot.png"
+       ry="11.921878"
+       y="-357.51904"
+       x="-1114.0498"
+       height="2016.4659"
+       width="2016.4659"
+       id="rect12738"
+       style="fill:#fffae6;fill-opacity:1;stroke:none" />
+    <rect
        style="fill:#fffae6;fill-opacity:1;stroke:none"
        id="rect12331"
-       width="8406.1865"
-       height="8406.1865"
-       x="-2389.0518"
-       y="-2811.7488"
-       ry="49.699593" />
-    <g
-       id="g12597"
-       transform="translate(44.194174,110.48543)">
-      <text
-         xml:space="preserve"
-         style="font-size:276.44876099px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.29203539;fill:#28170b;fill-opacity:1;stroke:none;filter:url(#filter12593);font-family:Engagement;-inkscape-font-specification:Engagement"
-         x="-861.19482"
-         y="662.2265"
-         id="text12583"
-         sodipodi:linespacing="125%"
-         inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly.png"
-         inkscape:export-xdpi="90"
-         inkscape:export-ydpi="90"><tspan
-           sodipodi:role="line"
-           id="tspan12585"
-           x="-861.19482"
-           y="662.2265"
-           style="fill:#28170b;fill-opacity:1">ButterflyOils</tspan></text>
-      <text
-         inkscape:export-ydpi="90"
-         inkscape:export-xdpi="90"
-         inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly.png"
-         sodipodi:linespacing="125%"
-         id="text2993"
-         y="648.2265"
-         x="-861.19482"
-         style="font-size:276.44876099px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient12603);fill-opacity:1;stroke:none;font-family:Engagement;-inkscape-font-specification:Engagement"
-         xml:space="preserve"><tspan
-           style="fill:url(#linearGradient12603);fill-opacity:1"
-           y="648.2265"
-           x="-861.19482"
-           id="tspan3001"
-           sodipodi:role="line">ButterflyOils</tspan></text>
-    </g>
+       width="2016.4659"
+       height="2016.4659"
+       x="-1203.5428"
+       y="-124.39476"
+       ry="11.921878"
+       inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly_icon_shot.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly.png"
+       sodipodi:linespacing="125%"
+       id="text12583"
+       y="772.71191"
+       x="-817.00067"
+       style="font-size:276.44876098999998248px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;opacity:0.29203539000000001;fill:#28170b;fill-opacity:1;stroke:none;filter:url(#filter12593);font-family:Engagement;-inkscape-font-specification:Engagement"
+       xml:space="preserve"><tspan
+         style="fill:#28170b;fill-opacity:1"
+         y="772.71191"
+         x="-817.00067"
+         id="tspan12585"
+         sodipodi:role="line">ButterflyOils</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:276.44876098999998248px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#333333;fill-opacity:1;stroke:none;font-family:Engagement;-inkscape-font-specification:Engagement"
+       x="-817.00067"
+       y="758.71191"
+       id="text2993"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         id="tspan3001"
+         x="-817.00067"
+         y="758.71191"
+         style="fill:#333333;fill-opacity:1">Butterfly</tspan></text>
+    <text
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/gage/code/butterfly-laravel/public/img/butterfly.png"
+       sodipodi:linespacing="125%"
+       id="text12740"
+       y="758.71191"
+       x="-151.13658"
+       style="font-size:276.44876098999998248px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#333333;fill-opacity:1;stroke:none;font-family:Engagement;-inkscape-font-specification:Engagement"
+       xml:space="preserve"><tspan
+         style="fill:#333333;fill-opacity:1"
+         y="758.71191"
+         x="-151.13658"
+         id="tspan12742"
+         sodipodi:role="line">Oils</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -413,5 +468,160 @@
        d="m 419.08738,554.20492 c -12.0713,0.0921 -33.81461,2.55533 -38.0625,5.59375 -3.61993,2.58924 -1.1963,54.06557 -2.53125,55.5625 -1.5112,1.69456 -2.67914,2.02812 -4.03125,3.03125 -2.10587,1.56235 0.2476,26.65975 1.5,28.78125 0.81616,1.38254 6.98066,3.85683 9.125,4.6875 l 76.375,0 c 2.15162,-0.83067 8.34009,-3.30496 9.15625,-4.6875 1.2524,-2.1215 3.60587,-27.2189 1.5,-28.78125 -1.35211,-1.00313 -2.52005,-1.33669 -4.03125,-3.03125 -1.33495,-1.49693 1.08868,-52.97326 -2.53125,-55.5625 -4.80885,-3.43966 -32.01635,-6.10398 -42.25,-5.46875 -1.19972,-0.0754 -2.61161,-0.13726 -4.21875,-0.125 z"
        id="path12097"
        inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="spots">
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path12748"
+       sodipodi:cx="309.08301"
+       sodipodi:cy="631.6889"
+       sodipodi:rx="4.1432037"
+       sodipodi:ry="4.1432037"
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       transform="matrix(0.73333333,0,0,0.73333333,113.35806,187.2329)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12750"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(0.39999999,0,0,0.39999999,204.50854,381.49927)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12752"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="translate(47.784951,2.2097089)" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.24336283;fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path12766"
+       sodipodi:cx="335.87573"
+       sodipodi:cy="643.01367"
+       sodipodi:rx="3.314563"
+       sodipodi:ry="3.314563"
+       d="m 339.1903,643.01367 a 3.314563,3.314563 0 1 1 -6.62913,0 3.314563,3.314563 0 1 1 6.62913,0 z"
+       transform="translate(21.478155,5.5293687)" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path12748-1"
+       sodipodi:cx="309.08301"
+       sodipodi:cy="631.6889"
+       sodipodi:rx="4.1432037"
+       sodipodi:ry="4.1432037"
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       transform="matrix(-0.00841539,-0.36044043,0.36044043,-0.00841539,113.282,745.85699)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12750-1"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.00459021,-0.19660387,0.19660387,-0.00459021,204.46749,685.20825)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12752-0"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.01147553,-0.49150967,0.49150967,-0.01147553,38.11785,796.65344)" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path12766-7"
+       sodipodi:cx="335.87573"
+       sodipodi:cy="643.01367"
+       sodipodi:rx="3.314563"
+       sodipodi:ry="3.314563"
+       d="m 339.1903,643.01367 a 3.314563,3.314563 0 1 1 -6.62913,0 3.314563,3.314563 0 1 1 6.62913,0 z"
+       transform="matrix(-0.01147553,-0.49150967,0.49150967,-0.01147553,27.819,787.80716)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12752-6"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="translate(37.841259,30.935906)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12752-0-5"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.01147553,-0.49150967,0.49150967,-0.01147553,17.340439,814.05709)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12750-1-2"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.00459021,-0.19660387,0.19660387,-0.00459021,191.55734,703.7799)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12750-1-1"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.00459021,-0.19660387,0.19660387,-0.00459021,186.99981,725.18646)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12750-1-8"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.00459021,-0.19660387,0.19660387,-0.00459021,206.05855,727.9486)" />
+    <path
+       d="m 313.22621,631.6889 a 4.1432037,4.1432037 0 1 1 -8.28641,0 4.1432037,4.1432037 0 1 1 8.28641,0 z"
+       sodipodi:ry="4.1432037"
+       sodipodi:rx="4.1432037"
+       sodipodi:cy="631.6889"
+       sodipodi:cx="309.08301"
+       id="path12750-1-81"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       sodipodi:type="arc"
+       transform="matrix(-0.00459021,-0.19660387,0.19660387,-0.00459021,221.80272,684.44495)" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:0.45575226;fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path12766-9"
+       sodipodi:cx="335.87573"
+       sodipodi:cy="643.01367"
+       sodipodi:rx="3.314563"
+       sodipodi:ry="3.314563"
+       d="m 339.1903,643.01367 a 3.314563,3.314563 0 1 1 -6.62913,0 3.314563,3.314563 0 1 1 6.62913,0 z"
+       transform="translate(25.82596,19.334925)" />
   </g>
 </svg>
