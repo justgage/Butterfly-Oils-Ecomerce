@@ -12,7 +12,9 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
 
-                <li><a class="nav bar" href="{{ URL::route('oils.index') }}">Shop</a></li>
+                <li>
+                    <a class="nav bar" href="{{ URL::route('oils.index') }}">Shop</a>
+                </li>
 
                 {{-- Categories drop down --}}
                 <li id="category-DD" class="dropdown">
@@ -55,6 +57,15 @@
                         @endforeach
                     </ul>
                 </li>
+
+                <?php $pages = InfoPage::all(); ?>
+                @foreach($pages as $page)
+                <li>
+                    <a class="nav bar" href="{{ URL::route('pages.show', $page->urlName) }}">
+                        {{ $page->name }}
+                    </a>
+                </li>
+                @endforeach
 
             </ul>
 

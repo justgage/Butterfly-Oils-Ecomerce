@@ -63,6 +63,6 @@ class BaseController extends Controller {
 	}
     
     public function missingMethod($array = array()) {
-        return view::make('front.404');
+        return View::make('front.404')->with('title', "404 - Page not found!");
     }
 }

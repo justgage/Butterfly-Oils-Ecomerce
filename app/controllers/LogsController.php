@@ -21,8 +21,8 @@ class LogsController extends BaseController {
                 ->with('title', 'Purchase logs')
                 ->with('logs', $logs)
                 ->with('month_total', $month_total)
-                ->with('month_logs', $this_month_logs)
-                ->with('tab', 2);
+                ->with('month_logs', $this_month_logs);
+
         } else {
             return Redirect::route('oils.index')
                 ->with('message' , "Sorry you don't have rights to create a Category, please login");

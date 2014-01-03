@@ -52,3 +52,10 @@
   text-decoration: none;
   background-color: #bbb;
 }
+#butter-logo {
+  padding: 10px;
+}
+#butter-logo:hover {
+  text-decoration: none;
+  background-color: #ddd;
+}

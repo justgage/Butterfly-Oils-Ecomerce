@@ -25,9 +25,10 @@
 
         <div class="container">
             <div id="content">
-                <form class="pull-right" action="{{ URL::route('search.show') }}" method="get">
-                    <input placeholder="Search..." type=search results=5 name=s>
+                <form class="form pull-right" action="{{ URL::route('search.show') }}" method="get">
+                        <input class="input-sm form-control" placeholder="Search..." type=text results=5 name=s>
                 </form>
+                <div class="clearfix"></div>
                 {{-- this will show the message if it exists --}}
                 @include('includes.message')
                 @section('content')

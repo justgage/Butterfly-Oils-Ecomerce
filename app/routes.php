@@ -30,7 +30,11 @@ Route::post('backend/check', array("as" => 'backend.check', 'uses' => 'UserContr
 //for AUTH protected routes. 
 Route::group(array('before' => 'auth'), function() {
     Route::get('backend', array("as" => 'backend.index', 'uses' => 'UserController@index'));
+    Route::get('backend/markdown', array("as" => 'backend.markdown', function () {
+        return View::make('backend.markdown')->with("title", "Markdown Help");
+    }));
     Route::get('backend/category', array("as" => 'backend.category', 'uses' => 'UserController@category'));
+    Route::get('backend/pages', array("as" => 'backend.page', 'uses' => 'PageController@index'));
     Route::get('backend/logs', array("as" => 'backend.logs', 'uses' => 'LogsController@index'));
 });
 
@@ -74,14 +78,20 @@ Route::resource('shop/uses', 'TagController',
 Route::resource('cats', 'CatController', 
     array('except' => [ 'show', 'index' ]) );
 
-//Categorys 
+Route::resource('pages', 'PageController', 
+    array('except' => [ 'show', 'index' ]) );
+
+//Category 
 Route::get('shop/categories', ['as' => 'cats.index', 'uses' => 'CatController@index']);
 
 // Tags show
 Route::get('uses/ajax_list', ['as' => 'tags.ajax', 'uses' => 'TagController@ajax_list']);
 Route::get('shop/uses/{tagId}', ['as' => 'tags.show', 'uses' => 'TagController@show']);
 
-//Cat index
+//Page show
+Route::get('page/{urlName}', ['as' => 'pages.show', 'uses' => 'PageController@show']);
+
+//Category index
 Route::get('shop/{catId}', ['as' => 'cats.show', 'uses' => 'CatController@show']);
 
 //Oils

@@ -109,7 +109,7 @@ return array(
 
                 'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
                 'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
-                'Cohensive\Markdown\MarkdownServiceProvider',
+                'MaxHoffmann\Parsedown\ParsedownServiceProvider',
 
         ),
 
@@ -179,7 +179,7 @@ return array(
 
                 'Cart'            => 'Gloudemans\Shoppingcart\Facades\Cart',
                 'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
-                'Markdown' => 'Cohensive\Markdown\Facades\Markdown',
+                'Markdown'        => 'MaxHoffmann\Parsedown\ParsedownFacade',
 
         ),
 

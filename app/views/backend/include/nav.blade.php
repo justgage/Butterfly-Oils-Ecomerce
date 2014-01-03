@@ -19,7 +19,7 @@
   @else
       <li>
   @endif
-      <a href="{{ URL::route('backend.category') }}">Categories</a>
+      <a href="{{ URL::route('backend.page') }}">Pages</a>
   </li>
 
   @if($tab === 2)
@@ -27,7 +27,24 @@
   @else
       <li>
   @endif
+      <a href="{{ URL::route('backend.category') }}">Categories</a>
+  </li>
+
+
+  @if($tab === 3)
+      <li class="active">
+  @else
+      <li>
+  @endif
       <a href="{{ URL::route('backend.logs') }}">Purchase logs</a>
+  </li>
+
+  @if($tab === 4)
+      <li class="active">
+  @else
+      <li>
+  @endif
+      <a href="{{ URL::route('backend.markdown') }}">Markdown Guide</a>
   </li>
 
 </ul>

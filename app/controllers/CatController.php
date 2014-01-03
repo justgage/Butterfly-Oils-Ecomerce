@@ -53,31 +53,28 @@ class CatController extends \BaseController {
     {
         if (Auth::check() === false) { // if NOT Authenticated
 
-            return Redirect::route('cats.index')
-            ->with('message' , "Sorry you don't have rights to create a Category, please login");
+        return Redirect::route('cats.index')
+        ->with('message' , "Sorry you don't have rights to create a Category, please login");
 
-        } else { // We are loged in as admin
+    } else { // We are loged in as admin
 
-        $valid_cat = Cat::validate(Input::all());
+    $valid_cat = Cat::validate(Input::all());
 
-        if ($valid_cat->fails()) {
-            return Redirect::route('cats.create')
-            ->withErrors($valid_cat)
-            ->withInput(); 
-        }
-
-        $cat = new Cat;
-        $cat->name = Input::get('cat_name');
-        $cat->urlName = Input::get('cat_urlName');
-        $cat->info = Input::get('cat_info');
-        $cat->visible = true;
-        $cat->save();
-        return Redirect::route('backend.index')
-            ->with('message', 'Category ' . $cat->name . ' was created sucsessfuly');
+    if ($valid_cat->fails()) {
+        return Redirect::route('cats.create')
+        ->withErrors($valid_cat)
+        ->withInput(); 
     }
 
-
-
+    $cat = new Cat;
+    $cat->name = Input::get('cat_name');
+    $cat->urlName = Input::get('cat_urlName');
+    $cat->info = Input::get('cat_info');
+    $cat->visible = true;
+    $cat->save();
+    return Redirect::route('backend.index')
+    ->with('message', 'Category ' . $cat->name . ' was created sucsessfuly');
+}
     }
 
     /**

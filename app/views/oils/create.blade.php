@@ -4,16 +4,15 @@
 <link rel="stylesheet" href="/js/tagsinput/bootstrap-tagsinput.css">
 @stop
 
-
 @section('content')
 
 @include('includes.invalid', $errors)
 
-{{ Form::open(["route" => "oils.store", "method" => "post", "files" => true, 'class' => 'form-horizontal'])}}
+{{ Form::open(["route" => "oils.store", "files" => true, 'class' => 'form-horizontal'])}}
 
 <?php $col_size = "col-md-6"; ?>
 
-<h1> Create new Oil </h1>
+<h1>Create new Oil</h1>
 <div class="row">
     <div class="{{ $col_size }}">
 
@@ -21,7 +20,11 @@
         <div class="form-group">
             {{ Form::label('name', 'Name', [ 'class' => 'col-sm-3 control-label']) }}
             <div class="col-sm-9">
-                {{ Form::text('name', Input::old('name') , ['autocomplete' => "off", 'placeholder' => 'Spice Traders', 'id' => 'text_oil_name', 'class' => 'form-control']) }} 
+                {{ Form::text('name', Input::old('name'), [
+                    'placeholder' => 'Spice Traders',
+                    'id' => 'text_oil_name',
+                    'class' => 'form-control'
+                ]) }} 
             </div>
         </div>
     
@@ -29,8 +32,11 @@
         <div class="form-group">
               {{ Form::label('urlName', 'URL name', ['class' => 'col-sm-3 control-label']) }}
                 <div class="col-sm-9">
-                   {{ Form::text('urlName', Input::old('urlName') , 
-                    ['placeholder' => 'spice_traders','id' => 'text_oil_urlName', 'class' => 'input-sm form-control']) }} 
+                   {{ Form::text('urlName', Input::old('urlName') , [
+                       'placeholder' => 'spice_traders',
+                       'id' => 'text_oil_urlName',
+                       'class' => 'input-sm form-control'
+                   ]) }} 
                 </div>
         </div>
 
@@ -40,20 +46,26 @@
             <div class="col-sm-9">
               <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  {{ Form::text('price', Input::old('price') , 
-                       ['placeholder' => '10.00', 'class' => 'form-control']) }} 
+                  {{ Form::text('price', Input::old('price') , [
+                      'placeholder' => '10.00',
+                      'class' => 'form-control'
+                  ]) }} 
                 </div>
             </div>
         </div>
        
        {{-- COMPARE PRICE --}}
         <div class="form-group">
-          {{ Form::label('compare_price', 'Compare Price', ['class' => 'col-sm-3 control-label']) }}
+          {{ Form::label('compare_price', 'Compare Price', [
+              'class' => 'col-sm-3 control-label'
+          ]) }}
             <div class="col-sm-9">
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  {{ Form::text('compare_price', Input::old('compare_price'),
-                         [ 'placeholder' => '12.00', 'class' => 'form-control' ] ) }} 
+                  {{ Form::text('compare_price', Input::old('compare_price'), [
+                      'placeholder' => '12.00',
+                      'class' => 'form-control' 
+                  ] ) }} 
                 </div> 
             </div> 
         </div>
@@ -62,8 +74,12 @@
         <div class="form-group">
           {{ Form::label('tags', 'Uses tags', ['class' => 'col-sm-3 control-label']) }}
            <div class="input-group col-sm-9">
-               {{ Form::text('tags', Input::old('tags') , 
-                    ['class' => 'form-control', 'data-role' => 'tagsinput', 'placeholder' => '','id' => 'tags_input']) }} 
+               {{ Form::text('tags', Input::old('tags') , [
+                   'class' => 'form-control',
+                   'data-role' => 'tagsinput',
+                   'placeholder' => '',
+                   'id' => 'tags_input'
+               ]) }} 
             <em>push enter to add a tag</em>
            </div>
         </div>
@@ -73,27 +89,40 @@
    <div class="{{ $col_size }}">
        {{-- INFO --}}
           {{ Form::label('info', 'Oil Info') }}
-          <p> {{ Form::textarea('info', Input::old('name'), 
-                    ['placeholder' => 'This is what the oil is (basic description, ingredints, etc..)',
-                     'class' => 'form-control',
-                     'rows' => 3
-                    ]) }} </p>
+          <p> {{ Form::textarea('info', Input::old('info'), [
+              'placeholder' => 'This is what the oil is (basic description, ingredints, etc..)',
+              'class' => 'form-control',
+              'rows' => 3
+          ]) }} </p>
 
        {{-- CAT DROP DOWN  --}}
         <h3> 
             {{ Form::label('cat_id', 'Category') }} 
-            {{ Form::select('cat_id', $cats, null, ['id' => 'cat_select', 'class' => 'form-control']) }} 
+            {{ Form::select('cat_id', $cats, null, [
+                'id' => 'cat_select',
+                'class' => 'form-control'
+            ]) }} 
         </h3>
         <div id="cat_new" style="display:none;">
             {{ Form::label('cat_name', 'Category name') }}
-            <p> {{ Form::text('cat_name', Input::old('cat_name') , ['autocomplete' => "off", 'placeholder' => 'Blends', 'id' => 'text_cat_name', 'class' => 'form-control']) }} </p>
+            <p> {{ Form::text('cat_name', Input::old('cat_name') , [
+                'placeholder' => 'Blends',
+                'id' => 'text_cat_name',
+                'class' => 'form-control'
+            ]) }} </p>
     
             {{ Form::label('cat_urlName', 'Category name in URL') }}
-            <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , ['placeholder' => 'blends', 'id' => 'text_cat_urlName', 'class' => 'form-control']) }} </p>
+            <p> {{ Form::text('cat_urlName', Input::old('cat_urlName') , [
+                'placeholder' => 'blends',
+                'id' => 'text_cat_urlName',
+                'class' => 'form-control'
+            ]) }} </p>
     
             {{ Form::label('cat_info', 'Cat description') }}
-            <p> {{ Form::textarea('cat_info', Input::old('cat_info'), 
-                    ['placeholder' => 'small description of category', 'class' => 'form-control']) }} </p>
+            <p> {{ Form::textarea('cat_info', Input::old('cat_info'), [
+                'placeholder' => 'small description of category',
+                'class' => 'form-control'
+            ]) }} </p>
                
         </div>
        
@@ -107,7 +136,9 @@
           Show in shop {{ Form::checkbox('visible', 'visible', ['checked' => Input::old('visible')] ) }} 
        </h4>
     {{-- SUBMIT --}}
-       {{ Form::submit('Save', array('class' => 'btn-lg btn-primary pull-right')) }}
+       {{ Form::submit('Save', [
+           'class' => 'btn-lg btn-primary pull-right' 
+       ]) }}
    </div>
 
 </div>

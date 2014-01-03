@@ -5,6 +5,8 @@
   <div class="pull-right">
       <a class="btn btn-warning" href="{{ URL::route('backend.logout')}}"> Logout </a> 
   </div>
+
+  <?php $tab = 2; ?>
   @include('backend.include.nav')
 
 <h2>Categories</h2>

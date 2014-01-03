@@ -48,7 +48,7 @@ class OilController extends \BaseController {
                 ->with('title', 'Creating a new oil')
                 ->with('cats', $cats);
         } else {
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
@@ -62,7 +62,7 @@ class OilController extends \BaseController {
     {
         if (Auth::check() === false) { 
 
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create a product, please login"); 
 
         } else { // We are loged in as admin
@@ -195,8 +195,9 @@ class OilController extends \BaseController {
     public function edit($id)
     {
         if (Auth::check()) {
+            // WRITE ME!
         } else {
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
@@ -210,8 +211,9 @@ class OilController extends \BaseController {
     public function update($id)
     {
         if (Auth::check()) {
+            // WRITE ME!
         } else {
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
@@ -234,7 +236,7 @@ class OilController extends \BaseController {
                 return Redirect::back()->with('message', "That product was already removed!" );
             }
         } else {
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
@@ -257,7 +259,7 @@ class OilController extends \BaseController {
                 return Redirect::back()->with('message', "That product was already removed!" );
             }
         } else {
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
@@ -282,7 +284,7 @@ class OilController extends \BaseController {
             }
 
         } else {
-            return Redirect::route('oils.index')
+            return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }

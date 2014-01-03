@@ -9,7 +9,7 @@ $i = 0;
     @if ($oil->visible == true)  
     <?php $i++ ?>
 
-        <div class='col-sm-6 col-md-3' id='user_id_{{$oil->id}}'>
+        <div class='col-sm-4 col-md-3' id='user_id_{{$oil->id}}'>
             @include('oils.include.oil_box', ['oil' => $oil])
         </div>
 
@@ -17,7 +17,7 @@ $i = 0;
       @if($i % 4 === 0 )
          <div class="clearfix visible-md visible-lg"></div>
       @endif
-      @if($i % 2 === 0 )
+      @if($i % 3 === 0 )
          <div class="clearfix visible-sm"></div>
       @endif
 

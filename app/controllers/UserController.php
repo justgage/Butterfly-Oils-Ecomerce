@@ -44,8 +44,7 @@ class UserController extends \BaseController {
         ->with([
             "title" => "Backend categories",
             "pretty_url" => $this->pretty_url(),
-            "cats" => $cats,
-            "tab" => 1
+            "cats" => $cats
         ]);
   }
 
