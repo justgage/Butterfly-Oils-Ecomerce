@@ -9,7 +9,7 @@
 
    <div class="row">
       <div class="col-sm-7">
-             <h1> {{ $oil->name }} </h1>
+             <h1> <sup>{{ $oil->prefix }}</sup> {{ $oil->name }} </h1>
          <div class="well">
              <?php $saved = ($oil->compare_price - $oil->price) ; ?>
 

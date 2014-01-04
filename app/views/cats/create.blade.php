@@ -11,8 +11,6 @@
 {{-- CAT DROP DOWN  --}}
 <div>
 
-    {{ Form::hidden('id',  Input::old('id')) }}
-
     {{ Form::label('name', 'Category name') }}
     <p> {{ Form::text('name',  Input::old('name') , ['autocomplete' => "off", 'placeholder' => 'Blends',  'class' => 'form-control']) }} </p>
 

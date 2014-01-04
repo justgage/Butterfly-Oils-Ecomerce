@@ -18,7 +18,7 @@
     @else
        <tr class="not-visible">
     @endif
-          <td> <a href="{{ $pretty_url($oil->id) }}"/>  {{ $oil->name  }}</a></td>
+          <td> <a href="{{ $pretty_url($oil->id) }}"/> <sup> {{ $oil->prefix }} </sup>  {{ $oil->name  }}</a></td>
           <td>{{ ($oil->visible == true ? 'no' : 'yes') }} </td>
           <td> <a href="{{ URL::route('cats.show', ['catId' => $oil->cat->urlName] );}}">
                     {{ $oil->cat->name}}

@@ -4,7 +4,7 @@
     {{-- TITLE --}}
     <h3 class="text-center">
         <a href="{{ $pretty_url($oil->id) }}"> 
-            {{ $oil->name }} 
+            <sup> {{ $oil->prefix }} </sup> {{ $oil->name }} 
         </a>
     </h3>
 

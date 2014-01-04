@@ -95,6 +95,7 @@ class OilController extends \BaseController {
                 // create oil in database
                 $oil = new Oil;
                 $oil->name          = Input::get('name');
+                $oil->prefix          = Input::get('prefix');
                 $oil->urlName       = $this->safeUrl(Input::get('name'));
                 $oil->compare_price = Input::get('compare_price');
                 $oil->info          = Input::get('info');
@@ -172,7 +173,18 @@ class OilController extends \BaseController {
     public function edit($id)
     {
         if (Auth::check()) {
-            // WRITE ME!
+            $cats_raw = Cat::all();
+
+            $cats;
+
+            foreach ($cats_raw as $cat){
+                $cats[$cat->id] = $cat->name;
+            }
+
+            return View::make('oils.edit')
+                ->with('title', 'Creating a new oil')
+                ->with('cats', $cats);
+
         } else {
             return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
@@ -188,12 +200,77 @@ class OilController extends \BaseController {
     public function update($id)
     {
         if (Auth::check()) {
-            // WRITE ME!
+
+            $valid = Oil::validate(Input::all());
+
+            if ($valid->fails()) {
+
+                return Redirect::route('oils.edit')
+                    ->withErrors($valid)
+                    ->withInput(); 
+
+            } else { // data IS valid
+
+                // check if there's any with the same name
+                $count = $count = Oil::where('name', '=', Input::get('name'))->count();
+
+                if ($count != 0) {
+                    return Redirect::route('oils.edit')
+                        ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
+                        ->withInput(); 
+                }
+
+                $cat = Cat::find( (int) Input::get('cat_id') );
+
+                $tags = explode(",", Input::Get('tags'));
+
+                $tags_obj = $this->tags_arr_add($tags);
+
+                // create oil in database
+                $oil = Oil::find($id);
+                $oil->name          = Input::get('name');
+                $oil->prefix          = Input::get('prefix');
+                $oil->compare_price = Input::get('compare_price');
+                $oil->info          = Input::get('info');
+                $oil->price         = Input::get('price');
+                $oil->visible       = ('visible' == Input::get('visible')) ; // hack for checkbox
+                $oil->cat()->associate($cat);
+
+                $oil->save();
+
+                // save the image(s) assosiated with it. 
+                $files = Input::file('image');
+
+                foreach($files as $file) {
+                    if ($file !== null) {
+
+                        $photo = new Photo;
+
+                        $ext = $file->getClientOriginalExtension();
+                        $filename = str_random(40) . ".$ext";
+                        $file->move('public/uploads', $filename);
+
+                        $photo->path = '/uploads/' . $filename;
+
+                        $photo = $oil->photos()->save($photo);
+                    }
+
+                }
+
+                foreach ($tags_obj as $tag){
+                    $oil->tags()->attach($tag->id);
+                }
+
+                // Return message saying, it worked!
+                return Redirect::route('backend.index')
+                    ->with('message', 'Product ' . $oil->name . ' was created sucsessfuly');
+
+
+    }
         } else {
             return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
-    }
 
     /**
      * Soft delete product

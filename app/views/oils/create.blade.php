@@ -19,10 +19,15 @@
         {{-- NAME --}}
         <div class="form-group">
             {{ Form::label('name', 'Name', [ 'class' => 'col-sm-3 control-label']) }}
-            <div class="col-sm-9">
+            <div class="col-sm-2">
+                {{ Form::text('prefix', Input::old('prefix'), [
+                    'placeholder' => 'le',
+                    'class' => 'form-control'
+                ]) }} 
+            </div>
+            <div class="col-sm-7">
                 {{ Form::text('name', Input::old('name'), [
                     'placeholder' => 'Spice Traders',
-                    'id' => 'text_oil_name',
                     'class' => 'form-control'
                 ]) }} 
             </div>
