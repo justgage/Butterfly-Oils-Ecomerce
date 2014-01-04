@@ -13,11 +13,12 @@ class OilsDB extends Migration {
     {
         Schema::create('oils', function($table) {
             $table->increments('id');
+            $table->string('prefix')->default("");
             $table->string('name')->unique();
             $table->string('urlName')->unique();
             $table->text('info');
             $table->float('price');
-            $table->float('compare_price');
+            $table->float('compare_price')->nullable();
             $table->boolean('visible');
             $table->integer('cat_id');
 

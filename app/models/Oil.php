@@ -22,10 +22,8 @@ class Oil extends Eloquent {
 
    public static $rules = array(
       "name" => "required|min:3|unique:oils,name",
-      "urlName" => "required|alpha_dash|min:3|unique:oils,urlName",
       "info" => "required|min:4",
       "price" => "required|numeric|min:1",
-      "compare_price" => "numeric",
       "image" => "image"
    );
 

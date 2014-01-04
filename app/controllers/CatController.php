@@ -23,21 +23,9 @@ class CatController extends \BaseController {
     */
     public function create()
     {
-        $cats_raw = Cat::all();
-
-        $cats;
-
-        foreach ($cats_raw as $cat){
-            $cats[$cat->id] = $cat->name;
-        }
-
-        //one for adding new categorys
-        $cats['new'] = "--Create new Category--";
-
         if (Auth::check()) {
             return View::make('cats.create')
-            ->with('title', 'Creating a new category')
-            ->with('cats', $cats);
+            ->with('title', 'Creating a new category');
         } else {
             return Redirect::route('oils.index')
             ->with('message' , "Sorry you don't have rights to create a Category, please login");
@@ -49,32 +37,31 @@ class CatController extends \BaseController {
     *
     * @return Response
     */
-    public function store()
-    {
-        if (Auth::check() === false) { // if NOT Authenticated
+    public function store() {
+        if (Auth::check() === false) {
 
-        return Redirect::route('cats.index')
-        ->with('message' , "Sorry you don't have rights to create a Category, please login");
+            return Redirect::route('cats.index')->with('message' , "Sorry you don't have rights to create a Category, please login");
 
-    } else { // We are loged in as admin
+        } else {
 
-    $valid_cat = Cat::validate(Input::all());
+            $valid_cat = Cat::validate(Input::all());
 
-    if ($valid_cat->fails()) {
-        return Redirect::route('cats.create')
-        ->withErrors($valid_cat)
-        ->withInput(); 
-    }
+            if ($valid_cat->fails()) {
+                return Redirect::route('cats.create')
+                ->withErrors($valid_cat)
+                ->withInput(); 
+            }
 
-    $cat = new Cat;
-    $cat->name = Input::get('cat_name');
-    $cat->urlName = Input::get('cat_urlName');
-    $cat->info = Input::get('cat_info');
-    $cat->visible = true;
-    $cat->save();
-    return Redirect::route('backend.index')
-    ->with('message', 'Category ' . $cat->name . ' was created sucsessfuly');
-}
+            $cat = new Cat;
+
+            $cat->name = Input::get('name');
+            $cat->urlName = $this->safeUrl( Input::get('name') );
+            $cat->info = Input::get('info');
+            $cat->visible = true;
+            $cat->save();
+
+            return Redirect::route('backend.category')->with('message', 'Category ' . $cat->name . ' was updated successfully');
+        }
     }
 
     /**
@@ -105,7 +92,20 @@ class CatController extends \BaseController {
     */
     public function edit($id)
     {
-        //
+        if (Auth::check() === false) {
+            return Redirect::route('home')->with('message' , "Sorry you don't have rights to do that");
+
+        } else { // We are loged in as admin
+            $cat = Cat::find($id);
+
+            if ($cat !== null) {
+                return View::make('cats.edit')
+                    ->with('title', 'Editing a new category')
+                    ->with('cat', $cat);
+            } else {
+                return Redirect::route('backend.category')->with('message' , "That Category no longer exists!");
+            }
+        }
     }
 
     /**
@@ -116,7 +116,36 @@ class CatController extends \BaseController {
     */
     public function update($id)
     {
-        //
+        if (Auth::check() === false) {
+
+            return Redirect::route('backend.login')->with('message' , "Sorry you don't have rights to create a Category, please login");
+
+        } else {
+
+            $valid_cat = Cat::validate_edit(Input::all());
+
+            if ($valid_cat->fails()) {
+                return Redirect::route('cats.edit')
+                ->withErrors($valid_cat)
+                ->withInput(); 
+            }
+
+            $cat = Cat::find($id);
+
+            if ($cat === null) {
+                return Redirect::route('cats.edit')->with('message', "This id doesnt work $id")
+                ->withInput(); 
+            }
+
+            $cat->name = Input::get('name');
+            $cat->info = Input::get('info');
+            $cat->visible = true;
+
+            $cat->save();
+
+            return Redirect::route('backend.index')
+            ->with('message', 'Category ' . $cat->name . ' was updated successfully');
+        }
     }
 
     /**
@@ -143,10 +172,10 @@ class CatController extends \BaseController {
 
                 $cat->delete();
                 return Redirect::route('backend.category')
-                    ->with('message', 'Category "' . $cat->name . '" was deleted!, all Oils inside where moved to "Other"');
+                ->with('message', 'Category "' . $cat->name . '" was deleted!, all Oils inside where moved to "Other"');
             } else {
                 return Redirect::route('backend.category')
-                    ->with('message', 'Category does not exist!' );
+                ->with('message', 'Category does not exist!' );
             }
 
         } else {

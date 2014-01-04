@@ -41,12 +41,10 @@ class OilController extends \BaseController {
                 $cats[$cat->id] = $cat->name;
             }
 
-            //one for adding new categorys
-            $cats['new'] = "--Create new Category--";
-
             return View::make('oils.create')
                 ->with('title', 'Creating a new oil')
                 ->with('cats', $cats);
+
         } else {
             return Redirect::route('home')
                 ->with('message' , "Sorry you don't have rights to create an oil, please login");
@@ -84,32 +82,11 @@ class OilController extends \BaseController {
                 if ($count != 0) {
                     return Redirect::route('oils.create')
                         ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
-                        ->withInput();; 
+                        ->withInput(); 
                 }
 
-                $cat_id = Input::get('cat_id');
-                $cat;
 
-                // add a category if select new
-                if ($cat_id === 'new') {
-
-                    $valid_cat = Cat::validate(Input::all());
-
-                    if ($valid_cat->fails()) {
-                        return Redirect::route('oils.create')
-                            ->withErrors($valid_cat)
-                            ->withInput(); 
-                    }
-
-                    $cat = new Cat;
-                    $cat->name = Input::get('cat_name');
-                    $cat->urlName = Input::get('cat_urlName');
-                    $cat->info = Input::get('cat_info');
-                    $cat->visible = true;
-                    $cat->save();
-                } else {
-                    $cat = Cat::find( (int) $cat_id);
-                } 
+                $cat = Cat::find( (int) Input::get('cat_id') );
 
                 $tags = explode(",", Input::Get('tags'));
 
@@ -118,7 +95,7 @@ class OilController extends \BaseController {
                 // create oil in database
                 $oil = new Oil;
                 $oil->name          = Input::get('name');
-                $oil->urlName       = Input::get('urlName');
+                $oil->urlName       = $this->safeUrl(Input::get('name'));
                 $oil->compare_price = Input::get('compare_price');
                 $oil->info          = Input::get('info');
                 $oil->price         = Input::get('price');

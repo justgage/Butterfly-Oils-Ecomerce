@@ -40,7 +40,7 @@
                 @else
                     <td> no </td>
                 @endif
-                <td> {{ $page->content }}</td>
+                <td> {{ substr($page->content, 0, 400) }}...</td>
                 <td>
                     {{ Form::open(array('route' => array('pages.destroy', $page->id), 'method' => 'delete')) }}
                     <button type="submit" href="{{ URL::route('pages.destroy', $page->id) }}" class="pull-left btn btn-danger btn-mini">

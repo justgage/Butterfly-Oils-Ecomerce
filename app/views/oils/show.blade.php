@@ -41,7 +41,7 @@
          </div>
       
          <h2>Description</h2>
-         <div> {{ $oil->info) }}</div>
+         <div> {{ $oil->info }}</div>
 
          <h2>Uses</h2>
              <div class="oil-uses">

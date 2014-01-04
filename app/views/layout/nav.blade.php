@@ -58,7 +58,7 @@
                     </ul>
                 </li>
 
-                <?php $pages = InfoPage::all(); ?>
+                <?php $pages = InfoPage::orderBy('order')->get(); ?>
                 @foreach($pages as $page)
                 <li>
                     <a class="nav bar" href="{{ URL::route('pages.show', $page->urlName) }}">

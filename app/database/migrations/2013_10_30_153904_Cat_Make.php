@@ -14,7 +14,7 @@ class CatMake extends Migration {
     {
         Schema::create('cats', function($table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('urlName')->unique();
             $table->text('info');
             $table->boolean('visible');

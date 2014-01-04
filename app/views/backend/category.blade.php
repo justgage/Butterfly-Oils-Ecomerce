@@ -54,7 +54,7 @@
                         </button>
                         {{ Form::close() }}
                     @endif
-                    <button class="btn btn-primary" href="#">Edit</button>
+                    <a class="btn btn-primary" href="{{ URL::route('cats.edit', $cat->id) }}">Edit</a>
                 </td>
             </tr>
             @endforeach

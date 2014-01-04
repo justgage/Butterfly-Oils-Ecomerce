@@ -16,6 +16,21 @@ class BaseController extends Controller {
         };
     }
 
+    /***
+    * Will take the input of one field
+    * and put change it to a lowercase
+    * and get rid of the spaces
+    * then put into another feild (to)
+    */
+    public function safeUrl ($text) {
+
+        $text = strtolower($text);
+        $text = preg_replace("/ *$/", "", $text); // get rid of white space at the end
+        $text = preg_replace("/\s/", "-", $text); // spaces to dash
+
+        return $text;
+    }
+
     /**
      * Adds a bunch of tags, non-duplicating 
      */
