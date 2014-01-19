@@ -34,7 +34,7 @@ class CartController extends BaseController {
         if (isset($oil) === false) 
             return json_encode(['error' => true, 'mess' => 'Product no longer exists']);
 
-        Cart::add($oil->id, $oil->name, 1, $oil->price);
+        Cart::add($oil->id, $oil->prefix.$oil->name." ".$oil->type, 1, $oil->price);
 
         $cart = Cart::content()->toArray();
 
@@ -70,6 +70,19 @@ class CartController extends BaseController {
 
         return Redirect::to('cart/show')
             ->with('message', "404 the page " . URL::to('/') . "/cart/$errors[0], was NOT FOUND!");
+
+    }
+
+    public function postUpdate () {
+
+        $input = Input::get('items');
+
+
+        foreach ($input as $item){
+            Cart::update($item['id'], $item['qty']);
+        }
+
+        return array("worked" => true);
 
     }
 

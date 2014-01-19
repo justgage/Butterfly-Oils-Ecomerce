@@ -1,7 +1,9 @@
 @extends('layout.main')
 
+
 @section('content')
-<h2>{{ $title }}</h2>
+<h1>Shop</h1>
+@include('layout.shop-nav', ['tab' => -1])
 
 @include('oils.include.oil_grid', ["oils" => $oils])
 @stop

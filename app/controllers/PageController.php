@@ -51,16 +51,16 @@ class PageController extends \BaseController {
         if ($valid->fails()) {
             return Redirect::route('pages.create')
                 ->withErrors($valid)
-                ->withInput(); 
+                ->withInput();
         }
 
         $page = new InfoPage;
 
         $page->name = Input::get('name');
-        $page->urlName = Input::get('urlName');
+        $page->urlName = $this->safeUrl(Input::get('name'));
         $page->content = Input::get('content');
         $page->order = Input::get('order');
-        $page->visible = Input::get('visible');
+        $page->visible = true == Input::get('visible');
 
         $page->save();
 
@@ -98,7 +98,21 @@ class PageController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+        if (Auth::check()) {
+            $page = InfoPage::find($id);
+            if ($page !== null) {
+                return View::make('pages.edit', $page)
+                    ->with('page', $page)
+                    ->with('title', 'Editing a page');
+            } else {
+                return Redirect::route('backend.page')
+                    ->with('message' , "Sorry that page doesn't exist anymore.");
+            }
+
+        } else {
+            return Redirect::route('home')
+                ->with('message' , "Sorry you don't have rights to do that. Please login.");
+        }
 	}
 
 	/**
@@ -109,7 +123,34 @@ class PageController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+        if (Auth::check() === false) { // if NOT Authenticated
+
+            return Redirect::route('pages.index')
+                ->with('message' , "Sorry you don't have rights to do that. Please log in.");
+
+        } else { // We are loged in as admin
+
+        $valid = InfoPage::validate(Input::all());
+
+        if ($valid->fails()) {
+            return Redirect::route('pages.edit', $id)
+                ->withErrors($valid)
+                ->withInput();
+        }
+
+        $page = InfoPage::find($id);
+
+        $page->name = Input::get('name');
+        $page->content = Input::get('content');
+        $page->order = Input::get('order');
+        $page->visible =  true == Input::get('visible');
+
+        $page->save();
+
+        return Redirect::route('backend.page')
+            ->with('message', 'Page ' . $page->name . ' was updated sucsessfuly');
+        }
+
 	}
 
 	/**
@@ -120,7 +161,22 @@ class PageController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
-	}
+        if (Auth::check() === false) { // if NOT Authenticated
 
-}
+            return Redirect::route('home')
+                ->with('message' , "Sorry you don't have rights to do that. Please log in.");
+
+        } else {
+            $page = InfoPage::find($id);
+            if ($page !== null) {
+                $page->delete();
+                return Redirect::route('backend.page')
+                ->with('message', 'Page ' . $page->name . ' was deleted sucsessfuly');
+            } else {
+                return Redirect::route('backend.page')
+                ->with('message', 'Page doesn\'t exist!');
+            }
+        }
+    }
+
+} // end of the object

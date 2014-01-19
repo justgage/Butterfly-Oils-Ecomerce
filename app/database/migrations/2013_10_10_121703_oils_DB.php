@@ -14,7 +14,9 @@ class OilsDB extends Migration {
         Schema::create('oils', function($table) {
             $table->increments('id');
             $table->string('prefix')->default("");
-            $table->string('name')->unique();
+            $table->string('name');
+            $table->string('type');
+            $table->string('sciName');
             $table->string('urlName')->unique();
             $table->text('info');
             $table->float('price');

@@ -11,14 +11,11 @@
 @else
     <ul>
     @foreach($tags as $tag)
-        <?php $count = $tag->oils()->count(); ?>
-        @if($count > 0)
-            <li>
-                <a href=" {{ URL::route('tags.show', $tag->urlName) }} ">
-                    {{ $tag->name }} ({{ $tag->oils()->count() }})
-                </a>
-            </li>
-        @endif
+    <li>
+        <a href=" {{ URL::route('tags.show', $tag->urlName) }} ">
+            {{ $tag->name }} ({{ $tag->oils()->count() }})
+        </a>
+    </li>
     @endforeach
     </ul>
 @endif

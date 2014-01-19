@@ -5,7 +5,6 @@ class InfoPage extends Eloquent {
 
    public static $rules = array(
       "name" => "required|unique:cats,name|min:2",
-      "urlName" => "required|alpha_dash|min:3|unique:cats,urlName",
       "content" => "required|min:12",
       "order" => "required|unique:pages,content",
    );

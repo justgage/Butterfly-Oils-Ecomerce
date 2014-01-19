@@ -5,14 +5,14 @@ class OilController extends \BaseController {
 
     private function authReject() {
         return Redirect::route('oils.index')
-                    ->with('message' , "Sorry you don't have rights to create an oil, please login");
+        ->with('message' , "Sorry you don't have rights to create an oil, please login");
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return Response
+    */
     public function index()
     {
 
@@ -21,15 +21,15 @@ class OilController extends \BaseController {
         $v = View::make('oils.index')->with('title', "Shop oils");
         $v->oils = $oils;
         $v->pretty_url = $this->pretty_url();
-        
+
         return $v;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return Response
+    */
     public function create()
     {
         if (Auth::check()) {
@@ -42,107 +42,109 @@ class OilController extends \BaseController {
             }
 
             return View::make('oils.create')
-                ->with('title', 'Creating a new oil')
-                ->with('cats', $cats);
+            ->with('title', 'Creating a new oil')
+            ->with('cats', $cats);
 
         } else {
             return Redirect::route('home')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+            ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @return Response
+    */
     public function store()
     {
         if (Auth::check() === false) { 
 
             return Redirect::route('home')
-                ->with('message' , "Sorry you don't have rights to create a product, please login"); 
+            ->with('message' , "Sorry you don't have rights to create a product, please login"); 
 
         } else { // We are loged in as admin
 
-            $valid = Oil::validate(Input::all());
+        $valid = Oil::validate(Input::all());
 
 
-            if ($valid->fails()) {
+        if ($valid->fails()) {
 
-                return Redirect::route('oils.create')
-                    ->withErrors($valid)
-                    ->withInput(); 
+            return Redirect::route('oils.create')
+            ->withErrors($valid)
+            ->withInput(); 
 
-            } else { // data IS valid
+        } else { // data IS valid
 
-                // check if there's any with the same name
-                $count = $count = Oil::where('name', '=', Input::get('name'))->count();
+        // check if there's any with the same name
+        $count = $count = Oil::where('name', '=', Input::get('name'))->count();
 
-                if ($count != 0) {
-                    return Redirect::route('oils.create')
-                        ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
-                        ->withInput(); 
-                }
+        if ($count != 0) {
+            return Redirect::route('oils.create')
+            ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
+            ->withInput(); 
+        }
 
 
-                $cat = Cat::find( (int) Input::get('cat_id') );
+        $cat = Cat::find( (int) Input::get('cat_id') );
 
-                $tags = explode(",", Input::Get('tags'));
+        $tags = explode(",", Input::Get('tags'));
 
-                $tags_obj = $this->tags_arr_add($tags);
+        $tags_obj = $this->tags_arr_add($tags);
 
-                // create oil in database
-                $oil = new Oil;
-                $oil->name          = Input::get('name');
-                $oil->prefix          = Input::get('prefix');
-                $oil->urlName       = $this->safeUrl(Input::get('name'));
-                $oil->compare_price = Input::get('compare_price');
-                $oil->info          = Input::get('info');
-                $oil->price         = Input::get('price');
-                $oil->visible       = ('visible' == Input::get('visible')) ; // hack for checkbox
-                $oil->cat()->associate($cat);
+        // create oil in database
+        $oil = new Oil;
+        $oil->name          = Input::get('name');
+        $oil->type          = Input::get('type');
+        $oil->sciName       = Input::get('sciName');
+        $oil->prefix        = Input::get('prefix');
+        $oil->urlName       = $this->safeUrl(Input::get('name'));
+        $oil->compare_price = Input::get('compare_price');
+        $oil->info          = Input::get('info');
+        $oil->price         = Input::get('price');
+        $oil->visible       = ('visible' == Input::get('visible')) ; // hack for checkbox
+        $oil->cat()->associate($cat);
 
-                $oil->save();
+        $oil->save();
 
-                // save the image(s) assosiated with it. 
-                $files = Input::file('image');
+        // save the image(s) assosiated with it. 
+        $files = Input::file('image');
 
-                foreach($files as $file) {
-                    if ($file !== null) {
+        foreach($files as $file) {
+            if ($file !== null) {
 
-                        $photo = new Photo;
+                $photo = new Photo;
 
-                        $ext = $file->getClientOriginalExtension();
-                        $filename = str_random(40) . ".$ext";
-                        $file->move('public/uploads', $filename);
+                $ext = $file->getClientOriginalExtension();
+                $filename = str_random(40) . ".$ext";
+                $file->move('public/uploads', $filename);
 
-                        $photo->path = '/uploads/' . $filename;
+                $photo->path = '/uploads/' . $filename;
 
-                        $photo = $oil->photos()->save($photo);
-                    }
+                $photo = $oil->photos()->save($photo);
+            }
 
-                }
+        }
 
-                foreach ($tags_obj as $tag){
-                    $oil->tags()->attach($tag->id);
-                }
+        foreach ($tags_obj as $tag){
+            $oil->tags()->attach($tag->id);
+        }
 
-                // Return message saying, it worked!
-                return Redirect::route('backend.index')
-                    ->with('message', 'Product ' . $oil->name . ' was created sucsessfuly');;
+        // Return message saying, it worked!
+        return Redirect::route('backend.index')
+        ->with('message', 'Product ' . $oil->name . ' was created sucsessfuly');;
 
-            } // if valid
-        } // if auth
+    } // if valid
+} // if auth
     }
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return Response
+    */
     public function show($cat, $urlName)
     {
 
@@ -165,25 +167,45 @@ class OilController extends \BaseController {
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return Response
+    */
     public function edit($id)
     {
         if (Auth::check()) {
-            $cats_raw = Cat::all();
 
-            $cats;
+            $oil = Oil::find($id);
 
-            foreach ($cats_raw as $cat){
-                $cats[$cat->id] = $cat->name;
-            }
+            if($oil !== null) {
+                $cats_raw = Cat::all();
 
-            return View::make('oils.edit')
+                $cats;
+
+                foreach ($cats_raw as $cat){
+                    $cats[$cat->id] = $cat->name;
+                }
+
+                $tags_raw = $oil->tags;
+                $tags = "";
+
+                foreach ($tags_raw as $tag) {
+                    $tags .= $tag->name . ",";
+                }
+
+                $tags = substr($tags, 0, -1);
+
+                return View::make('oils.edit')
                 ->with('title', 'Creating a new oil')
-                ->with('cats', $cats);
+                ->with('cats', $cats)
+                ->with('oil', $oil)
+                ->with('tags', $tags);
+            } else {
+                return Redirect::route('backend.index')
+                    ->with('message' , "Sorry that oil no longer exist to edit.");
+
+            }
 
         } else {
             return Redirect::route('home')
@@ -192,32 +214,35 @@ class OilController extends \BaseController {
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  int  $id
+    * @return Response
+    */
     public function update($id)
     {
-        if (Auth::check()) {
+        if ( Auth::check() ) {
 
             $valid = Oil::validate(Input::all());
 
+            $oil = Oil::find($id);
+
             if ($valid->fails()) {
 
-                return Redirect::route('oils.edit')
+                return Redirect::route('oils.edit', $id)
+                    ->with($oil)
                     ->withErrors($valid)
                     ->withInput(); 
 
-            } else { // data IS valid
+            } else {
+                // IS VALID
+                $check =  Oil::where('name', '=', Input::get('name'))->first();
 
-                // check if there's any with the same name
-                $count = $count = Oil::where('name', '=', Input::get('name'))->count();
-
-                if ($count != 0) {
-                    return Redirect::route('oils.edit')
-                        ->with("message", "Oil name, " . Input::get('name') . " already exists." . $count )
-                        ->withInput(); 
+                // no duplicate name
+                if ( $check !== null && $check->id !== $id ) {
+                    return Redirect::route('oils.edit', $id)
+                    ->with("message", "Oil name, " . Input::get('name') . " already exists.")
+                    ->withInput(); 
                 }
 
                 $cat = Cat::find( (int) Input::get('cat_id') );
@@ -226,10 +251,11 @@ class OilController extends \BaseController {
 
                 $tags_obj = $this->tags_arr_add($tags);
 
-                // create oil in database
-                $oil = Oil::find($id);
+                // update oil in database
                 $oil->name          = Input::get('name');
-                $oil->prefix          = Input::get('prefix');
+                $oil->prefix        = Input::get('prefix');
+                $oil->type          = Input::get('type');
+                $oil->sciName       = Input::get('sciName');
                 $oil->compare_price = Input::get('compare_price');
                 $oil->info          = Input::get('info');
                 $oil->price         = Input::get('price');
@@ -257,27 +283,32 @@ class OilController extends \BaseController {
 
                 }
 
+                $tags_ids = [];
                 foreach ($tags_obj as $tag){
-                    $oil->tags()->attach($tag->id);
+                    $tags_ids[] = $tag->id;
                 }
+
+                $oil->tags()->sync($tags_ids);
 
                 // Return message saying, it worked!
                 return Redirect::route('backend.index')
-                    ->with('message', 'Product ' . $oil->name . ' was created sucsessfuly');
+                ->with('message', 'Product ' . $oil->name . ' was updated sucsessfuly');
 
+            }
 
-    }
         } else {
+            //Not autherized
             return Redirect::route('home')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+            ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
+    }
 
     /**
-     * Soft delete product
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    * Soft delete product
+    *
+    * @param  int  $id
+    * @return Response
+    */
     public function destroy($id)
     {
         if (Auth::check()) {
@@ -291,16 +322,16 @@ class OilController extends \BaseController {
             }
         } else {
             return Redirect::route('home')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+            ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return Response
+    */
     public function delete($id)
     {
         if (Auth::check()) {
@@ -314,16 +345,16 @@ class OilController extends \BaseController {
             }
         } else {
             return Redirect::route('home')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+            ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
 
     /**
-     * Restore product
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    * Restore product
+    *
+    * @param  int  $id
+    * @return Response
+    */
     public function restore($id)
     {
 
@@ -339,7 +370,7 @@ class OilController extends \BaseController {
 
         } else {
             return Redirect::route('home')
-                ->with('message' , "Sorry you don't have rights to create an oil, please login");
+            ->with('message' , "Sorry you don't have rights to create an oil, please login");
         }
     }
 

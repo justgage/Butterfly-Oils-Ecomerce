@@ -3,16 +3,16 @@
 
 @section('content')
 @include('includes.invalid', $errors)
-{{ Form::open(["route" => "pages.store", 'class' => 'form-horizontal'])}}
+{{ Form::model($page, ["route" => array("pages.update", $id), 'method' => 'put', 'class' => 'form-horizontal'])}}
 
 <div class="row">
-    <h1>Create new page</h1>
+    <h1>Edit "{{ $page->name }}"</h1>
 
     {{-- NAME --}}
     <div class="form-group">
         {{ Form::label('name', 'Name', [ 'class' => 'col-sm-2 control-label']) }}
         <div class="col-sm-10">
-            {{ Form::text('name', Input::old('name'), [
+            {{ Form::text('name', null, [
                 'autocomplete' => "off",
                 'placeholder' => 'About Us',
                 'id' => 'text_page_name',
@@ -25,7 +25,7 @@
     <div class="form-group">
         {{ Form::label('Order', 'Order number ', ['class' => 'col-sm-2 control-label']) }}
         <div class="col-sm-10">
-            {{ Form::text('order', Input::old('order') , [
+            {{ Form::text('order', null, [
                 'placeholder' => '1',
                 'class' => 'input-sm form-control'
             ]) }} 
@@ -38,7 +38,7 @@
     <small>Markdown is a way of adding style to a page through keys on the keyboard <a href="{{ URL::route('backend.markdown') }}">Click here to learn more</a></small>
     <div class="panel panel-default">
         <div class="" id="epiceditor">
-        {{ Form::textarea('content', Input::old('content'), [
+        {{ Form::textarea('content', null, [
             'placeholder' => 'This is the main content in markdown',
             'class' => 'form-control',
             'id' => 'epic-textarea',
@@ -47,10 +47,11 @@
         </div>
     </div>
 
+
+
+    {{-- VISIBLE --}}
     <h4 class="text-right">
-        Show in Navigation {{ Form::checkbox('visible', 'visible', [
-            'checked' => Input::old('visible')
-        ] ) }} 
+        Show in Navigation {{ Form::checkbox('visible', 'visible') }} 
     </h4>
     
     {{ Form::submit('Save', array('class' => 'btn-lg btn-primary pull-right')) }}

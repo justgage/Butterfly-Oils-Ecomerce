@@ -7,9 +7,14 @@
 
 @section('content')
 
+
    <div class="row">
       <div class="col-sm-7">
-             <h1> <sup>{{ $oil->prefix }}</sup> {{ $oil->name }} </h1>
+             <h1>
+                 <sup>{{ $oil->prefix }}</sup> {{ $oil->name }} 
+                 <small>{{ $oil->sciName }}</small> 
+             </h1>
+             
          <div class="well">
              <?php $saved = ($oil->compare_price - $oil->price) ; ?>
 
@@ -30,8 +35,12 @@
                  <dt>Price</dt>
              </div>
 
+                 <div>
+                     <strong>Type:</strong> <span> {{ $oil->type }} </span>
+                 </div>
+
              <div>
-                 <div class="oil-price text-center">
+                 <div id="oil_id_{{ $oil->id }}" class="oil-price text-center">
                      <button data-id="{{ $oil->id }}" class="cart_add btn btn-lg btn-success" >
                          <span class="cart_num" >Add to Cart</span> 
                          <span class="glyphicon glyphicon-shopping-cart"></span>
@@ -41,7 +50,7 @@
          </div>
       
          <h2>Description</h2>
-         <div> {{ $oil->info }}</div>
+         <div> {{ nl2br($oil->info) }}</div>
 
          <h2>Uses</h2>
              <div class="oil-uses">

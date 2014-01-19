@@ -24,14 +24,24 @@
         <?php
         $item_del = 0;
         ?>
+
        @foreach($cart as $item)
             <?php $oil = Oil::find($item['id']); ?>
             @if($oil !== null)
-                <tr>                                                {{-- GET RID OF THIS CAT --}}
+                <tr class="item">                                                {{-- GET RID OF THIS CAT --}}
+                {{ Form::hidden('id', $item['rowid'], ['class' => 'row-id']) }}
                     <td><a class="remove-item" data-id="{{ $item['rowid'] }}" href="#"><span class="glyphicon glyphicon-remove"></span> </a></td>
                    <td> <em><a href="{{ URL::route('oils.show', ["CAT" , Oil::find($item['id'])->urlName ]) }}">{{ $item['name'] }}</a></em> </td>
-                   <td> ${{ $item['price'] }} </td>
-                   <td> <input type="text" value="{{ $item['qty'] }}" /> </td>
+                   <td> ${{ number_format($item['price'], 2) }} </td>
+                   <td class="qty">
+                       <button class="btn btn-default minus-qty">
+                           <i class="glyphicon glyphicon-minus"></i>
+                       </button> 
+                       <input class="qty-feild form-control" name="qty[]" type="text" value="{{ $item['qty'] }}" /> 
+                       <button class="btn btn-default add-qty">
+                           <i class="glyphicon glyphicon-plus"></i>
+                       </button> 
+                   </td>
                    <td class="text-right"> <strong>${{ $item['subtotal'] }} </strong></td>
                 </tr>
             @else 
@@ -51,7 +61,10 @@
        <div class="row">
            <div class="col-sm-12">
                <div class="text-right float-right">
-                   <h4>Total ${{ number_format(Cart::total(), 2) }} </h4>
+{{ Form::submit("Update Cart", ["id" => "update", "class" => "btn btn-default"]) }}
+<br />
+                   shipping ${{ number_format(5.0, 2) }} 
+                   <h4>Total $<span id="total">{{ number_format(Cart::total() + 5, 2) }}</span> </h4>
                </div>
            </div>
            <div class="col-sm-12">
@@ -72,6 +85,8 @@ $(document).ready(function () {
     
     var count = {{ count($cart) }};
 
+    // Clear button
+
     $("#clear").click(function () {
         $.post("{{ URL::to('cart/clear') }}", {}, function (data) {
             console.log(data.mess);
@@ -79,11 +94,70 @@ $(document).ready(function () {
         });
     });
 
-    $(".remove-item").click(function () {
+    // minus one
+    $(".minus-qty").click(function (e) { 
+        e.preventDefault();
+        
+        var $feild = $(this).parent().find("input");
+
+        var val = $feild.val();
+
+        if (val > 0 && --val !== NaN) {
+            $feild.val(val);
+        }
+    });
+
+    // add one
+    $(".add-qty").click(function (e) { 
+        e.preventDefault();
+        
+        var $feild = $(this).parent().find("input");
+
+        var val = $feild.val();
+
+        $feild.val(++val);
+    });
+
+    // update whole cart
+    $("#update").click(function (e) {
+        e.preventDefault();
+        var url = "{{ URL::to('cart/update') }}"; 
+        var data = [];
+        $(".item").each(function () {
+            $this = $(this);
+
+            var item = {};
+
+            item.id = $this.find(".row-id").first().val();
+            item.qty = $this.find(".qty-feild").first().val();
+
+            data.push(item);
+        });
+
+        var promise = $.post(url, { 'items' : data });
+
+        promise.done(function (json) {
+            if (json.worked === true) {
+                window.location.reload(true);
+            }
+        });
+
+        console.log(data);
+        console.log(url);
+    });
+
+    $(".remove-item").click(function (e) {
+        e.preventDefault();
         var url = "{{ URL::to('cart/remove') }}/" + $(this).data('id');
         var $that = $(this);
 
-        $that.parent().parent().fadeOut(); // the table row
+        $tr = $that.parent().parent();
+
+        $tr.find("qty-feild").val(0);
+
+        $tr.fadeOut().promise().done(function () {
+            $(this).remove();
+        }); // the table row
 
         var promise = $.get( url);
 

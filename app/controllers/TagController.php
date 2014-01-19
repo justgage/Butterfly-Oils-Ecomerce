@@ -7,6 +7,14 @@ class TagController extends \BaseController {
 	{
         $tags = Tag::all();
 
+        $tags = $tags->filter(function($tag){
+            if ($tag->oils()->count() > 0) {
+                return $tag;
+            } else {
+                $tag->delete();
+            }
+        });
+
         return View::make("tags.index")
             ->with('title', "View by Use")
             ->with('tags', $tags);

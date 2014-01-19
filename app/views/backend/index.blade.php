@@ -8,9 +8,10 @@
   @include('backend.include.nav')
 
 <h2>Product list</h2>
-<a href="{{ URL::route('oils.create')}}" class="">
+<a href="{{ URL::route('oils.create')}}" class="btn btn-primary pull-right pad">
     + Add Product
 </a>
+<div class="clearfix"> </div>
 <div class="panel panel-default">
     @include("backend.include.table", array("oils" => $oils) )
 </div>

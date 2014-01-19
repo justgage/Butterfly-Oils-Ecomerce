@@ -5,15 +5,16 @@
     <h3 class="text-center">
         <a href="{{ $pretty_url($oil->id) }}"> 
             <sup> {{ $oil->prefix }} </sup> {{ $oil->name }} 
+            <small> {{ $oil->sciName }} </small>
         </a>
     </h3>
 
-    <div class="well">
+    <div class="">
         {{-- IMAGE --}}
         <div class="oil_img"> 
             <a href="{{ $pretty_url($oil->id) }}"> 
                 @if($oil->photos->isEmpty() === false)
-                <img class="img-responsive" src="{{ $oil->photos->first()->path }}" alt="photo"/>
+                <img class="img center-block img-responsive" src="{{ $oil->photos->first()->path }}" alt="photo"/>
                 @else
                 <div class="img_empty img-responsive img-thumbnail"/>
                         <span class="glyphicon glyphicon-camera"></span>

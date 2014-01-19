@@ -48,7 +48,7 @@
                         Delete
                     </button>
                     {{ Form::close() }}
-                    <button class="btn btn-primary" href="#">Edit</button>
+                    <a class="btn btn-primary" href="{{ URL::route('pages.edit', $page->id) }}">Edit</a>
                 </td>
             </tr>
             @endforeach

@@ -1,0 +1,12 @@
+.navbar-default {
+  border-bottom-width: 3px;
+}
+.qty button,
+.qty input {
+  height: 33px;
+  width: 40px;
+}
+.qty-feild {
+  width: 3em;
+  display: inline;
+}

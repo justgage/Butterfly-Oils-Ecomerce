@@ -3,6 +3,10 @@
 
 @section('content')
 <h2>{{ $title }}</h2>
+<div>
+    {{ $cat->info }}
+</div>
+@include('layout.shop-nav', ['tab' => $cat->id])
 
 @include('oils.include.oil_grid', ["oils" => $oils])
 @stop

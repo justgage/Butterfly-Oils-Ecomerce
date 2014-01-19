@@ -62,6 +62,8 @@
              <p> {{{ $address['country_code'] }}} </p>
         </div>
     </div>
+
+    <a class="btn btn-primary" href="javascript:window.print()"> <i class="glyphicon-print"></i>Print this</a>
 </div>
 
 

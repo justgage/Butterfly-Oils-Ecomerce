@@ -78,6 +78,7 @@ class CatController extends \BaseController {
 
         $v = View::make('cats.show');
         $v->title = $cat->name;
+        $v->cat = $cat;
         $v->oils = $oils;
         $v->pretty_url = $this->pretty_url();
 

@@ -8,7 +8,7 @@
 
 @include('includes.invalid', $errors)
 
-{{ Form::open(["route" => "oils.store", "files" => true, 'class' => 'form-horizontal'])}}
+{{ Form::model($oil, ["route" => array("oils.update", $oil->id), "method" => "put", "files" => true, 'class' => 'form-horizontal'])}}
 
 <?php $col_size = "col-md-6"; ?>
 
@@ -20,13 +20,13 @@
         <div class="form-group">
             {{ Form::label('name', 'Name', [ 'class' => 'col-sm-3 control-label']) }}
             <div class="col-sm-2">
-                {{ Form::text('prefix', Input::old('prefix'), [
+                {{ Form::text('prefix', null, [
                     'placeholder' => 'le',
                     'class' => 'form-control'
                 ]) }} 
             </div>
             <div class="col-sm-7">
-                {{ Form::text('name', Input::old('name'), [
+                {{ Form::text('name', null, [
                     'placeholder' => 'Spice Traders',
                     'class' => 'form-control'
                 ]) }} 
@@ -44,6 +44,7 @@
             </div>
         </div>
     
+
         {{-- Type --}}
         <div class="form-group">
             {{ Form::label('type', 'Type', [ 'class' => 'col-sm-3 control-label']) }}
@@ -55,25 +56,27 @@
             </div>
         </div>
     
+    
        {{-- PRICE --}}
         <div class="form-group">
           {{ Form::label('price', 'price', ['class' => 'col-sm-3 control-label']) }}
             <div class="col-sm-9">
               <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  {{ Form::text('price', Input::old('price') , [
+                  {{ Form::text('price', null, [
                       'placeholder' => '10.00',
                       'class' => 'form-control'
                   ]) }} 
                 </div>
             </div>
         </div>
+
        
         {{-- TAGS --}}
         <div class="form-group">
           {{ Form::label('tags', 'Uses tags', ['class' => 'col-sm-3 control-label']) }}
            <div class="input-group col-sm-9">
-               {{ Form::text('tags', Input::old('tags') , [
+               {{ Form::text('tags', Input::old('tags') === null ?  $tags : Input::old('tags'), [
                    'class' => 'form-control',
                    'data-role' => 'tagsinput',
                    'placeholder' => '',
@@ -88,7 +91,7 @@
    <div class="{{ $col_size }}">
        {{-- INFO --}}
           {{ Form::label('info', 'Oil Info') }}
-          <p> {{ Form::textarea('info', Input::old('info'), [
+          <p> {{ Form::textarea('info', null, [
               'placeholder' => 'This is what the oil is (basic description, ingredints, etc..)',
               'class' => 'form-control',
               'rows' => 10
@@ -110,7 +113,7 @@
        
     {{-- VISIBLE --}}
        <h4>
-          Show in shop {{ Form::checkbox('visible', 'visible', ['checked' => Input::old('visible')] ) }} 
+          Show in shop {{ Form::checkbox('visible', 'visible') }} 
        </h4>
     {{-- SUBMIT --}}
        {{ Form::submit('Save', [

@@ -7,7 +7,7 @@
          <th>Category</th>
          <th>Price</th>
          <th>Compare Price</th>
-         <th>Trash</th>
+         <th>Trash / Edit</th>
       </tr>
    </thead>
 <tbody class = "backend-table">
@@ -32,6 +32,8 @@
                 <span class="glyphicon glyphicon-trash"></span>
                 Trash
             </button>
+
+            <a class="btn btn-success" href="{{ URL::route('oils.edit', $oil->id) }}">Edit</a>
             {{ Form::close() }}
         </td>
        </tr>

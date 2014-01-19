@@ -18,10 +18,8 @@ class DatabaseSeeder extends Seeder {
 
 class CatTableSeeder extends Seeder {
 	public function run() {
-        DB::table('cats')->delete();
 
         $cat_list  = array(
-            "Other" => "Other miscellaneous products.",
             "Singles" => "A bottle of oil, containing only one pure essential oil. ",
             "Blends" => "A powerful blends of different essential oils.",
             "Cases" => "Cases to protect the oils"
