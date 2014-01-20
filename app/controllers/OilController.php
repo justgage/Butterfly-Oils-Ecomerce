@@ -15,8 +15,26 @@ class OilController extends \BaseController {
     */
     public function index()
     {
+        $get = Input::all();
+        $oils = Oil::where('visible', '=', true);
+        $reverse = 'asc';
 
-        $oils = Oil::orderBy('name')->get();
+        if ( isset($get['sort']) ) {
+
+           if ( isset($get['reverse']) ) {
+               $reverse = 'desc';
+           }
+
+           if ($get['sort'] == "name") {
+               $oils->OrderBy('name', $reverse);
+
+           } elseif ($get['sort'] == "price") {
+               $oils->OrderBy('price', $reverse);
+           }
+
+        } 
+
+        $oils =  $oils->get();
 
         $v = View::make('oils.index')->with('title', "Shop oils");
         $v->oils = $oils;

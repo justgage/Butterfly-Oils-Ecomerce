@@ -8,7 +8,9 @@
       "way/generators": "dev-master",
       "gloudemans/shoppingcart": "dev-master",
       "way/generators": "dev-master",
-      "maxhoffmann/parsedown-laravel": "dev-master"
+      "maxhoffmann/parsedown-laravel": "dev-master",
+      "ezyang/htmlpurifier": "dev-master",
+      "mews/purifier": "dev-master"
    },
    "autoload": {
       "classmap": [

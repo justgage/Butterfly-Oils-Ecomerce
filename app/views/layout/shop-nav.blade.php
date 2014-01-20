@@ -50,3 +50,18 @@
         </ul>
     </li>
 </ul>
+
+<br />
+<div class="row">
+    <div class="col-sm-4">
+        <span>Name:</span>
+        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=name" }}"> A to Z</a>
+        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=name&reverse"}}">  Z to A</a>
+    </div>
+    
+    <div class="col-sm-6">
+        <span>Price:</span>
+        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=price" }}">Low to High</a>
+        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=price&reverse"}}">High to low</a>
+    </div>
+</div>

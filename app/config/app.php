@@ -110,6 +110,7 @@ return array(
                 'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
                 'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
                 'MaxHoffmann\Parsedown\ParsedownServiceProvider',
+                'Mews\Purifier\PurifierServiceProvider',
 
         ),
 
@@ -180,6 +181,7 @@ return array(
                 'Cart'            => 'Gloudemans\Shoppingcart\Facades\Cart',
                 'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
                 'Markdown'        => 'MaxHoffmann\Parsedown\ParsedownFacade',
+                'Purifier' => 'Mews\Purifier\Facades\Purifier',
 
         ),
 

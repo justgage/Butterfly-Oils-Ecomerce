@@ -49,7 +49,7 @@
             {{ Form::label('type', 'Type', [ 'class' => 'col-sm-3 control-label']) }}
             <div class="col-sm-9">
                 {{ Form::text('type', Input::old('type'), [
-                    'placeholder' => '8oz',
+                    'placeholder' => '10ml',
                     'class' => 'form-control'
                 ]) }} 
             </div>

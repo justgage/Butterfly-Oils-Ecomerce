@@ -59,6 +59,7 @@ class PageController extends \BaseController {
         $page->name = Input::get('name');
         $page->urlName = $this->safeUrl(Input::get('name'));
         $page->content = Input::get('content');
+        $page->contentHTML = Purifier::clean(Markdown::instance()->set_breaks_enabled(true)->parse(Input::get('content')));
         $page->order = Input::get('order');
         $page->visible = true == Input::get('visible');
 
@@ -142,6 +143,7 @@ class PageController extends \BaseController {
 
         $page->name = Input::get('name');
         $page->content = Input::get('content');
+        $page->contentHTML = Purifier::clean(Markdown::instance()->set_breaks_enabled(true)->parse(Input::get('content')));
         $page->order = Input::get('order');
         $page->visible =  true == Input::get('visible');
 

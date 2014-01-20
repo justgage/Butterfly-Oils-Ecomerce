@@ -18,6 +18,7 @@ class Page extends Migration {
             $table->string('urlName');
             $table->integer('order');
             $table->text('content');
+            $table->text('contentHTML');
             $table->timestamps();
         });
 	}

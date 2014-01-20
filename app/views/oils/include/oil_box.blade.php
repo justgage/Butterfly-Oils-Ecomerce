@@ -2,12 +2,12 @@
 <div class="oil_index_box" id="oil_id_{{ $oil->id }}">
 
     {{-- TITLE --}}
-    <h3 class="text-center">
-        <a href="{{ $pretty_url($oil->id) }}"> 
+    <a href="{{ $pretty_url($oil->id) }}"> 
+        <h3 class="text-center">
             <sup> {{ $oil->prefix }} </sup> {{ $oil->name }} 
-            <small> {{ $oil->sciName }} </small>
-        </a>
-    </h3>
+        </h3>
+        <p class="text-muted text-center"> {{ $oil->sciName }} </p>
+    </a>
 
     <div class="">
         {{-- IMAGE --}}
@@ -29,6 +29,7 @@
         <div class="oil_price">
             <div class="text-center">
                 <h3>${{ number_format($oil->price, 2) }} </h3>
+                <p class="text-muted"> {{ $oil->type }} </p>
                     <button data-id="{{ $oil->id }}" class="cart_add btn btn-primary" >
                         <span class="cart_num" >Add to Cart</span> 
                         <span class="glyphicon glyphicon-shopping-cart"></span>
