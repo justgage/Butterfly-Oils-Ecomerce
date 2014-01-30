@@ -111,6 +111,7 @@ return array(
                 'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
                 'MaxHoffmann\Parsedown\ParsedownServiceProvider',
                 'Mews\Purifier\PurifierServiceProvider',
+                'Yangqi\Htmldom\HtmldomServiceProvider',
 
         ),
 
@@ -182,6 +183,7 @@ return array(
                 'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
                 'Markdown'        => 'MaxHoffmann\Parsedown\ParsedownFacade',
                 'Purifier' => 'Mews\Purifier\Facades\Purifier',
+                'Htmldom' => 'Yangqi\Htmldom\Htmldom',
 
         ),
 

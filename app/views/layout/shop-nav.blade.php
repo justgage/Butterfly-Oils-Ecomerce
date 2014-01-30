@@ -55,13 +55,17 @@
 <div class="row">
     <div class="col-sm-4">
         <span>Name:</span>
-        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=name" }}"> A to Z</a>
-        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=name&reverse"}}">  Z to A</a>
+        <?php
+            $sort = Input::get('sort');
+            $rev = Input::get('reverse') !== NULL;
+        ?>
+        <a class="btn btn-default {{ $sort == "name" && $rev == false ? "btn-primary" : "" }}" href="{{ $baseurl . "?sort=name" }}"> A to Z</a>
+        <a class="btn btn-default {{ $sort == "name" && $rev == true ? "btn-primary" : "" }}" href="{{ $baseurl . "?sort=name&reverse"}}">  Z to A</a>
     </div>
     
     <div class="col-sm-6">
         <span>Price:</span>
-        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=price" }}">Low to High</a>
-        <a class="btn btn-default" href="{{ route('oils.index') . "?sort=price&reverse"}}">High to low</a>
+        <a class="btn btn-default {{ $sort == "price" && $rev == false ? "btn-primary" : "" }}" href="{{ $baseurl . "?sort=price" }}">Low to High</a>
+        <a class="btn btn-default {{ $sort == "price" && $rev == true ? "btn-primary" : "" }}" href="{{ $baseurl . "?sort=price&reverse"}}">High to low</a>
     </div>
 </div>

@@ -12,7 +12,7 @@
 
 <?php $col_size = "col-md-6"; ?>
 
-<h1>Create new Oil</h1>
+<h1>Editing <em><sup>{{ $oil->prefix }}</sup>{{ $oil->name }}</em></h1>
 <div class="row">
     <div class="{{ $col_size }}">
 

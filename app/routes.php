@@ -36,6 +36,12 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('backend/category', array("as" => 'backend.category', 'uses' => 'UserController@category'));
     Route::get('backend/pages', array("as" => 'backend.page', 'uses' => 'PageController@index'));
     Route::get('backend/logs', array("as" => 'backend.logs', 'uses' => 'LogsController@index'));
+    Route::get('backend/import', array("as" => 'backend.logs', function () {
+        $oils = Oil::all();
+        return View::make('backend.import')
+                ->with("title", "compare to ButterflyExpressions")
+                ->with("oilsJSON", $oils->toJson());
+    }));
 });
 
 Route::get('backend/logout', array("as" => 'backend.logout', 'uses' => 'UserController@logout'));

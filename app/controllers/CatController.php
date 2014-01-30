@@ -74,13 +74,34 @@ class CatController extends \BaseController {
     {
         $cat = Cat::where('urlName', '=', $urlName)->first();
 
-        $oils = $cat->oils;
+        $oils = Oil::where('visible', '=', true)->where('cat_id', '=', $cat->id);
+
+        $reverse = 'asc';
+        $get = Input::all();
+
+        if ( isset($get['sort']) ) {
+
+           if ( isset($get['reverse']) ) {
+               $reverse = 'desc';
+           }
+
+           if ($get['sort'] == "name") {
+               $oils->OrderBy('name', $reverse);
+
+           } elseif ($get['sort'] == "price") {
+               $oils->OrderBy('price', $reverse);
+           }
+
+        } 
+
+        $oils =  $oils->get();
 
         $v = View::make('cats.show');
         $v->title = $cat->name;
         $v->cat = $cat;
         $v->oils = $oils;
         $v->pretty_url = $this->pretty_url();
+        $v->baseurl = route('cats.show', $urlName);
 
         return $v;
     }

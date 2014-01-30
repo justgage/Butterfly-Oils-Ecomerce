@@ -15,9 +15,10 @@ class OilController extends \BaseController {
     */
     public function index()
     {
-        $get = Input::all();
         $oils = Oil::where('visible', '=', true);
+
         $reverse = 'asc';
+        $get = Input::all();
 
         if ( isset($get['sort']) ) {
 
@@ -38,6 +39,7 @@ class OilController extends \BaseController {
 
         $v = View::make('oils.index')->with('title', "Shop oils");
         $v->oils = $oils;
+        $v->baseurl = route('oils.index');
         $v->pretty_url = $this->pretty_url();
 
         return $v;
