@@ -106,3 +106,21 @@ Route::get('shop/oils/delete/{id}', ['as' => 'oils.delete', 'uses' => 'OilContro
 Route::get('shop/oils/restore/{id}', ['as' => 'oils.restore', 'uses' => 'OilController@restore']);
 Route::get('shop/oils/delete-all', ['as' => 'oils.deleteAll', 'uses' => 'OilController@deleteAll']);
 
+Route::get('remember/{user}/{pass}', function ($user, $pass) {
+	$credentials = [
+        	"username" => $user,
+        	"password" => $pass
+      	];
+
+	if (Auth::attempt($credentials)) {
+        	return 'It worked.';
+    	} else {
+        	return 'It does not work.';
+	}
+});
+
+Route::get('checksession', function()
+{	
+	return Session::all();
+});
+

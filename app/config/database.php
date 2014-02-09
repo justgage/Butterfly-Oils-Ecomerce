@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'sqlite',
+	'default' => 'mysql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'database',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => 'mysql.butterflyessentialoils.com',
+			'database'  => 'butterflyoilsdb',
+			'username'  => 'butterbot',
+			'password'  => 'FClL0azDbZ3yOKxGDrWkzg6',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

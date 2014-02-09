@@ -21,15 +21,14 @@ class UserController extends \BaseController {
 
   public function check() {
     $credentials = [
-      "username" => Input::get("username"),
-        "password" => Input::get("password")
+	    "username" => Input::get("username"),
+	    "password" => Input::get("password")
       ];
-    if (Auth::attempt($credentials))
-    {
-      return Redirect::route("backend.index");
-    }
-    else {
-      return Redirect::route('login')->withInput(Input::except('password'))->with([ 'message' => 'Bad Password or Username', 'title' => 'Login' ]);
+
+    if (Auth::attempt($credentials)) {
+	    return Redirect::route("backend.index")->with('message', "It worked!");
+    } else {
+	    return Redirect::route('login')->withInput(Input::except('password'))->with([ 'message' => 'Bad Password or Username', 'title' => 'Login' ]);
     }
   }
 
