@@ -4,14 +4,14 @@
    "keywords": ["framework", "laravel"],
    "license": "MIT",
    "require": {
-      "laravel/framework": "4.1.*",
+      "laravel/framework": "4.0.*",
       "yangqi/htmldom": "dev-master",
       "way/generators": "dev-master",
       "gloudemans/shoppingcart": "dev-master",
       "way/generators": "dev-master",
       "maxhoffmann/parsedown-laravel": "dev-master",
-      "ezyang/htmlpurifier": "dev-master",
-      "mews/purifier": "dev-master"
+      "mews/purifier": "dev-master",
+      "ezyang/htmlpurifier": "4.6.0"
    },
    "autoload": {
       "classmap": [
@@ -24,24 +24,16 @@
          ]
    },
    "scripts": {
-      "post-install-cmd": [
-         "php artisan optimize"
-         ],
-         "pre-update-cmd": [
-            "php artisan clear-compiled"
-            ],
-            "post-update-cmd": [
-               "php artisan optimize"
-               ],
-               "post-create-project-cmd": [
-                  "php artisan key:generate"
-               ]
+      "post-install-cmd": [ "php artisan optimize" ],
+      "pre-update-cmd": [ "php artisan clear-compiled" ],
+      "post-update-cmd": [ "php artisan optimize" ],
+      "post-create-project-cmd": [ "php artisan key:generate" ]
    },
    "config": {
       "preferred-install": "dist"
    },
    "require-dev": {
-           "anouar/paypalpayment": "dev-master"
+      "anouar/paypalpayment": "dev-master"
    },
    "minimum-stability": "dev"
 }

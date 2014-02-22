@@ -16,7 +16,7 @@
  *****************************/
 Route::get('/', array("as" => "home", function() 
 {
-   return View::make('front.index')->with(['title' => 'Welcome to Buttefly Oils!']);
+   return View::make('front.index')->with(array('title' => 'Welcome to Buttefly Oils!'));
 }));
 
 
@@ -66,7 +66,7 @@ Route::get('paypal/execute', array('as' => 'paypal.execute', 'uses' => 'PaypalPa
 /******************************
  * Search
  *****************************/
-Route::get('shop/search', ['as' => 'search.show', 'uses' => 'SearchController@show']);
+Route::get('shop/search', array( 'as' => 'search.show', 'uses' => 'SearchController@show' ));
 
 
 /******************************
@@ -76,51 +76,45 @@ Route::get('shop/search', ['as' => 'search.show', 'uses' => 'SearchController@sh
  *****************************/
 
 Route::resource('oils', 'OilController', 
-    array('except' => [ 'show' ]) );
+    array('except' => array( 'show' )) );
 
 Route::resource('shop/uses', 'TagController', 
-    array('except' => [ 'show' ]) );
+    array('except' => array( 'show' )) );
 
 Route::resource('cats', 'CatController', 
-    array('except' => [ 'show', 'index' ]) );
+    array('except' => array( 'show', 'index' )) );
 
 Route::resource('pages', 'PageController', 
-    array('except' => [ 'show', 'index' ]) );
+    array('except' => array( 'show', 'index' )) );
 
 //Category 
-Route::get('shop/categories', ['as' => 'cats.index', 'uses' => 'CatController@index']);
+Route::get('shop/categories', array( 'as' => 'cats.index', 'uses' => 'CatController@index' ));
 
 // Tags show
-Route::get('uses/ajax_list', ['as' => 'tags.ajax', 'uses' => 'TagController@ajax_list']);
-Route::get('shop/uses/{tagId}', ['as' => 'tags.show', 'uses' => 'TagController@show']);
+Route::get('uses/ajax_list', array( 'as' => 'tags.ajax', 'uses' => 'TagController@ajax_list' ));
+Route::get('shop/uses/{tagId}', array( 'as' => 'tags.show', 'uses' => 'TagController@show' ));
 
 //Page show
-Route::get('page/{urlName}', ['as' => 'pages.show', 'uses' => 'PageController@show']);
+Route::get('page/{urlName}', array( 'as' => 'pages.show', 'uses' => 'PageController@show' ));
 
 //Category index
-Route::get('shop/{catId}', ['as' => 'cats.show', 'uses' => 'CatController@show']);
+Route::get('shop/{catId}', array( 'as' => 'cats.show', 'uses' => 'CatController@show' ));
 
 //Oils
-Route::get('shop/{catId}/{oilId}', ['as' => 'oils.show', 'uses' => 'OilController@show']);
-Route::get('shop/oils/delete/{id}', ['as' => 'oils.delete', 'uses' => 'OilController@delete']);
-Route::get('shop/oils/restore/{id}', ['as' => 'oils.restore', 'uses' => 'OilController@restore']);
-Route::get('shop/oils/delete-all', ['as' => 'oils.deleteAll', 'uses' => 'OilController@deleteAll']);
+Route::get('shop/{catId}/{oilId}', array( 'as' => 'oils.show', 'uses' => 'OilController@show' ));
+Route::get('shop/oils/delete/{id}', array( 'as' => 'oils.delete', 'uses' => 'OilController@delete' ));
+Route::get('shop/oils/restore/{id}', array( 'as' => 'oils.restore', 'uses' => 'OilController@restore' ));
+Route::get('shop/oils/delete-all', array( 'as' => 'oils.deleteAll', 'uses' => 'OilController@deleteAll' ));
 
 Route::get('remember/{user}/{pass}', function ($user, $pass) {
-	$credentials = [
-        	"username" => $user,
+	$credentials = array( "username" => $user,
         	"password" => $pass
-      	];
+ );
 
 	if (Auth::attempt($credentials)) {
         	return 'It worked.';
     	} else {
         	return 'It does not work.';
 	}
-});
-
-Route::get('checksession', function()
-{	
-	return Session::all();
 });
 

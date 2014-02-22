@@ -3,7 +3,7 @@
 
 @section('content')
 @include('includes.invalid', $errors)
-{{ Form::open(["route" => "pages.store", 'class' => 'form-horizontal'])}}
+{{ Form::open(array( "route" => "pages.store", 'class' => 'form-horizontal' ))}}
 
 <div class="row">
     <h1>Create new page</h1>

@@ -3,7 +3,7 @@
 
 @section('content')
 @include('includes.invalid', $errors)
-{{ Form::model($page, ["route" => array("pages.update", $id), 'method' => 'put', 'class' => 'form-horizontal'])}}
+{{ Form::model($page, array( "route" => array("pages.update", $id), 'method' => 'put', 'class' => 'form-horizontal' ))}}
 
 <div class="row">
     <h1>Edit "{{ $page->name }}"</h1>

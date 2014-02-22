@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'database',
+	'driver' => 'native',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ return array(
 	|
 	*/
 
-	'lifetime' => 120,
+	'lifetime' => 1200,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -125,6 +125,6 @@ return array(
     /*
       laravel 4.1 added
       */
-    'expire_on_close' => false,
+    'expire_on_close' => true,
 
 );
