@@ -1,14 +1,9 @@
 /bootstrap/compiled.php
 /vendor/
+/public/uploads/
 composer.phar
 .DS_Store
 *.swp
 *.swo
-
-README.md
-
-*.jpg
-
-*.png
 
 app/PayPal.log
