@@ -10,7 +10,7 @@ $curl = curl_init();
 curl_setopt($curl, CURLOPT_URL, 'http://butterflyexpress.net/shopping');  
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);  
 curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);  
-url_close($curl);  
+curl_close($curl);  
 
 $html = curl_exec($curl);  
 $html = str_get_html();
